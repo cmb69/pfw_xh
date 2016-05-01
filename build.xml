@@ -49,6 +49,10 @@
         <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
 
+    <target name="markup" description="generates HTML help">
+        <exec command="pandoc help/help.md -t html5 --toc -s -o help/help.htm"/>
+    </target>
+
     <target name="doc" description="generates API documentation">
         <mkdir dir="docs"/>
         <phpdoc2 title="Pfw_XH" destdir="docs" defaultPackageName="Pfw"
