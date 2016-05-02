@@ -57,8 +57,8 @@ Pfw_XH is licensed under GPLv3.
 Credits
 -------
 
-The plugin icon is designed by TODO.
-Many thanks for publishing this icon under TODO.
+The plugin logo is designed by [schollidesign](http://schollidesign.deviantart.com/).
+Many thanks for publishing this icon under LGPLv3.
 
 And last but not least many thanks to Peter Harteg,
 the "father" of CMSimple,
