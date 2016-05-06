@@ -45,7 +45,7 @@ class Lang implements \ArrayAccess
      *
      * @param string $plugin
      */
-    private function __construct($plugin)
+    public function __construct($plugin)
     {
         $this->plugin = $plugin;
     }
