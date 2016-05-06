@@ -44,6 +44,30 @@ class DocumentStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::CONTENTS, file_get_contents($this->filename));
     }
 
+    public function testExists()
+    {
+        file_put_contents($this->filename, self::CONTENTS);
+        $this->assertTrue(
+            $this->subject->exists(self::BASENAME)
+        );
+    }
+
+    public function testDoesNotExist()
+    {
+        $this->assertFalse(
+            $this->subject->exists(self::BASENAME)
+        );
+    }
+
+    public function testNames()
+    {
+        file_put_contents($this->filename, self::CONTENTS);
+        $this->assertEquals(
+            array(self::BASENAME),
+            $this->subject->names()
+        );
+    }
+
     public function testFind()
     {
         file_put_contents($this->filename, self::CONTENTS);

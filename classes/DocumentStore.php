@@ -34,6 +34,34 @@ class DocumentStore
     }
 
     /**
+     * Returns the basenames of all existing documents
+     *
+     * @return array<string>
+     */
+    public function names()
+    {
+        $names = array();
+        foreach (scandir($this->folder) as $basename) {
+            if (strpos($basename, '.') !== 0) {
+                $names[] = $basename;
+            }
+        }
+        return $names;
+    }
+
+    /**
+     * Returns whether a document exists
+     *
+     * @param string $basename
+     *
+     * @return bool
+     */
+    public function exists($basename)
+    {
+        return file_exists($this->filenameOf($basename));
+    }
+
+    /**
      * Inserts a new document
      *
      * @param string   $basename
