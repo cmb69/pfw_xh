@@ -2,8 +2,6 @@
 
 /**
  * The plugin framework
- *
- * @todo SystemCheck classes incl. builder
  */
 namespace Pfw;
 
