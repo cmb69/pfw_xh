@@ -10,27 +10,28 @@ class PluginTest extends \PHPUnit_Framework_TestCase
     {
         global $plugin, $pth;
 
-        $plugin = 'foo';
+        $plugin = 'pfw';
         $pth = array(
             'folder' => array(
-                'plugin' => './plugins/foo/'
+                'plugin' => './plugins/pfw/'
             )
         );
-        $this->subject = new Plugin();
+        $this->subject = (new Plugin())
+            ->version('1.0');
     }
 
     public function testName()
     {
-        $this->assertEquals('foo', $this->subject->name());
+        $this->assertEquals('pfw', $this->subject->name());
     }
 
     public function testFolder()
     {
-        $this->assertEquals('./plugins/foo/', $this->subject->folder());
+        $this->assertEquals('./plugins/pfw/', $this->subject->folder());
     }
 
     public function testVersion()
     {
-        $this->assertEquals('0.1.0', $this->subject->version());
+        $this->assertEquals('1.0', $this->subject->version());
     }
 }

@@ -6,17 +6,69 @@
 namespace Pfw;
 
 /**
- * The PFW plugin
+ * PFW plugins
  */
-class Plugin extends AbstractPlugin
+class Plugin
 {
     /**
-     * Returns the plugin version
+     * The plugin name
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * The plugin folder
+     *
+     * @var string
+     */
+    private $folder;
+
+    private $version;
+
+    /**
+     * Constructs an instance
+     */
+    public function __construct()
+    {
+        global $plugin, $pth;
+
+        $this->name = $plugin;
+        $this->folder = $pth['folder']['plugin'];
+        $this->version = 'UNKNOWN';
+    }
+
+    /**
+     * Returns the plugin name
      *
      * @return string
      */
-    public function version()
+    public function name()
     {
-        return '0.1.0';
+        return $this->name;
+    }
+
+    /**
+     * Returns the plugin folder
+     *
+     * @return string
+     */
+    public function folder()
+    {
+        return $this->folder;
+    }
+
+    /**
+     * Sets or returns the plugin version
+     *
+     * @return string
+     */
+    public function version($version = null)
+    {
+        if (!isset($version)) {
+            return $this->version;
+        }
+        $this->version = $version;
+        return $this;
     }
 }
