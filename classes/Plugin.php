@@ -74,6 +74,15 @@ class Plugin
         return $this->lang;
     }
 
+    public function copyright($copyright = null)
+    {
+        if (!isset($copyright)) {
+            return $this->copyright;
+        }
+        $this->copyright = $copyright;
+        return $this;
+    }
+
     /**
      * Sets or returns the plugin version
      *
