@@ -87,4 +87,47 @@ class Plugin
         $this->version = $version;
         return $this;
     }
+
+    public function admin()
+    {
+        if (!defined('XH_ADM') || !XH_ADM) {
+            return $this;
+        }
+        XH_registerStandardPluginMenuItems(false);
+        if (!isset($GLOBALS[$this->name]) || $GLOBALS[$this->name] != 'true') {
+            return $this;
+        }
+        $controller = ucfirst($this->name) . '\\' . $this->adminController();
+        $action = $this->adminAction();
+        if (class_exists($controller)) { // TODO fall back to Pfw namespace!
+            $controller = new $controller($this);
+            $controller->{$action}();
+        }
+        return $this;
+    }
+
+    private function adminController()
+    {
+        global $admin;
+
+        initvar('admin');
+        if (preg_match('/^plugin_(.*)$/', $admin, $matches)) {
+            $name = ucfirst($matches[1]);
+        } else {
+            $name = 'Default';
+        }
+        return "{$name}AdminController";
+    }
+
+    private function adminAction()
+    {
+        global $action;
+        
+        if (preg_match('/^plugin_(.*)$/', $action, $matches)) {
+            $name = ucfirst($matches[1]);
+        } else {
+            $name = 'Default';
+        }
+        return "handle$name";
+    }
 }
