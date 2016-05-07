@@ -16,15 +16,11 @@ class StylesheetAdminController extends AdminController
 
     public function handleText()
     {
-        global $o;
-
-        $o .= $this->fileEdit->form();
+        echo $this->fileEdit->form();
     }
 
     public function handleTextsave()
     {
-        global $o;
-
-        $o .= $this->fileEdit->submit();
+        echo $this->fileEdit->submit();
     }
 }

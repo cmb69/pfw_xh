@@ -16,15 +16,11 @@ class LanguageAdminController extends AdminController
 
     public function handleEdit()
     {
-        global $o;
-
-        $o .= $this->fileEdit->form();
+        echo $this->fileEdit->form();
     }
 
     public function handleSave()
     {
-        global $o;
-
-        $o .= $this->fileEdit->submit();
+        echo $this->fileEdit->submit();
     }
 }

@@ -31,9 +31,7 @@ class View
     public function render()
     {
         extract($this->data);
-        ob_start();
         include $this->templatePath();
-        return ob_get_clean();
     }
 
     private function templatePath()

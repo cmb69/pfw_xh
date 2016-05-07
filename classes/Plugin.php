@@ -101,7 +101,9 @@ class Plugin
         $action = $this->adminAction();
         if (class_exists($controller)) { // TODO fall back to Pfw namespace!
             $controller = new $controller($this);
+            ob_start();
             $controller->{$action}();
+            Response::instance()->append(ob_get_clean());
         }
         return $this;
     }
