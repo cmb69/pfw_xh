@@ -26,6 +26,10 @@ class Plugin
 
     private $version;
 
+    private $config;
+
+    private $lang;
+
     /**
      * Constructs an instance
      */
@@ -36,6 +40,8 @@ class Plugin
         $this->name = $plugin;
         $this->folder = $pth['folder']['plugin'];
         $this->version = 'UNKNOWN';
+        $this->config = Config::instance($plugin);
+        $this->lang = Lang::instance($plugin);
     }
 
     /**
@@ -56,6 +62,16 @@ class Plugin
     public function folder()
     {
         return $this->folder;
+    }
+    
+    public function config()
+    {
+        return $this->config;
+    }
+
+    public function lang()
+    {
+        return $this->lang;
     }
 
     /**
