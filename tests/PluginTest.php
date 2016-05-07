@@ -58,18 +58,6 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $this->subject->admin();
     }
 
-    public function testDefaultAdministration()
-    {
-        global $pfw, $admin, $action;
-
-        $this->defineConstant('XH_ADM', true);
-        $pfw = 'true';
-        $admin = '';
-        $action = '';
-        $this->subject->admin();
-        $this->assertEquals(1, DefaultAdminController::$defaultCount);
-    }
-
     public function testTestAdministration()
     {
         global $pfw, $admin, $action;
@@ -99,16 +87,5 @@ class TestAdminController
     public function handleTest()
     {
         self::$testCount++;
-    }
-}
-
-
-class DefaultAdminController
-{
-    public static $defaultCount = 0;
-    
-    public function handleDefault()
-    {
-        self::$defaultCount++;
     }
 }
