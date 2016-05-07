@@ -4,7 +4,7 @@ namespace Pfw;
 
 abstract class Controller
 {
-    private $plugin;
+    protected $plugin;
 
     protected $request;
 
