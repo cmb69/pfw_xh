@@ -1,11 +1,27 @@
 .pfw_logo {
     float: right;
     margin: 0 0 1em 1em;
+    width: 128px;
+    height: 128px;
 }
 .pfw_license {
     text-align: justify;
 }
 
+.pfw_form div {
+    margin: 1em 0;
+}
+
+.pfw_form label {
+    display: inline-block;
+    width: 10em;
+    vertical-align: top;
+}
+
+/*.pfw_form label {
+    display: block;
+}
+*/
 .pfw_validation_error {
     color: red;
     font-weight: bold;
