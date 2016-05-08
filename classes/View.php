@@ -36,6 +36,10 @@ class View
 
     private function templatePath()
     {
-        return $this->plugin->folder() . "views/{$this->template}.php";
+        $filename = $this->plugin->folder() . "views/{$this->template}.php";
+        if (file_exists($filename)) {
+            return $filename;
+        }
+        return $this->plugin->folder() . "../pfw/views/{$this->template}.php";
     }
 }
