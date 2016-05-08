@@ -82,6 +82,12 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, TestAdminController::$testCount);
     }
 
+    public function testFuncDefinesFunction()
+    {
+        $this->subject->func('foo');
+        $this->assertInternalType('callable', 'pfw_foo');
+    }
+
     private function defineConstant($name, $value)
     {
         if (defined($name)) {

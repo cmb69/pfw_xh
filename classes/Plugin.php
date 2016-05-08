@@ -149,4 +149,20 @@ class Plugin
         }
         return "handle$name";
     }
+
+    public function func($name)
+    {
+        $controller = ucfirst($this->name) . '\\Default' . ucfirst($name) . 'FuncController';
+        $action = 'handleDefault';
+        eval(<<<EOS
+function {$this->name}_$name()
+{
+    \$controller = new $controller(Pfw\\Plugin::instance('{$this->name}'));
+    ob_start();
+    \$controller->{$action}();
+    return ob_get_clean();
+}
+EOS
+        );
+    }
 }
