@@ -28,6 +28,11 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testRegistersTheInstance()
+    {
+        $this->assertSame($this->subject, Plugin::instance('pfw'));
+    }
+
     public function testName()
     {
         $this->assertEquals('pfw', $this->subject->name());

@@ -10,6 +10,8 @@ namespace Pfw;
  */
 class Plugin
 {
+    private static $instances = array();
+
     /**
      * The plugin name
      *
@@ -29,6 +31,11 @@ class Plugin
     private $config;
 
     private $lang;
+    
+    public static function instance($name)
+    {
+        return self::$instances[$name];
+    }
 
     /**
      * Constructs an instance
@@ -42,6 +49,7 @@ class Plugin
         $this->version = 'UNKNOWN';
         $this->config = Config::instance($plugin);
         $this->lang = Lang::instance($plugin);
+        self::$instances[$plugin] = $this;
     }
 
     /**
