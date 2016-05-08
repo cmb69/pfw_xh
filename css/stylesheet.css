@@ -5,3 +5,8 @@
 .pfw_license {
     text-align: justify;
 }
+
+.pfw_validation_error {
+    color: red;
+    font-weight: bold;
+}
