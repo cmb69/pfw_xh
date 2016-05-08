@@ -163,6 +163,8 @@ abstract class Check
 {
     private $isMandatory;
 
+    protected $lang;
+
     public function __construct($isMandatory)
     {
         $this->isMandatory = $isMandatory;
