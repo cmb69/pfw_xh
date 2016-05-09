@@ -10,8 +10,6 @@ namespace Pfw;
  *
  * @copyright 2016 Christoph M. Becker
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
- *
- * @todo ::redirect($url, $code = 302)
  */
 class Response implements Singleton
 {
