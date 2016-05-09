@@ -150,9 +150,6 @@ class Plugin
         return "handle$name";
     }
 
-    /**
-     * @todo pass additional function params to action
-     */
     public function func($name, $actionParam = null)
     {
         $controller = ucfirst($this->name) . '\\Default' . ucfirst($name) . 'FuncController';
@@ -163,7 +160,7 @@ function {$this->name}_$name()
     \$action = isset(\$_GET['$actionParam']) ? ucfirst(\$_GET['$actionParam']) : 'Default';
     \$action = "handle\$action";
     ob_start();
-    \$controller->{\$action}();
+    call_user_func_array(array(\$controller, \$action), func_get_args());
     return ob_get_clean();
 }
 EOS
