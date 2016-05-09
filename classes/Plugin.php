@@ -150,16 +150,20 @@ class Plugin
         return "handle$name";
     }
 
-    public function func($name)
+    /**
+     * @todo pass additional function params to action
+     */
+    public function func($name, $actionParam = null)
     {
         $controller = ucfirst($this->name) . '\\Default' . ucfirst($name) . 'FuncController';
-        $action = 'handleDefault';
         eval(<<<EOS
 function {$this->name}_$name()
 {
-    \$controller = new $controller(Pfw\\Plugin::instance('{$this->name}'));
+    \$controller = new $controller(Pfw\\Plugin::instance('{$this->name}'), '$actionParam');
+    \$action = isset(\$_GET['$actionParam']) ? ucfirst(\$_GET['$actionParam']) : 'Default';
+    \$action = "handle\$action";
     ob_start();
-    \$controller->{$action}();
+    \$controller->{\$action}();
     return ob_get_clean();
 }
 EOS
