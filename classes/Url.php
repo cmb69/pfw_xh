@@ -33,7 +33,7 @@ class Url
      * @param string $path
      * @param array  $params
      */
-    public function __construct($path, $params)
+    public function __construct($path, array $params)
     {
         $this->path = $path;
         $this->params = $params;
