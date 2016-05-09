@@ -1,5 +1,5 @@
-Getting started
-===============
+Case study: Phonebook
+=====================
 
 Consider that the webmaster of a CMSimple_XH web site wants to be able to
 administrate a small phone book in the back-end of his site.
@@ -18,7 +18,7 @@ Then we create the following phonebook/index.php:
 
     <?php
 
-    (new Pfw\Plugin)
+    Pfw\Plugin::register()
         ->copyright('2016 Christoph M. Becker')
         ->version('0.1')
         ->admin();
