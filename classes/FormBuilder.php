@@ -333,6 +333,9 @@ class Form
 
     private $action;
 
+    /**
+     * @var array<$string, Control>
+     */
     private $controls;
 
     private $data;
@@ -356,7 +359,7 @@ class Form
 
     public function addControl(Control $control)
     {
-        $this->controls[] = $control;
+        $this->controls[$control->name()] = $control;
     }
 
     /**
@@ -416,14 +419,21 @@ class Form
         return $this->validated;
     }
 
+    /**
+     * Populates the form data from $_POST
+     *
+     * Only $_POST parameters actually belonging to the form are incorporated.
+     *
+     * @return void
+     */
     private function populateFromPost()
     {
         $prefix = "{$this->prefix}_";
         $this->data = array();
-        foreach ($_POST as $name => $value) {
-            if (strpos($name, $prefix) === 0) {
+        foreach ($this->controls as $name => $control) {
+            if (isset($_POST[$name])) {
                 $key = substr($name, strlen($prefix));
-                $this->data[$key] = stsl($value);
+                $this->data[$key] = stsl($_POST[$name]);
             }
         }
     }
@@ -457,7 +467,7 @@ abstract class Control
         $this->id = ++$id;
     }
 
-    protected function name()
+    public function name()
     {
         return $this->form->prefix() . '_' . $this->name;
     }
