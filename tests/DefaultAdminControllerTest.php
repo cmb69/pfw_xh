@@ -17,6 +17,7 @@ class DefaultAdminControllerTest extends \PHPUnit_Framework_TestCase
         $plugin->expects($this->any())->method('folder')->willReturn('./');
         $plugin->expects($this->any())->method('name')->willReturn('pfw');
         $plugin->expects($this->any())->method('copyright')->willReturn('2016 cmb');
+        $plugin->expects($this->any())->method('functions')->willReturn(array());
         $this->subject = new DefaultAdminController($plugin);
         $lang = $this->getMockBuilder('Pfw\\Lang')->disableOriginalConstructor()->getMock();
         $this->langInst = new \PHPUnit_Extensions_MockStaticMethod('Pfw\\Lang::instance', null);
@@ -50,7 +51,10 @@ href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
 <h4></h4>
 <p><img src="core/css/success.png" alt=""> </p>
 <p><img src="core/css/success.png" alt=""> </p>
-<p><img src="core/css/failure.png" alt=""> </p>
+<p><img src="core/css/failure.png" alt=""> </p><h4></h4>
+<dl>
+</dl>
+
 EOT
         );
     }

@@ -38,6 +38,11 @@ class Plugin
     private $lang;
 
     /**
+     * @var array<string>
+     */
+    private $functions = array();
+
+    /**
      * Registers the plugin
      *
      * Actually, this is just an alias for `new Plugin()`,
@@ -126,6 +131,16 @@ class Plugin
         return $this;
     }
 
+    /**
+     * Returns all registered user function names
+     *
+     * @return array<string>
+     */
+    public function functions()
+    {
+        return $this->functions;
+    }
+
     public function admin()
     {
         if (!defined('XH_ADM') || !XH_ADM) {
@@ -208,6 +223,7 @@ class Plugin
             $functionName = $this->name;
             $name = 'default';
         }
+        $this->functions[] = $functionName;
         $controller = ucfirst($this->name) . '\\Default' . ucfirst($name) . 'FuncController';
         eval(<<<EOS
 function $functionName()

@@ -15,3 +15,10 @@ Public License along with this program. If not, see <a
 href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
 <h4><?php echo $this->lang['syscheck_title']?></h4>
 <?php echo $systemCheck?>
+<h4><?php echo $this->lang['userfunc_title']?></h4>
+<dl>
+<?php foreach ($this->plugin->functions() as $function):?>
+    <dt><?php echo $function?></dt>
+    <dd><?php echo $this->lang["userfunc_$function"]?></dd>
+<?php endforeach?>
+</dl>
