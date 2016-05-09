@@ -82,6 +82,12 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, TestAdminController::$testCount);
     }
 
+    public function testDefaultFunction()
+    {
+        $this->subject->func();
+        $this->assertInternalType('callable', 'pfw');
+    }
+
     public function testFuncDefinesFunction()
     {
         $this->subject->func('foo');

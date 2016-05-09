@@ -166,11 +166,44 @@ class Plugin
         return "handle$name";
     }
 
-    public function func($name, $actionParam = null)
+    /**
+     * Registers a user function
+     *
+     * Traditionally, user functions are just plain PHP functions.
+     * This has the drawback that the system is not aware which user
+     * functions are available, because it cannot distinguish between
+     * internal helper functions.
+     * The even greater drawback with regard to the plugin framework
+     * is that a plain PHP user function would have to create the
+     * appropriate controller object passing the appropriate plugin
+     * as parameter, and to dynamically call the appropriate action
+     * passing the user function's arguments.
+     * All that is handled automagically by this method.
+     * You still can write and use plain PHP functions as user functions,
+     * though this is not recommended.
+     *
+     * If the name is ommitted, the function name is just the plugin name,
+     * what is useful if there is only one user function or there is a
+     * main user function. Otherwise the function name is prefixed with
+     * the plugin name and an underscore. Example for a `foo` plugin:
+     *
+     *      func() // function foo() {}
+     *      func('bar') // function foo_bar() {}
+     *
+     * @param string $name
+     * @param string $actionParam
+     */
+    public function func($name = null, $actionParam = null)
     {
+        if (isset($name)) {
+            $functionName = "{$this->name}_$name";
+        } else {
+            $functionName = $this->name;
+            $name = 'default';
+        }
         $controller = ucfirst($this->name) . '\\Default' . ucfirst($name) . 'FuncController';
         eval(<<<EOS
-function {$this->name}_$name()
+function $functionName()
 {
     \$controller = new $controller(Pfw\\Plugin::instance('{$this->name}'), '$actionParam');
     \$action = isset(\$_GET['$actionParam']) ? ucfirst(\$_GET['$actionParam']) : 'Default';
