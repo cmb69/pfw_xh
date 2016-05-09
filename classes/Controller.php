@@ -40,6 +40,11 @@ abstract class Controller
         return new View($this, $template);
     }
 
+    protected function htmlView($template)
+    {
+        return new HtmlView($this, $template);
+    }
+
     public function seeOther(Url $url)
     {
         $this->response->redirect($url->absolute(), 303);

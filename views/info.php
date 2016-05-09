@@ -1,7 +1,7 @@
 <h1><?php echo $this->plugin->name()?></h1>
 <img class="pfw_logo" src="<?php echo $this->plugin->folder(), $this->plugin->name(), '.png'?>"/>
 <p>Version <?php echo $this->plugin->version()?></p>
-<p>Copyright <?php echo $this->plugin->copyright()?></p>
+<p>Copyright <?php echo $this->escape($this->plugin->copyright())?></p>
 <p class="pfw_license">This program is free software: you can redistribute it
 and/or modify it under the terms of the GNU General Public License as published
 by the Free Software Foundation, either version 3 of the License, or (at your

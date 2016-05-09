@@ -6,7 +6,7 @@ class DefaultAdminController extends AdminController
 {
     public function handleDefault()
     {
-        $view = $this->view('info');
+        $view = $this->htmlView('info');
         $view->logo = $this->plugin->folder() . $this->plugin->name() . '.png';
         $view->copyright = $this->plugin->copyright();
         $view->version = $this->plugin->version();

@@ -42,4 +42,9 @@ class View
         }
         return $this->plugin->folder() . "../pfw/views/{$this->template}.php";
     }
+
+    protected function escape($string)
+    {
+        return $string;
+    }
 }
