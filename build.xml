@@ -54,7 +54,7 @@
     </target>
 
     <target name="doc" description="generates API documentation">
-        <mkdir dir="docs"/>
+        <mkdir dir="docs/api"/>
         <phpdoc2 title="Pfw_XH" destdir="docs/api" defaultPackageName="Pfw"
                  pharlocation="phpDocumentor.phar" template="clean">
             <fileset refid="php-sources"/>
