@@ -239,4 +239,44 @@ EOS
         );
         return $this;
     }
+
+    /**
+     * Registers a page controller
+     *
+     * A page controller is invoked when a certain page is requested.
+     * This is mostly useful for plugins that wish to handle certain non
+     * existing pages without the need for the user to actually create
+     * these pages.
+     *
+     * The check whether the page is requested uses either $name directly,
+     * or it uses the language string with key `page_$name` if it exists.
+     * In the latter case, the page name is treated as it where a normal
+     * page, i.e. it is HTML entitiy escaped and passed through `uenc`.
+     *
+     * @param string $name
+     * @param string $actionParam
+     *
+     * @return self
+     */
+    public function page($name, $actionParam = null)
+    {
+        global $su;
+
+        if ($this->lang["page_$name"]) {
+            $page = uenc(htmlspecialchars($this->lang["page_$name"], ENT_COMPAT, 'UTF-8'));
+        } else {
+            $page = $name;
+        }
+        if ($su != $page) {
+            return $this;
+        }
+        $controller = ucfirst($this->name) . '\\Default' . ucfirst($name) . 'PageController';
+        $action = isset($_GET[$actionParam]) ? ucfirst($_GET[$actionParam]) : 'Default';
+        $action = "handle$action";
+        $controller = new $controller($this, $actionParam);
+        ob_start();
+        $controller->{$action}();
+        Response::instance()->append(ob_get_clean());
+        return $this;
+    }
 }

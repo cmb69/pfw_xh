@@ -104,6 +104,22 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testPageReturnsSelf()
+    {
+        $this->assertSame(
+            $this->subject, $this->subject->page('foo')
+        );
+    }
+
+    public function testPageCallAction()
+    {
+        global $su;
+
+        $su = 'foo';
+        $this->subject->page('foo');
+        $this->assertEquals(1, DefaultFooPageController::$testCount);
+    }
+
     private function defineConstant($name, $value)
     {
         if (defined($name)) {
@@ -119,6 +135,16 @@ class TestAdminController
     public static $testCount = 0;
 
     public function handleTest()
+    {
+        self::$testCount++;
+    }
+}
+
+class DefaultFooPageController
+{
+    public static $testCount = 0;
+
+    public function handleDefault()
     {
         self::$testCount++;
     }
