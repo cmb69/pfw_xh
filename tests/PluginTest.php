@@ -21,7 +21,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
                 'plugin' => './plugins/pfw/'
             )
         );
-        $this->subject = new Plugin();
+        $this->subject = Plugin::register();
         $this->registerStandardPluginMenuItemsMock = new \PHPUnit_Extensions_MockFunction(
             'XH_registerStandardPluginMenuItems',
             $this->subject

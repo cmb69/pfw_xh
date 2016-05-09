@@ -31,6 +31,22 @@ class Plugin
     private $config;
 
     private $lang;
+
+    /**
+     * Registers the plugin
+     *
+     * Actually, this is just an alias for `new Plugin()`,
+     * but we prefer the more explicit naming (we actually want
+     * the user to register a plugin instead of creating it)
+     * and we work around the PHP 5.3 limitation regarding
+     * class member access on instantiation.
+     *
+     * @return self
+     */
+    public static function register()
+    {
+        return new self();
+    }
     
     public static function instance($name)
     {
@@ -40,7 +56,7 @@ class Plugin
     /**
      * Constructs an instance
      */
-    public function __construct()
+    private function __construct()
     {
         global $plugin, $pth;
 
