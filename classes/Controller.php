@@ -45,6 +45,11 @@ abstract class Controller
         return new HtmlView($this, $template);
     }
 
+    protected function formBuilder($action)
+    {
+        return new FormBuilder($this->plugin->name(), $this->lang, $action);
+    }
+
     public function seeOther(Url $url)
     {
         $this->response->redirect($url->absolute(), 303);
