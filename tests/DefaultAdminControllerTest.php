@@ -22,7 +22,7 @@ class DefaultAdminControllerTest extends \PHPUnit_Framework_TestCase
         $this->langInst = new \PHPUnit_Extensions_MockStaticMethod('Pfw\\Lang::instance', null);
         $this->langInst->expects($this->any())->willReturn($lang);
     }
-    
+
     public function tearDown()
     {
         $this->langInst->restore();
