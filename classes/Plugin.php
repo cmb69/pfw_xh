@@ -116,7 +116,7 @@ class Plugin
         }
         $controller = ucfirst($this->name) . '\\' . $this->adminController();
         $action = $this->adminAction();
-        if (class_exists($controller)) { // TODO fall back to Pfw namespace!
+        if (class_exists($controller)) {
             $controller = new $controller($this);
             ob_start();
             $controller->{$action}();
