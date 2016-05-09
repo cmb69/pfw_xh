@@ -44,4 +44,6 @@ abstract class Controller
     {
         $this->response->redirect($url->absolute(), 303);
     }
+
+    abstract function url($action);
 }
