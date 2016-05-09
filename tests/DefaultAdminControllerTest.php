@@ -54,4 +54,14 @@ href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
 EOT
         );
     }
+
+    public function testContentFolder()
+    {
+        global $pth;
+
+        $pth = array(
+            'folder' => array('content' => 'foobar')
+        );
+        $this->assertEquals('foobar', $this->subject->contentFolder());
+    }
 }

@@ -28,6 +28,13 @@ abstract class Controller
         return $this->plugin;
     }
 
+    public function contentFolder()
+    {
+        global $pth;
+
+        return $pth['folder']['content'];
+    }
+
     protected function view($template)
     {
         return new View($this, $template);
