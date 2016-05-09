@@ -430,7 +430,7 @@ class Form
     {
         $prefix = "{$this->prefix}_";
         $this->data = array();
-        foreach ($this->controls as $name => $control) {
+        foreach (array_keys($this->controls) as $name) {
             if (isset($_POST[$name])) {
                 $key = substr($name, strlen($prefix));
                 $this->data[$key] = stsl($_POST[$name]);
