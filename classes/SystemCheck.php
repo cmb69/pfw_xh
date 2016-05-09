@@ -23,7 +23,6 @@ namespace Pfw;
  *              ->writable($filename)
  *          ->render();
  *
- * @todo add language strings
  * @todo add check for a plugin which has to be installed (jQuery etc.)
  */
 class SystemCheck
