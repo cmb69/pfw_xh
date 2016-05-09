@@ -86,12 +86,22 @@ class PluginTest extends \PHPUnit_Framework_TestCase
     {
         $this->subject->func();
         $this->assertInternalType('callable', 'pfw');
+        runkit_function_remove('pfw');
     }
 
     public function testFuncDefinesFunction()
     {
         $this->subject->func('foo');
         $this->assertInternalType('callable', 'pfw_foo');
+        runkit_function_remove('pfw_foo');
+    }
+
+    public function testFuncReturnsSelf()
+    {
+        $this->assertSame(
+            $this->subject,
+            $this->subject->func()
+        );
     }
 
     private function defineConstant($name, $value)

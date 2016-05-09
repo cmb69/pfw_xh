@@ -192,6 +192,8 @@ class Plugin
      *
      * @param string $name
      * @param string $actionParam
+     *
+     * @return self
      */
     public function func($name = null, $actionParam = null)
     {
@@ -214,5 +216,6 @@ function $functionName()
 }
 EOS
         );
+        return $this;
     }
 }
