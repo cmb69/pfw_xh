@@ -7,6 +7,11 @@ namespace Pfw;
 
 /**
  * PFW plugins
+ *
+ * @todo Check whether it's possible to actually run the plugin after
+ *       plugin loading (seems to be an issue with plugin_admin_common).
+ *       This would imply that admin() and func() would actually register
+ *       only, and that we would need a run() method for immediate tasks.
  */
 class Plugin
 {
