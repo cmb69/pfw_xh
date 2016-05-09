@@ -39,4 +39,9 @@ abstract class Controller
     {
         return new View($this, $template);
     }
+
+    public function seeOther(Url $url)
+    {
+        $this->response->redirect($url->absolute(), 303);
+    }
 }
