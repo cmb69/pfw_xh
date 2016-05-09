@@ -112,4 +112,18 @@ class Response implements Singleton
 
         $title = $value;
     }
+
+    /**
+     * Redirect to a URL with a certain status code and exit script.
+     *
+     * @param string $url
+     * @param int    $code
+     *
+     * @return void
+     */
+    public function redirect($url, $code = 302)
+    {
+        header("Location: $url", $code);
+        XH_exit();
+    }
 }

@@ -77,4 +77,16 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->subject->setTitle('Pfw_XH');
         $this->assertEquals('Pfw_XH', $title);
     }
+
+    public function testRedirect()
+    {
+        $exit = new \PHPUnit_Extensions_MockFunction('XH_exit', $this->subject);
+        $exit->expects($this->once());
+        $header = new \PHPUnit_Extensions_MockFunction('header', $this->subject);
+        $header->expects($this->once())->with(
+            $this->equalTo('Location: http://example.com'),
+            302
+        );
+        $this->subject->redirect('http://example.com');
+    }
 }
