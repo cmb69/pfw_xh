@@ -191,7 +191,7 @@ abstract class Check
 
         $status = $this->status();
         $src = "{$pth['folder']['base']}core/css/$status.png";
-        $alt = $this->lang["syscheck_alt_$status"];
+        $alt = $this->lang->get("syscheck_alt_$status");
         return tag(sprintf('img src="%s" alt="%s"', $src, $alt));
     }
 
@@ -267,7 +267,7 @@ class NoMagicQuotesCheck extends Check
     
     protected function text()
     {
-        return $this->lang['syscheck_magic_quotes'];
+        return $this->lang->get('syscheck_magic_quotes');
     }
 }
 

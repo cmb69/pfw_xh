@@ -29,38 +29,23 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     public function testExistingOption()
     {
         $subject = Config::instance('other');
-        $this->assertTrue(isset($subject['option1']));
-        $this->assertEquals('foo', $subject['option1']);
+        $this->assertEquals('foo', $subject->get('option1'));
     }
     
     public function testInheritedOption()
     {
         $subject = Config::instance('other');
-        $this->assertTrue(isset($subject['option3']));
-        $this->assertEquals('baz', $subject['option3']);
+        $this->assertEquals('baz', $subject->get('option3'));
     }
 
     public function testNonExistingOption()
     {
         $subject = Config::instance('other');
-        $this->assertFalse(isset($subject['option4']));
-        $this->assertNull($subject['option4']);
+        $this->assertNull($subject->get('option4'));
     }
 
     public function testNonExistingPlugin()
     {
         $this->assertNull(Config::instance('foo'));
-    }
-
-    public function testSetOptionThrows()
-    {
-        $this->setExpectedException('\\LogicException');
-        Config::instance('other')['option1'] = 'foo';
-    }
-
-    public function testUnsetOptionThrows()
-    {
-        $this->setExpectedException('\\LogicException');
-        unset(Config::instance('other')['option1']);
     }
 }

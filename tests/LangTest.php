@@ -31,22 +31,19 @@ class LangTest extends \PHPUnit_Framework_TestCase
     public function testExistingOption()
     {
         $subject = Lang::instance('other');
-        $this->assertTrue(isset($subject['option1']));
-        $this->assertEquals('foo', $subject['option1']);
+        $this->assertEquals('foo', $subject->get('option1'));
     }
 
     public function testInheritedOption()
     {
         $subject = Lang::instance('other');
-        $this->assertTrue(isset($subject['option3']));
-        $this->assertEquals('baz', $subject['option3']);
+        $this->assertEquals('baz', $subject->get('option3'));
     }
 
     public function testNonExistingOption()
     {
         $subject = Lang::instance('other');
-        $this->assertFalse(isset($subject['option4']));
-        $this->assertNull($subject['option4']);
+        $this->assertNull($subject->get('option4'));
     }
 
     public function testNonExistingPlugin()
@@ -54,18 +51,6 @@ class LangTest extends \PHPUnit_Framework_TestCase
         $this->assertNull(Lang::instance('foo'));
     }
 
-    public function testSetOptionThrows()
-    {
-        $this->setExpectedException('\\LogicException');
-        Lang::instance('other')['option1'] = 'foo';
-    }
-
-    public function testUnsetOptionThrows()
-    {
-        $this->setExpectedException('\\LogicException');
-        unset(Lang::instance('other')['option1']);
-    }
-    
     public function testSingular()
     {
         $subject = Lang::instance('other');

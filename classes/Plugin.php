@@ -189,7 +189,7 @@ class Plugin
                 continue;
             }
             $url = "$sn?{$this->name}&admin=plugin_" . strtolower($name) . '&normal';
-            XH_registerPluginMenuItem($this->name, $this->lang["menu_" . strtolower($name)], $url);
+            XH_registerPluginMenuItem($this->name, $this->lang->get("menu_" . strtolower($name)), $url);
         }
     }
 
@@ -294,8 +294,8 @@ EOS
     {
         global $su;
 
-        if ($this->lang["page_$name"]) {
-            $page = uenc(htmlspecialchars($this->lang["page_$name"], ENT_COMPAT, 'UTF-8'));
+        if ($this->lang->get("page_$name")) {
+            $page = uenc(htmlspecialchars($this->lang->get("page_$name"), ENT_COMPAT, 'UTF-8'));
         } else {
             $page = $name;
         }

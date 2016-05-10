@@ -12,14 +12,14 @@ namespace Pfw;
  * of jQuery4CMSimple is enabled, do:
  *
  *      $config = Config::instance('jquery');
- *      if ($config['autoload']) {
+ *      if ($config->get('autoload')) {
  *          ...
  *      }
  *
  * @copyright 2016 Christoph M. Becker
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
-class Config implements \ArrayAccess
+class Config
 {
     /**
      * The plugin.
@@ -59,65 +59,22 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * Returns whether a certain offset exists.
+     * Returns the value of a certain $key.
      *
-     * @param  string $offset
-     * @return bool
-     * @internal
-     */
-    public function offsetExists($offset)
-    {
-        global $plugin_cf;
-
-        return isset($plugin_cf[$this->plugin][$offset])
-            || isset($plugin_cf['pfw'][$offset]);
-    }
-
-    /**
-     * Returns the value of a certain offset.
-     *
-     * @param  string $offset
+     * @param  string $key
      * @return mixed
      * @internal
      */
-    public function offsetGet($offset)
+    public function get($key)
     {
         global $plugin_cf;
 
-        if (isset($plugin_cf[$this->plugin][$offset])) {
-            return $plugin_cf[$this->plugin][$offset];
-        } elseif (isset($plugin_cf['pfw'][$offset])) {
-            return $plugin_cf['pfw'][$offset];
+        if (isset($plugin_cf[$this->plugin][$key])) {
+            return $plugin_cf[$this->plugin][$key];
+        } elseif (isset($plugin_cf['pfw'][$key])) {
+            return $plugin_cf['pfw'][$key];
         } else {
             return null;
         }
-    }
-
-    /**
-     * Sets the value of a certain offset.
-     *
-     * @param  string $offset
-     * @param  mixed  $value
-     * @return void
-     * @internal
-     */
-    public function offsetSet($offset, $value)
-    {
-        throw new \LogicException('Config options are write protected');
-        echo $offset, $value; // to satisfy PHPMD
-    }
-
-    /**
-     * Unsets a certain offset.
-     *
-     * @param  string $offset
-     * @param  mixed  $value
-     * @return void
-     * @internal
-     */
-    public function offsetUnset($offset)
-    {
-        throw new \LogicException('Config options are write protected');
-        echo $offset; // to satisfy PHPMD
     }
 }

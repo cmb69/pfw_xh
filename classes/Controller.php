@@ -35,6 +35,11 @@ abstract class Controller
         return $pth['folder']['content'];
     }
 
+    protected function config($key)
+    {
+        return $this->config->get($key);
+    }
+
     protected function view($template)
     {
         return new View($this, $template);

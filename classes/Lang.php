@@ -11,7 +11,7 @@ namespace Pfw;
  * @copyright 2016 Christoph M. Becker
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
-class Lang implements \ArrayAccess
+class Lang
 {
     /**
      * The plugin.
@@ -51,68 +51,24 @@ class Lang implements \ArrayAccess
     }
 
     /**
-     * Returns whether a certain offset exists.
-     *
-     * @param  string $offset
-     * @return bool
-     * @internal
-     */
-    public function offsetExists($offset)
-    {
-        global $plugin_tx;
-
-        return isset($plugin_tx[$this->plugin][$offset])
-            || isset($plugin_tx['pfw'][$offset]);
-    }
-
-    /**
      * Returns the value of a certain offset.
      *
-     * @param  string $offset
+     * @param  string $key
      * @return mixed
      * @internal
      */
-    public function offsetGet($offset)
+    public function get($key)
     {
         global $plugin_tx;
 
-        if (isset($plugin_tx[$this->plugin][$offset])) {
-            return $plugin_tx[$this->plugin][$offset];
-        } elseif (isset($plugin_tx['pfw'][$offset])) {
-            return $plugin_tx['pfw'][$offset];
+        if (isset($plugin_tx[$this->plugin][$key])) {
+            return $plugin_tx[$this->plugin][$key];
+        } elseif (isset($plugin_tx['pfw'][$key])) {
+            return $plugin_tx['pfw'][$key];
         } else {
             return null;
         }
     }
-
-    /**
-     * Sets the value of a certain offset.
-     *
-     * @param  string $offset
-     * @param  mixed  $value
-     * @return void
-     * @internal
-     */
-    public function offsetSet($offset, $value)
-    {
-        throw new \LogicException('Config options are write protected');
-        echo $offset, $value; // to satisfy PHPMD
-    }
-
-    /**
-     * Unsets a certain offset.
-     *
-     * @param  string $offset
-     * @param  mixed  $value
-     * @return void
-     * @internal
-     */
-    public function offsetUnset($offset)
-    {
-        throw new \LogicException('Config options are write protected');
-        echo $offset; // to satisfy PHPMD
-    }
-
     /**
      * Returns a language text.
      *
@@ -125,7 +81,7 @@ class Lang implements \ArrayAccess
     public function singular($key)
     {
         $args = array_slice(func_get_args(), 1);
-        return vsprintf($this[$key], $args);
+        return vsprintf($this->get($key), $args);
     }
 
     /**
@@ -144,13 +100,13 @@ class Lang implements \ArrayAccess
             $suffix = '_singular';
         } elseif ($count > 2 && $count < 5) {
             $suffix = '_paucal';
-            if (!isset($this["$key$suffix"])) {
+            if ($this->get("$key$suffix") === null) {
                 $suffix = '_plural';
             }
         } else {
             $suffix = '_plural';
         }
         $args = array_slice(func_get_args(), 1);
-        return vsprintf($this["$key$suffix"], $args);
+        return vsprintf($this->get("$key$suffix"), $args);
     }
 }
