@@ -1,15 +1,16 @@
 <?php
 
 /**
- * The plugin framework
- */
-namespace Pfw;
-
-/**
- * Access to the i18n of the plugins.
+ * Access to the i18n of the plugins
  *
  * @copyright 2016 Christoph M. Becker
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
+ */
+
+namespace Pfw;
+
+/**
+ * Access to the i18n of the plugins
  */
 class Lang
 {
@@ -21,7 +22,7 @@ class Lang
     private $plugin;
 
     /**
-     * Returns an instance.
+     * Returns an instance
      *
      * @param  string $plugin
      * @return self
@@ -41,7 +42,7 @@ class Lang
     }
 
     /**
-     * Constructs an instance.
+     * Constructs an instance
      *
      * @param string $plugin
      */
@@ -51,7 +52,7 @@ class Lang
     }
 
     /**
-     * Returns the value of a certain offset.
+     * Returns the value of a certain offset
      *
      * @param  string $key
      * @return mixed
@@ -70,7 +71,7 @@ class Lang
         }
     }
     /**
-     * Returns a language text.
+     * Returns a language text
      *
      * printf-style placeholders are replaced by additional parameters.
      *
@@ -85,7 +86,7 @@ class Lang
     }
 
     /**
-     * Returns a pluralized language text.
+     * Returns a pluralized language text
      *
      * printf-style placeholders are replaced by additional parameters.
      *

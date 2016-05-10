@@ -1,8 +1,12 @@
 <?php
 
 /**
- * The plugin framework
+ * PFW plugins
+ *
+ * @copyright 2016 Christoph M. Becker
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
+
 namespace Pfw;
 
 /**
@@ -15,6 +19,11 @@ namespace Pfw;
  */
 class Plugin
 {
+    /**
+     * The plugin instances
+     *
+     * @var Plugin[]
+     */
     private static $instances = array();
 
     /**
@@ -31,14 +40,31 @@ class Plugin
      */
     private $folder;
 
+    /**
+     * The plugin version
+     *
+     * @var string
+     */
     private $version;
 
+    /**
+     * The plugin configuration
+     *
+     * @var Config
+     */
     private $config;
 
+    /**
+     * The plugin language
+     *
+     * @var Lang
+     */
     private $lang;
 
     /**
-     * @var array<string>
+     * The names of the registered functions
+     * 
+     * @var string[]
      */
     private $functions = array();
 
@@ -57,7 +83,14 @@ class Plugin
     {
         return new self();
     }
-    
+
+    /**
+     * Returns a plugin instance
+     *
+     * @param string $name
+     *
+     * @return Plugin
+     */
     public static function instance($name)
     {
         return self::$instances[$name];
@@ -97,17 +130,36 @@ class Plugin
     {
         return $this->folder;
     }
-    
+
+    /**
+     * Returns the plugin configuration
+     *
+     * @return Config
+     */
     public function config()
     {
         return $this->config;
     }
 
+    /**
+     * Returns the plugin language
+     *
+     * @return Lang
+     */
     public function lang()
     {
         return $this->lang;
     }
 
+    /**
+     * Returns or sets the copyright
+     *
+     * @param string $copyright
+     *
+     * @return string|void
+     *
+     * @todo Split into getter and setter.
+     */
     public function copyright($copyright = null)
     {
         if (!isset($copyright)) {
@@ -118,9 +170,13 @@ class Plugin
     }
 
     /**
-     * Sets or returns the plugin version
+     * Returns or sets the plugin version
      *
-     * @return string
+     * @param string $version
+     *
+     * @return string|void
+     *
+     * @todo Split into getter and setter.
      */
     public function version($version = null)
     {
@@ -141,6 +197,11 @@ class Plugin
         return $this->functions;
     }
 
+    /**
+     * Declares that the plugin has an administration interface
+     *
+     * @return void
+     */
     public function admin()
     {
         if (!defined('XH_ADM') || !XH_ADM) {
@@ -163,6 +224,11 @@ class Plugin
         return $this;
     }
 
+    /**
+     * Returns the names of all available admin controllers
+     *
+     * @return string[]
+     */
     private function getAdminControllerNames()
     {
         $names = array();
@@ -180,6 +246,13 @@ class Plugin
         return $names;
     }
 
+    /**
+     * Registers the additional (i.e. non-standard) menu items
+     *
+     * @param string[] $controllerNames
+     *
+     * @return void
+     */
     private function registerAdditionalMenuItems($controllerNames)
     {
         global $sn;
@@ -193,6 +266,11 @@ class Plugin
         }
     }
 
+    /**
+     * Returns the name of the requested admin controller
+     *
+     * @return string
+     */
     private function adminController()
     {
         global $admin;
@@ -206,6 +284,11 @@ class Plugin
         return "{$name}AdminController";
     }
 
+    /**
+     * Returns the name of the requested action
+     *
+     * @return void
+     */ 
     private function adminAction()
     {
         global $action;

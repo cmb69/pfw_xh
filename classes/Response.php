@@ -1,20 +1,21 @@
 <?php
 
 /**
- * The plugin framework.
- */
-namespace Pfw;
-
-/**
- * Encapsulates the current HTTP response.
+ * The current HTTP response.
  *
  * @copyright 2016 Christoph M. Becker
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
+
+namespace Pfw;
+
+/**
+ * The current HTTP response.
+ */
 class Response implements Singleton
 {
     /**
-     * Returns the single instance.
+     * Returns the single instance
      *
      * @return self
      */
@@ -29,14 +30,14 @@ class Response implements Singleton
     }
 
     /**
-     * Constructs a new instance.
+     * Constructs a new instance
      */
     private function __construct()
     {
     }
 
     /**
-     * Appends HTML to the contents area.
+     * Appends HTML to the contents area
      *
      * @param  string $html
      * @return void
@@ -49,7 +50,7 @@ class Response implements Singleton
     }
 
     /**
-     * Appends HTML to the head.
+     * Appends HTML to the head
      *
      * @param  string $html
      * @return void
@@ -62,7 +63,7 @@ class Response implements Singleton
     }
 
     /**
-     * Appends HTML to the body.
+     * Appends HTML to the body
      *
      * @param  string $html
      * @return void
@@ -75,7 +76,7 @@ class Response implements Singleton
     }
 
     /**
-     * Adds a styleheet link.
+     * Adds a styleheet link
      *
      * @param  string $path
      * @return void
@@ -87,7 +88,7 @@ class Response implements Singleton
     }
 
     /**
-     * Adds a script.
+     * Adds a script
      *
      * @param  string $path
      * @return void
@@ -99,7 +100,7 @@ class Response implements Singleton
     }
 
     /**
-     * Sets the document's title.
+     * Sets the document's title
      *
      * @param  string $value
      * @return void
@@ -112,7 +113,7 @@ class Response implements Singleton
     }
 
     /**
-     * Redirect to a URL with a certain status code and exit script.
+     * Redirect to a URL with a certain status code and exit script
      *
      * @param string $url
      * @param int    $code

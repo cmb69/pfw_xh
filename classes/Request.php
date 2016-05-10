@@ -1,22 +1,22 @@
 <?php
 
 /**
- * The plugin framework.
+ * The current HTTP request
+ *
+ * You can access this {@see Singleton} ...
  */
+
 namespace Pfw;
 
 /**
- * Encapsulates the current HTTP request.
+ * The current HTTP request
  *
  * You can access this {@see Singleton} ...
- *
- * @copyright 2016 Christoph M. Becker
- * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
 class Request implements Singleton
 {
     /**
-     * Returns the single instance.
+     * Returns the single instance
      *
      * @return self
      */
@@ -31,14 +31,14 @@ class Request implements Singleton
     }
 
     /**
-     * Constructs an instance.
+     * Constructs an instance
      */
     private function __construct()
     {
     }
 
     /**
-     * Returns the current request method.
+     * Returns the current request method
      *
      * @return string
      */
@@ -48,7 +48,7 @@ class Request implements Singleton
     }
 
     /**
-     * Returns the current URL.
+     * Returns the current URL
      *
      * @return Url
      */

@@ -1,34 +1,53 @@
 <?php
 
 /**
- * The plugin framework.
- */
-namespace Pfw;
-
-/**
- * Internal URLs as value objects.
+ * Internal URLs as immutable value objects
  *
  * @copyright 2016 Christoph M. Becker
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
+
+namespace Pfw;
+
+/**
+ * Internal URLs as immutable value objects
+ *
+ * Dealing with URLs is a very important part of web applications in general,
+ * and CMSimple_XH plugins in particular. For CMSimple_XH plugins the relevant
+ * URL component is the query string. Traditionally, most plugins simply
+ * use string processing to assemble the desired query strings, what works
+ * fine as long as the URLs won't change. However, there's still the problem
+ * that CMSimple_XH has to stick with certain URL conventions, even if they
+ * turned out to be a problem; for instance, name a CMSimple_XH page "print".
+ *
+ * One of the main motivations for having a plugin framework was to abstract
+ * the URL handling as much as possible. This is realized by Plugin acting as
+ * router and the concept of different kinds of controllers, and hopefully
+ * sufficiently supported by this class. Manual construction of URLs via
+ * string manipulation is therefore highly discouraged. Instead use {@see with}
+ * and {@see without} or preferable where possible, {@see Controller::url()}.
+ * This is also important to not incidentially mess around with query
+ * parameters set and required by other plugins. Just set and remove your
+ * own parameters.
+ */
 class Url
 {
     /**
-     * The URL path.
+     * The URL path
      *
      * @var string
      */
     private $path;
 
     /**
-     * The URL params.
+     * The URL params
      *
      * @var array
      */
     private $params;
 
     /**
-     * Constructs an instance.
+     * Constructs an instance
      *
      * @param string $path
      * @param array  $params
@@ -40,7 +59,7 @@ class Url
     }
 
     /**
-     * Converts an instance to string.
+     * Converts an instance to string representing the relative URL
      *
      * @return string
      */
@@ -50,7 +69,7 @@ class Url
     }
 
     /**
-     * Returns the relative URL.
+     * Returns the relative URL
      *
      * @return string
      */
@@ -60,7 +79,7 @@ class Url
     }
 
     /**
-     * Returns the absolute URL.
+     * Returns the absolute URL
      *
      * @return string
      */
@@ -70,7 +89,7 @@ class Url
     }
 
     /**
-     * Returns the assembled query string.
+     * Returns the assembled query string
      *
      * @return string
      */
@@ -91,10 +110,11 @@ class Url
     }
 
     /**
-     * Returns a new URL with a certain param.
+     * Returns a new URL with a certain param
      *
-     * @param  string $param
-     * @param  string $value
+     * @param string $param
+     * @param string $value
+     * 
      * @return self
      */
     public function with($param, $value)
@@ -105,9 +125,10 @@ class Url
     }
 
     /**
-     * Returns a new URL without a certain param.
+     * Returns a new URL without a certain param
      *
-     * @param  string $param
+     * @param string $param
+     * 
      * @return self
      */
     public function without($param)

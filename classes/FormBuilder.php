@@ -1,12 +1,14 @@
 <?php
 
 /**
+ * Forms and their builders
+ *
  * @see <https://www.w3.org/TR/html5/forms.html>
+ *
+ * @copyright 2016 Christoph M. Becker
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
 
-/**
- * The plugin framework
- */
 namespace Pfw;
 
 /**
@@ -41,18 +43,47 @@ namespace Pfw;
  *          // return the form
  *          ->build();
  *
- * @link <http://martinfowler.com/bliki/ExpressionBuilder.html>
+ * @link http://martinfowler.com/bliki/ExpressionBuilder.html
+ *
+ * @todo Rename `render*` where appropriate. Actually, we usually add elements
+ *       or attributes.
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class FormBuilder
 {
+    /**
+     * The form to build
+     *
+     * @var Form
+     */
     private $form;
 
+    /**
+     * The language
+     *
+     * @var Lang
+     */
     private $lang;
 
+    /**
+     * The current (aka. most recently added) control
+     *
+     * Rules are always added to this control.
+     *
+     * @var Control
+     */
     private $currentControl;
 
+    /**
+     * Constructs an instance
+     *
+     * @param string $prefix
+     * @param Lang   $lang
+     * @param string $action
+     *
+     * @todo Use other parameters, e.g. `Control` and `Url`?
+     */
     public function __construct($prefix, Lang $lang, $action)
     {
         $this->form = new Form($prefix, $lang, $action);
@@ -66,7 +97,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#hidden-state-(type=hidden)>
+     * @link https://www.w3.org/TR/html5/forms.html#hidden-state-(type=hidden)
      */
     public function hidden($name)
     {
@@ -80,7 +111,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#text-(type=text)-state-and-search-state-(type=search)>
+     * @link https://www.w3.org/TR/html5/forms.html#text-(type=text)-state-and-search-state-(type=search)
      */
     public function text($name)
     {
@@ -94,7 +125,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#password-state-(type=password)>
+     * @link https://www.w3.org/TR/html5/forms.html#password-state-(type=password)
      */
     public function password($name)
     {
@@ -108,7 +139,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#number-state-(type=number)>
+     * @link https://www.w3.org/TR/html5/forms.html#number-state-(type=number)
      */
     public function number($name)
     {
@@ -122,7 +153,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#checkbox-state-(type=checkbox)>
+     * @link https://www.w3.org/TR/html5/forms.html#checkbox-state-(type=checkbox)
      */
     public function checkbox($name)
     {
@@ -136,7 +167,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-button-element>
+     * @link https://www.w3.org/TR/html5/forms.html#the-button-element
      */
     public function button($name)
     {
@@ -150,7 +181,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-select-element>
+     * @link https://www.w3.org/TR/html5/forms.html#the-select-element
      */
     public function select($name)
     {
@@ -164,7 +195,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-option-element>
+     * @link https://www.w3.org/TR/html5/forms.html#the-option-element
      */
     public function options()
     {
@@ -181,7 +212,7 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-textarea-element>
+     * @link https://www.w3.org/TR/html5/forms.html#the-textarea-element
      */
     public function textarea($name)
     {
@@ -195,26 +226,33 @@ class FormBuilder
      *
      * @return self
      *
-     * @link <http://www.cmsimple-xh.org/dev-doc/php/XH/tutorial_XH_CSRFProtection.cls.html>
+     * @link http://www.cmsimple-xh.org/dev-doc/php/XH/tutorial_XH_CSRFProtection.cls.html
      */
     public function csrf()
     {
         return $this->control(new CSRFControl($this->form, $this->lang, null));
     }
 
+    /**
+     * Adds a control
+     *
+     * @param Control $control
+     *
+     * @return self
+     */
     private function control(Control $control)
     {
         $this->currentControl = $control;
         $this->form->addControl($control);
         return $this;
     }
-    
+
     /**
      * Adds a minlength rule
      *
      * @param int $length
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-maxlength-and-minlength-attributes>
+     * @link https://www.w3.org/TR/html5/forms.html#the-maxlength-and-minlength-attributes
      */
     public function minlength($length)
     {
@@ -226,7 +264,7 @@ class FormBuilder
      *
      * @param int $length
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-maxlength-and-minlength-attributes>
+     * @link https://www.w3.org/TR/html5/forms.html#the-maxlength-and-minlength-attributes
      */
     public function maxlength($length)
     {
@@ -236,7 +274,7 @@ class FormBuilder
     /**
      * Adds a required rule
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-required-attribute>
+     * @link https://www.w3.org/TR/html5/forms.html#the-required-attribute
      */
     public function required()
     {
@@ -248,7 +286,7 @@ class FormBuilder
      *
      * @param string $pattern
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-pattern-attribute>
+     * @link https://www.w3.org/TR/html5/forms.html#the-pattern-attribute
      */
     public function pattern($pattern)
     {
@@ -260,7 +298,7 @@ class FormBuilder
      *
      * @param number $value
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-min-and-max-attributes>
+     * @link https://www.w3.org/TR/html5/forms.html#the-min-and-max-attributes
      */
     public function min($value)
     {
@@ -272,13 +310,20 @@ class FormBuilder
      *
      * @param number $value
      *
-     * @link <https://www.w3.org/TR/html5/forms.html#the-min-and-max-attributes>
+     * @link https://www.w3.org/TR/html5/forms.html#the-min-and-max-attributes
      */
     public function max($value)
     {
         return $this->rule(new MaxRule($this->currentControl, $this->lang, $value));
     }
 
+    /**
+     * Adds a rule
+     *
+     * @param Rule $rule
+     *
+     * @return self
+     */
     private function rule(Rule $rule)
     {
         $this->currentControl->addRule($rule);
@@ -327,21 +372,55 @@ class FormBuilder
  */
 class Form
 {
+    /**
+     * The prefix of all names
+     *
+     * @var string
+     */
     private $prefix;
 
+    /**
+     * The language
+     *
+     * @var Lang
+     */
     private $lang;
 
+    /**
+     * The form's action attribute value
+     *
+     * @var string
+     */
     private $action;
 
     /**
+     * The controls.
+     * 
      * @var array<$string, Control>
      */
     private $controls;
 
+    /**
+     * The form data
+     *
+     * @var string[]
+     */
     private $data;
 
+    /**
+     * Whether the form has already been validated
+     *
+     * @var bool
+     */
     private $validated;
 
+    /**
+     * Constructs an instance
+     *
+     * @param string $prefix
+     * @param Lang   $lang
+     * @param string $action
+     */
     public function __construct($prefix, Lang $lang, $action)
     {
         $this->prefix = $prefix;
@@ -352,11 +431,23 @@ class Form
         $this->validated = false;
     }
 
+    /**
+     * Returns the name prefix
+     *
+     * @return string
+     */
     public function prefix()
     {
         return $this->prefix;
     }
 
+    /**
+     * Adds a control
+     *
+     * @param Control $control
+     *
+     * @return void
+     */
     public function addControl(Control $control)
     {
         $this->controls[$control->name()] = $control;
@@ -365,6 +456,8 @@ class Form
     /**
      * Populates the form with data
      *
+     * @param string[] $data A map
+     *
      * @return void
      */
     public function populate(array $data)
@@ -372,6 +465,13 @@ class Form
         $this->data = $data;
     }
 
+    /**
+     * Returns the data (aka. value) of a certain control
+     *
+     * @param string $key Actually, the name of the control
+     *
+     * @return string
+     */
     public function data($key)
     {
         return isset($this->data[$key]) ? $this->data[$key] : null;
@@ -414,6 +514,11 @@ class Form
         return $this->data;
     }
     
+    /**
+     * Returns whether the form has already been validated
+     *
+     * @return bool
+     */
     public function validated()
     {
         return $this->validated;
@@ -441,21 +546,51 @@ class Form
 
 /**
  * Form controls
- *
- * @internal
  */
 abstract class Control
 {
+    /**
+     * The form
+     *
+     * @var Form
+     */
     protected $form;
 
+    /**
+     * The language
+     *
+     * @var Lang
+     */
     protected $lang;
 
+    /**
+     * The name without prefix
+     *
+     * @var string
+     */
     protected $name;
 
+    /**
+     * The rules to apply
+     *
+     * @var array<Rule>
+     */
     protected $rules;
 
+    /**
+     * The ID without prefix
+     *
+     * @var int
+     */
     private $id;
 
+    /**
+     * Constructs an instance
+     *
+     * @param Form   $form
+     * @param Lang   $lang
+     * @param string $name
+     */
     public function __construct(Form $form, Lang $lang, $name)
     {
         static $id = 0;
@@ -467,39 +602,100 @@ abstract class Control
         $this->id = ++$id;
     }
 
+    /**
+     * Returns the prefixed name
+     *
+     * @return string
+     */
     public function name()
     {
         return $this->form->prefix() . '_' . $this->name;
     }
 
+    /**
+     * Returns the current value
+     *
+     * @return string
+     *
+     * @todo Rename to `value`? That might be misleading wrt. `<textarea>`s.
+     *       `data` isn't more clarifying, though.
+     */
     protected function data()
     {
         return $this->form->data($this->name);
     }
 
+    /**
+     * Returns the prefixed ID
+     *
+     * @return string
+     */
     protected function id()
     {
         return 'pfw_control_' . $this->id;
     }
 
+    /**
+     * Adds a rule
+     *
+     * @param Rule $rule
+     *
+     * @return void
+     */
     public function addRule(Rule $rule)
     {
         $this->rules[] = $rule;
     }
 
+    /**
+     * Renders the control
+     *
+     * The control is rendered inside a `<div>` with a `<label>` and
+     * additional elements, where appropriate.
+     *
+     * @param \SimpleXMLElement $form
+     *
+     * @return void
+     */
     abstract public function render(\SimpleXMLElement $form);
 
+    /**
+     * Renders the control's label
+     *
+     * @param \SimpleXMLElement $form
+     *
+     * @return void
+     */
     protected function renderLabel(\SimpleXMLElement $form)
     {
         $label = $form->addChild('label', $this->label());
         $label->addAttribute('for', $this->id());
     }
 
+    /**
+     * Returns the label
+     *
+     * The label's text is taken from the language file by looking for the
+     * key `label_$name`.
+     *
+     * @return string
+     *
+     * @todo What if there's no such language string?
+     *       Have an empty label (as it's now), throw a notice for the
+     *       developer and/or use the control's name directly.
+     */
     public function label()
     {
         return $this->lang->singular("label_{$this->name}");
     }
 
+    /**
+     * Renders the attributes of all attached rules
+     *
+     * @param \SimpleXMLElement $control
+     *
+     * @return void
+     */
     protected function renderRuleAttributes(\SimpleXMLElement $control)
     {
         foreach ($this->rules as $rule) {
@@ -507,6 +703,11 @@ abstract class Control
         }
     }
 
+    /**
+     * Returns whether the current value of the control is valid
+     *
+     * @return bool
+     */
     public function validate()
     {
         foreach ($this->rules as $rule) {
@@ -517,6 +718,13 @@ abstract class Control
         return true;
     }
 
+    /**
+     * Renders the validation error messages, if any
+     *
+     * @param \SimpleXMLElement $field
+     *
+     * @return void
+     */
     public function renderValidationErrors(\SimpleXMLElement $field)
     {
         if ($this->form->validated()) {
@@ -531,11 +739,16 @@ abstract class Control
 
 /**
  * Simple input form controls
- *
- * @internal
  */
 class InputControl extends Control
 {
+    /**
+     * Renders the control
+     *
+     * @param \SimpleXMLElement $form
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $form)
     {
         $field = $form->addChild('div');
@@ -552,11 +765,16 @@ class InputControl extends Control
 
 /**
  * Text input form controls
- *
- * @internal
  */
 class TextControl extends InputControl
 {
+    /**
+     * Renders the type attribute of the input
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function renderTypeAttribute(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('type', 'text');
@@ -565,16 +783,30 @@ class TextControl extends InputControl
 
 /**
  * Hidden input form controls
- *
- * @internal
  */
 class HiddenControl extends InputControl
 {
+    /**
+     * Renders the type attribute of the input
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function renderTypeAttribute(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('type', 'hidden');
     }
 
+    /**
+     * Renders the control's label
+     *
+     * As hidden input controls don't need a label, we simply do nothing here.
+     *
+     * @param \SimpleXMLElement $form
+     *
+     * @return void
+     */
     public function renderLabel(\SimpleXMLElement $form)
     {
         // do nothing
@@ -583,11 +815,16 @@ class HiddenControl extends InputControl
 
 /**
  * Number input form controls
- *
- * @internal
  */
 class NumberControl extends InputControl
 {
+    /**
+     * Renders the type attribute of the input
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function renderTypeAttribute(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('type', 'number');
@@ -596,11 +833,16 @@ class NumberControl extends InputControl
 
 /**
  * Password input form controls
- *
- * @internal
  */
 class PasswordControl extends InputControl
 {
+    /**
+     * Renders the type attribute of the input
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function renderTypeAttribute(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('type', 'password');
@@ -609,11 +851,21 @@ class PasswordControl extends InputControl
 
 /**
  * Checkbox input form controls
- *
- * @internal
  */
 class CheckboxControl extends Control
 {
+    /**
+     * Renders the control
+     *
+     * Unchecked checkboxes are ignored by user agents when submitting a form,
+     * so we use the customary hack of having a hidden input with the same
+     * name just before the checkbox. Thanks for svasti to making me aware
+     * of this trick.
+     *
+     * @param Form $form
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $form)
     {
         $field = $form->addChild('div');
@@ -637,11 +889,16 @@ class CheckboxControl extends Control
 
 /**
  * Button form controls
- *
- * @internal
  */
 class ButtonControl extends Control
 {
+    /**
+     * Renders the control
+     *
+     * @param \SimpleXMLElement $form
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $form)
     {
         $field = $form->addChild('div');
@@ -653,18 +910,35 @@ class ButtonControl extends Control
 
 /**
  * Select form controls
- *
- * @internal
  */
 class SelectControl extends Control
 {
+    /**
+     * The options
+     *
+     * @var array<string>
+     */
     private $options = array();
 
+    /**
+     * Adds an option
+     *
+     * @param string $option
+     *
+     * @return void
+     */
     public function addOption($option)
     {
         $this->options[] = $option;
     }
 
+    /**
+     * Renders the control
+     * 
+     * @param \SimpleXMLElement $form
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $form)
     {
         $field = $form->addChild('div');
@@ -685,11 +959,16 @@ class SelectControl extends Control
 
 /**
  * Textarea form controls
- *
- * @internal
  */
 class TextareaControl extends Control
 {
+    /**
+     * Renders the control
+     * 
+     * @param \SimpleXMLElement $form
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $form)
     {
         $field = $form->addChild('div');
@@ -704,11 +983,16 @@ class TextareaControl extends Control
 
 /**
  * CSRF protection form controls
- *
- * @internal
  */
 class CsrfControl extends Control
 {
+    /**
+     * Renders the control
+     * 
+     * @param \SimpleXMLElement $form
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $form)
     {
         global $_XH_csrfProtection;
@@ -721,6 +1005,9 @@ class CsrfControl extends Control
         $input->addAttribute('value', $matches[1]);
     }
 
+    /**
+     * Returns whether the current value of the control is valid
+     */
     public function validate()
     {
         global $_XH_csrfProtection;
@@ -731,51 +1018,126 @@ class CsrfControl extends Control
 }
 
 /**
+ * A rule regarding validation
  *
- * @internal
+ * @todo Rename to `Constraint`? `Rule` is the name used by HTML5, though.
  */
 abstract class Rule
 {
+    /**
+     * The control the rule belongs to
+     *
+     * @var Control
+     */
     protected $control;
 
+    /**
+     * The language
+     *
+     * @var Lang
+     */
     protected $lang;
 
+    /**
+     * Constructs a rule
+     *
+     * @param Control $control
+     * @param Lang    $lang
+     */
     public function __construct(Control $control, Lang $lang)
     {
         $this->control = $control;
         $this->lang = $lang;
     }
 
+    /**
+     * Renders the rule as attribute of the given element
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     abstract public function render(\SimpleXMLElement $sxe);
     
+    /**
+     * Returns whether the rule is fulfilled
+     *
+     * @param float $value
+     *
+     * @return bool
+     */
     abstract public function validate($value);
 
+    /**
+     * Renders a validation error message
+     *
+     * @param float             $value The actual value
+     * @param \SimpleXMLElement $field
+     *
+     * @return void
+     */
     abstract public function renderValidationError($value, \SimpleXMLElement $field);
 }
 
 /**
- * @internal
+ * A rule stating a minimum length requirement
+ *
+ * @link https://www.w3.org/TR/html5/forms.html#the-maxlength-and-minlength-attributes
  */
 class MinlengthRule extends Rule
 {
+    /**
+     * The minimum length
+     *
+     * @var int
+     */
     private $length;
 
+    /**
+     * Constructs an instance
+     *
+     * @param Control $control
+     * @param Lang    $lang
+     * @param int     $length
+     */
     public function __construct(Control $control, Lang $lang, $length)
     {
         parent::__construct($control, $lang);
         $this->length = $length;
     }
 
+    /**
+     * Renders the rule as attribute of the given element
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('minlength', $this->length);
     }
 
+    /**
+     * Returns whether the rule is fulfilled
+     *
+     * @param float $value
+     *
+     * @return bool
+     */
     public function validate($value)
     {
         return utf8_strlen($value) >= $this->length;
     }
 
+    /**
+     * Renders a validation error message
+     *
+     * @param float             $value The actual value
+     * @param \SimpleXMLElement $field
+     *
+     * @return void
+     */
     public function renderValidationError($value, \SimpleXMLElement $field)
     {
         $text = $this->lang->singular('validation_minlength', $this->control->label(), $this->length);
@@ -785,28 +1147,64 @@ class MinlengthRule extends Rule
 }
 
 /**
- * @internal
+ * A rule stating a maximum length requirement
+ *
+ * @link https://www.w3.org/TR/html5/forms.html#the-maxlength-and-minlength-attributes
  */
 class MaxlengthRule extends Rule
 {
+    /**
+     * The maximum length
+     *
+     * @var int
+     */
     private $length;
 
+    /**
+     * Constructs an instance
+     *
+     * @param Control $control
+     * @param Lang    $lang
+     * @param int     $length
+     */
     public function __construct(Control $control, Lang $lang, $length)
     {
         parent::__construct($control, $lang);
         $this->length = $length;
     }
 
+    /**
+     * Renders the rule as attribute of the given element
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('maxlength', $this->length);
     }
 
+    /**
+     * Returns whether the rule is fulfilled
+     *
+     * @param float $value
+     *
+     * @return bool
+     */
     public function validate($value)
     {
         return utf8_strlen($value) <= $this->length;
     }
 
+    /**
+     * Renders a validation error message
+     *
+     * @param float             $value The actual value
+     * @param \SimpleXMLElement $field
+     *
+     * @return void
+     */
     public function renderValidationError($value, \SimpleXMLElement $field)
     {
         $text = $this->lang->singular('validation_maxlength', $this->control->label(), $this->length);
@@ -816,20 +1214,45 @@ class MaxlengthRule extends Rule
 }
 
 /**
- * @internal
+/**
+ * A rule stating a non-empty requirement
+ *
+ * @link https://www.w3.org/TR/html5/forms.html#the-required-attribute
  */
 class RequiredRule extends Rule
 {
+    /**
+     * Renders the rule as attribute of the given element
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('required', 'required');
     }
 
+    /**
+     * Returns whether the rule is fulfilled
+     *
+     * @param float $value
+     *
+     * @return bool
+     */
     public function validate($value)
     {
         return $value != '';
     }
 
+    /**
+     * Renders a validation error message
+     *
+     * @param float             $value The actual value
+     * @param \SimpleXMLElement $field
+     *
+     * @return void
+     */
     public function renderValidationError($value, \SimpleXMLElement $field)
     {
         $text = $this->lang->singular('validation_required', $this->control->label());
@@ -839,29 +1262,71 @@ class RequiredRule extends Rule
 }
 
 /**
- * @internal
+ * A rule stating a pattern requirement
+ *
+ * To be able to do client and server side validation of the value against
+ * the regular expression pattern, only the intersection of features
+ * supported by JavaScript and PCRE may be used.
+ *
+ * @todo Find out what this intersection is.
+ *
+ * @link https://www.w3.org/TR/html5/forms.html#the-pattern-attribute
  */
 class PatternRule extends Rule
 {
+    /**
+     * The regex pattern
+     *
+     * @var string
+     */
     private $pattern;
 
+    /**
+     * Constructs an instance
+     *
+     * @param Control $control
+     * @param Lang    $lang
+     * @param string  $pattern
+     */
     public function __construct(Control $control, Lang $lang, $pattern)
     {
         parent::__construct($control, $lang);
         $this->pattern = $pattern;
     }
 
+    /**
+     * Renders the rule as attribute of the given element
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('pattern', $this->pattern);
     }
 
+    /**
+     * Returns whether the rule is fulfilled
+     *
+     * @param float $value
+     *
+     * @return bool
+     */
     public function validate($value)
     {
         $pattern = "/^({$this->pattern})$/";
         return preg_match($pattern, $value);
     }
 
+    /**
+     * Renders a validation error message
+     *
+     * @param float             $value The actual value
+     * @param \SimpleXMLElement $field
+     *
+     * @return void
+     */
     public function renderValidationError($value, \SimpleXMLElement $field)
     {
         $text = $this->lang->singular('validation_pattern', $this->control->label(), $this->pattern);
@@ -871,28 +1336,64 @@ class PatternRule extends Rule
 }
 
 /**
- * @internal
+ * A rule stating a minimum value requirement
+ *
+ * @link https://www.w3.org/TR/html5/forms.html#the-min-and-max-attributes
  */
 class MinRule extends Rule
 {
+    /**
+     * The minimum value
+     *
+     * @var float
+     */
     private $value;
 
+    /**
+     * Constructs an instance
+     *
+     * @param Control $control
+     * @param Lang    $lang
+     * @param float   $value
+     */
     public function __construct(Control $control, Lang $lang, $value)
     {
         parent::__construct($control, $lang);
         $this->value = $value;
     }
 
+    /**
+     * Renders the rule as attribute of the given element
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('min', $this->value);
     }
     
+    /**
+     * Returns whether the rule is fulfilled
+     *
+     * @param float $value
+     *
+     * @return bool
+     */
     public function validate($value)
     {
         return $value >= $this->value;
     }
     
+    /**
+     * Renders a validation error message
+     *
+     * @param float             $value The actual value
+     * @param \SimpleXMLElement $field
+     *
+     * @return void
+     */
     public function renderValidationError($value, \SimpleXMLElement $field)
     {
         $text = $this->lang->singular('validation_min', $this->control->label(), $this->value);
@@ -902,28 +1403,65 @@ class MinRule extends Rule
 }
 
 /**
- * @internal
+/**
+ * A rule stating a maximum value requirement
+ *
+ * @link https://www.w3.org/TR/html5/forms.html#the-min-and-max-attributes
  */
 class MaxRule extends Rule
 {
+    /**
+     * The minimum value
+     *
+     * @var float
+     */
     private $value;
 
+    /**
+     * Constructs an instance
+     *
+     * @param Control $control
+     * @param Lang    $lang
+     * @param float   $value
+     */
     public function __construct(Control $control, Lang $lang, $value)
     {
         parent::__construct($control, $lang);
         $this->value = $value;
     }
 
+    /**
+     * Renders the rule as attribute of the given element
+     *
+     * @param \SimpleXMLElement $sxe
+     *
+     * @return void
+     */
     public function render(\SimpleXMLElement $sxe)
     {
         $sxe->addAttribute('max', $this->value);
     }
 
+    /**
+     * Returns whether the rule is fulfilled
+     *
+     * @param float $value
+     *
+     * @return bool
+     */
     public function validate($value)
     {
         return $value <= $this->value;
     }
 
+    /**
+     * Renders a validation error message
+     *
+     * @param float             $value The actual value
+     * @param \SimpleXMLElement $field
+     *
+     * @return void
+     */
     public function renderValidationError($value, \SimpleXMLElement $field)
     {
         $text = $this->lang->singular('validation_max', $this->control->label(), $this->value);

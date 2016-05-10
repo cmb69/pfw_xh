@@ -1,12 +1,16 @@
 <?php
 
 /**
- * The plugin framework.
+ * Access to the configuration of the plugins
+ *
+ * @copyright 2016 Christoph M. Becker
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
+
 namespace Pfw;
 
 /**
- * Access to the configuration of the plugins.
+ * Access to the configuration of the plugins
  *
  * For instance, to check whether the `autoload` option
  * of jQuery4CMSimple is enabled, do:
@@ -15,9 +19,6 @@ namespace Pfw;
  *      if ($config->get('autoload')) {
  *          ...
  *      }
- *
- * @copyright 2016 Christoph M. Becker
- * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
 class Config
 {

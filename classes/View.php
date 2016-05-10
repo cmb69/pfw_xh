@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Views
+ *
+ * @copyright 2016 Christoph M. Becker
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
+ */
+
 namespace Pfw;
 
 /**
@@ -7,9 +14,18 @@ namespace Pfw;
  *
  * Views are helper objects that render a given PHP template, i.e. `echo` it.
  * The template usually contains PHP tags, which preferably are constrained
- * to simple loops and `echo` statements. The output of all `echo` statements
- * is supposed to be properly escaped.
+ * to simple loops and `echo` statements. To keep logic out of the templates,
+ * the controller sets arbitrary view properties, which are available in the
+ * template as local variables. These properties/variables are not restricted
+ * to pure data, but may actually be callables, what supports the notion of
+ * views as helper objects, opposed to having to inherit from View for
+ * individual views.
  *
+ * While the template has access to all private class members, this is
+ * discouraged. Instead only the protected methods and the local variables
+ * should be used.
+ *
+ * The output of all `echo` statements is supposed to be properly escaped.
  * A simple convention would be to explicitly escape all local variables in the
  * template. This implies that local variables never contain HTML strings,
  * what appears to be a problem in some cases. We might need an HtmlString
@@ -21,16 +37,51 @@ namespace Pfw;
  */
 class View
 {
+    /**
+     * The controller
+     *
+     * @var Controller
+     */
     private $controller;
 
+    /**
+     * The template name, i.e. the basename of the file without extension
+     *
+     * @var string
+     */
     private $template;
 
+    /**
+     * The plugin
+     *
+     * @var Plugin
+     */
     private $plugin;
 
+    /**
+     * The language
+     *
+     * @var Lang
+     */
     private $lang;
 
+    /**
+     * The store for the supplied properties
+     *
+     * This are available in the template as local variables.
+     *
+     * @var array
+     *
+     * @see __set()
+     */
     private $data;
 
+    /**
+     * Constructs an instance
+     *
+     * @param Controller $controller
+     * @param string     $template
+     */
     public function __construct(Controller $controller, $template)
     {
         $this->controller = $controller;
@@ -40,11 +91,36 @@ class View
         $this->data = array();
     }
 
+    /**
+     * Supports setting view properties by clients
+     *
+     * This is some PHP magic which allows clients to treat as if they
+     * were subclasses particularly created for the given template.
+     *
+     * All properties are available in the template as local variables.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     */
     public function __set($name, $value)
     {
         $this->data[$name] = $value;
     }
 
+    /**
+     * Returns an escaped language string
+     *
+     * Additional paramters are processed in an sprintf style.
+     *
+     * @param string $key
+     * @param array  ...$args
+     *
+     * @return string
+     *
+     * @todo use vsprintf()
+     */
     protected function text($key)
     {
         $lang = $this->plugin->lang();
@@ -53,7 +129,20 @@ class View
         );
     }
 
-    protected function plural($key)
+    /**
+     * Returns an escaped pluralized language string
+     *
+     * Additional paramters are processed in an sprintf style.
+     *
+     * @param string $key
+     * @param int    $count
+     * @param array  ...$args
+     *
+     * @return string
+     *
+     * @todo use vsprintf()
+     */
+    protected function plural($key, $count)
     {
         $lang = $this->plugin->lang();
         return $this->escape(
@@ -61,12 +150,25 @@ class View
         );
     }
 
+    /**
+     * Renders the template.
+     *
+     * @return void
+     */
     public function render()
     {
         extract($this->data);
         include $this->templatePath();
     }
 
+    /**
+     * Returns the path of the template file
+     *
+     * If the template is not found in the current plugin view folder,
+     * we fall back to the view folder of the plugin framework.
+     *
+     * @return string
+     */
     private function templatePath()
     {
         $filename = $this->plugin->folder() . "views/{$this->template}.php";
@@ -76,6 +178,15 @@ class View
         return $this->plugin->folder() . "../pfw/views/{$this->template}.php";
     }
 
+    /**
+     * Returns a properly escaped string.
+     *
+     * This base implementation simply returns the string as is.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
     protected function escape($string)
     {
         return $string;
