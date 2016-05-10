@@ -146,6 +146,8 @@ class Plugin
         if (!defined('XH_ADM') || !XH_ADM) {
             return $this;
         }
+        $controllerNames = $this->getAdminControllerNames();
+        $this->registerAdditionalMenuItems($controllerNames);
         XH_registerStandardPluginMenuItems(false);
         if (!isset($GLOBALS[$this->name]) || $GLOBALS[$this->name] != 'true') {
             return $this;
@@ -159,6 +161,33 @@ class Plugin
             Response::instance()->append(ob_get_clean());
         }
         return $this;
+    }
+
+    private function getAdminControllerNames()
+    {
+        $names = array();
+        $classFolder = $this->folder() . 'classes/';
+        $dirIter = new \DirectoryIterator($classFolder);
+        foreach ($dirIter as $item) {
+            if (preg_match('/^(.+)AdminController.php$/', $item->getBasename(), $matches)) {
+                $names[] = $matches[1];
+            }
+        }
+        sort($matches);
+        return $names;
+    }
+
+    private function registerAdditionalMenuItems($controllerNames)
+    {
+        global $sn;
+
+        foreach ($controllerNames as $name) {
+            if (in_array($name, array('Config', 'Default', 'Language', 'Stylesheet'))) {
+                continue;
+            }
+            $url = "$sn?{$this->name}&admin=plugin_" . strtolower($name) . '&normal';
+            XH_registerPluginMenuItem($this->name, $this->lang["menu_" . strtolower($name)], $url);
+        }
     }
 
     private function adminController()
