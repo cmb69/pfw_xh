@@ -31,13 +31,17 @@ class View
     protected function text($key)
     {
         $lang = $this->plugin->lang();
-        return call_user_func_array(array($lang, 'singular'), func_get_args());
+        return $this->escape(
+            call_user_func_array(array($lang, 'singular'), func_get_args())
+        );
     }
 
     protected function plural($key)
     {
         $lang = $this->plugin->lang();
-        return call_user_func_array(array($lang, 'plural'), func_get_args());
+        return $this->escape(
+            call_user_func_array(array($lang, 'plural'), func_get_args())
+        );
     }
 
     public function render()
