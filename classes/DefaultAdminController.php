@@ -7,6 +7,7 @@ class DefaultAdminController extends AdminController
     public function handleDefault()
     {
         $view = $this->htmlView('info');
+        $view->title = ucfirst($this->plugin->name());
         $view->systemCheck = $this->systemCheck();
         $view->render();
     }

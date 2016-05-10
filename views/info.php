@@ -1,4 +1,4 @@
-<h1><?php echo $this->plugin->name()?></h1>
+<h1><?php echo $title?></h1>
 <img class="pfw_logo" src="<?php echo $this->plugin->folder(), $this->plugin->name(), '.png'?>"/>
 <p>Version <?php echo $this->plugin->version()?></p>
 <p>Copyright <?php echo $this->escape($this->plugin->copyright())?></p>
