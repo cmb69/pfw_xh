@@ -8,6 +8,9 @@ class DefaultAdminController extends AdminController
     {
         $view = $this->htmlView('info');
         $view->title = ucfirst($this->plugin->name());
+        $view->logo = $this->plugin->folder() . $this->plugin->name() . '.png';
+        $view->version = $this->plugin->version();
+        $view->copyright = $this->plugin->copyright();
         $view->systemCheck = $this->systemCheck();
         $view->render();
     }
@@ -20,7 +23,6 @@ class DefaultAdminController extends AdminController
                 ->phpVersion('5.3')
             ->mandatory()
                 ->noMagicQuotes()
-                ->xhVersion('1.6')
-            ->render();
+                ->xhVersion('1.6');
     }
 }

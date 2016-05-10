@@ -5,6 +5,9 @@
  */
 namespace Pfw;
 
+/**
+ * HTML views
+ */
 class HtmlView extends View
 {
     protected function escape($string)

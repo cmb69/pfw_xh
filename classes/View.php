@@ -2,6 +2,23 @@
 
 namespace Pfw;
 
+/**
+ * Views
+ *
+ * Views are helper objects that render a given PHP template, i.e. `echo` it.
+ * The template usually contains PHP tags, which preferably are constrained
+ * to simple loops and `echo` statements. The output of all `echo` statements
+ * is supposed to be properly escaped.
+ *
+ * A simple convention would be to explicitly escape all local variables in the
+ * template. This implies that local variables never contain HTML strings,
+ * what appears to be a problem in some cases. We might need an HtmlString
+ * class, which could be treated specially in `escape`.
+ *
+ * Anyhow, complex output such as the system check or forms are probably
+ * best passed to the view before they're rendered, and `render` is called
+ * in the template. Language strings are automatically escaped, anyway.
+ */
 class View
 {
     private $controller;
