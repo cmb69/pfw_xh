@@ -167,6 +167,9 @@ class Plugin
     {
         $names = array();
         $classFolder = $this->folder() . 'classes/';
+        if (!file_exists($classFolder)) {
+            return $names;
+        }
         $dirIter = new \DirectoryIterator($classFolder);
         foreach ($dirIter as $item) {
             if (preg_match('/^(.+)AdminController.php$/', $item->getBasename(), $matches)) {

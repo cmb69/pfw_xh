@@ -33,7 +33,7 @@ class DefaultAdminControllerTest extends \PHPUnit_Framework_TestCase
     {
         $this->subject->handleDefault();
         $this->expectOutputString(<<<EOT
-<h1>pfw</h1>
+<h1>Pfw</h1>
 <img class="pfw_logo" src="./pfw.png"/>
 <p>Version 0.1</p>
 <p>Copyright 2016 cmb</p>
