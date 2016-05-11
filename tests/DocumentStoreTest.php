@@ -6,6 +6,8 @@
 namespace Pfw;
 
 use org\bovigo\vfs\vfsStream;
+use Pfw\DataSource\DocumentStore;
+use Pfw\DataSource\Document;
 
 class DocumentStoreTest extends \PHPUnit_Framework_TestCase
 {

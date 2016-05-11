@@ -7,7 +7,7 @@
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
  */
 
-namespace Pfw;
+namespace Pfw\DataSource;
 
 /**
  * Documents for the DocumentStores
