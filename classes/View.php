@@ -119,7 +119,7 @@ class View
      *
      * @return string
      *
-     * @todo use vsprintf()
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function text($key)
     {
@@ -140,7 +140,7 @@ class View
      *
      * @return string
      *
-     * @todo use vsprintf()
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function plural($key, $count)
     {
