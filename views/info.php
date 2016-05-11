@@ -17,7 +17,7 @@ href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
 <?php echo $systemCheck->render()?>
 <h4><?php echo $this->text('userfunc_title')?></h4>
 <dl>
-<?php foreach ($this->plugin->functions() as $function):?>
+<?php foreach ($this->plugin->functions as $function):?>
     <dt><?php echo $this->escape($function)?></dt>
     <dd><?php echo $this->text("userfunc_$function")?></dd>
 <?php endforeach?>

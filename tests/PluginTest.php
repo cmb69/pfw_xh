@@ -35,25 +35,25 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
     public function testName()
     {
-        $this->assertEquals('pfw', $this->subject->name());
+        $this->assertEquals('pfw', $this->subject->name);
     }
 
     public function testFolder()
     {
-        $this->assertEquals('./plugins/pfw/', $this->subject->folder());
+        $this->assertEquals('./plugins/pfw/', $this->subject->folder);
     }
 
     public function testCopyright()
     {
         $copyright = '2016 Christoph M. Becker';
         $this->subject->copyright($copyright);
-        $this->assertEquals($copyright, $this->subject->copyright());
+        $this->assertEquals($copyright, $this->subject->copyright);
     }
 
     public function testVersion()
     {
         $this->subject->version('1.0');
-        $this->assertEquals('1.0', $this->subject->version());
+        $this->assertEquals('1.0', $this->subject->version);
     }
 
     public function testMenuShownInAdminMode()

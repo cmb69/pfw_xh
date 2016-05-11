@@ -87,7 +87,7 @@ class View
         $this->controller = $controller;
         $this->template = $template;
         $this->plugin = $controller->plugin();
-        $this->lang = $this->plugin->lang();
+        $this->lang = $this->plugin->lang;
         $this->data = array();
     }
 
@@ -123,9 +123,8 @@ class View
      */
     protected function text($key)
     {
-        $lang = $this->plugin->lang();
         return $this->escape(
-            call_user_func_array(array($lang, 'singular'), func_get_args())
+            call_user_func_array(array($this->lang, 'singular'), func_get_args())
         );
     }
 
@@ -144,9 +143,8 @@ class View
      */
     protected function plural($key, $count)
     {
-        $lang = $this->plugin->lang();
         return $this->escape(
-            call_user_func_array(array($lang, 'plural'), func_get_args())
+            call_user_func_array(array($this->lang, 'plural'), func_get_args())
         );
     }
 
@@ -171,11 +169,11 @@ class View
      */
     private function templatePath()
     {
-        $filename = $this->plugin->folder() . "views/{$this->template}.php";
+        $filename = $this->plugin->folder . "views/{$this->template}.php";
         if (file_exists($filename)) {
             return $filename;
         }
-        return $this->plugin->folder() . "../pfw/views/{$this->template}.php";
+        return $this->plugin->folder . "../pfw/views/{$this->template}.php";
     }
 
     /**

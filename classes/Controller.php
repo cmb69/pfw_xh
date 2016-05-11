@@ -67,8 +67,8 @@ abstract class Controller
         $this->plugin = $plugin;
         $this->request = Request::instance();
         $this->response = Response::instance();
-        $this->config = $plugin->config();
-        $this->lang = $plugin->lang();
+        $this->config = $plugin->config;
+        $this->lang = $plugin->lang;
     }
 
     /**

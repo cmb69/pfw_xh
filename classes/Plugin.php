@@ -12,6 +12,14 @@ namespace Pfw;
 /**
  * PFW plugins
  *
+ * @property-read Config   $config    The plugin configuration (read-only)
+ * @property-read string   $copyright The copyright of the plugin (read-only)
+ * @property-read string   $folder    The plugin folder (read-only)
+ * @property-read string[] $functions The names of the registered user functions (read-only)
+ * @property-read Lang     $lang      The plugin language (read-only)
+ * @property-read string   $name      The plugin name (read-only)
+ * @property-read string   $version   The plugin version (read-only)
+ *
  * @todo Check whether it's possible to actually run the plugin after
  *       plugin loading (seems to be an issue with plugin_admin_common).
  *       This would imply that admin() and func() would actually register
@@ -110,91 +118,54 @@ class Plugin
         $this->lang = Lang::instance($plugin);
         self::$instances[$plugin] = $this;
     }
-
+    
     /**
-     * Returns the plugin name
+     * Makes some properties available
      *
-     * @return string
+     * @param string $name
+     *
+     * @return mixed
      */
-    public function name()
+    public function __get($name)
     {
-        return $this->name;
+        switch ($name) {
+            case 'config':
+            case 'copyright':
+            case 'folder':
+            case 'functions':
+            case 'lang':
+            case 'name':
+            case 'version':
+                return $this->{$name};
+            default:
+                assert(false);
+        }
     }
 
     /**
-     * Returns the plugin folder
-     *
-     * @return string
-     */
-    public function folder()
-    {
-        return $this->folder;
-    }
-
-    /**
-     * Returns the plugin configuration
-     *
-     * @return Config
-     */
-    public function config()
-    {
-        return $this->config;
-    }
-
-    /**
-     * Returns the plugin language
-     *
-     * @return Lang
-     */
-    public function lang()
-    {
-        return $this->lang;
-    }
-
-    /**
-     * Returns or sets the copyright
+     * Sets the copyright
      *
      * @param string $copyright
      *
-     * @return string|void
-     *
-     * @todo Split into getter and setter.
+     * @return self
      */
-    public function copyright($copyright = null)
+    public function copyright($copyright)
     {
-        if (!isset($copyright)) {
-            return $this->copyright;
-        }
         $this->copyright = $copyright;
         return $this;
     }
 
     /**
-     * Returns or sets the plugin version
+     * Sets the plugin version
      *
      * @param string $version
      *
-     * @return string|void
-     *
-     * @todo Split into getter and setter.
+     * @return self
      */
-    public function version($version = null)
+    public function version($version)
     {
-        if (!isset($version)) {
-            return $this->version;
-        }
         $this->version = $version;
         return $this;
-    }
-
-    /**
-     * Returns all registered user function names
-     *
-     * @return string[]
-     */
-    public function functions()
-    {
-        return $this->functions;
     }
 
     /**
@@ -232,7 +203,7 @@ class Plugin
     private function getAdminControllerNames()
     {
         $names = array();
-        $classFolder = $this->folder() . 'classes/';
+        $classFolder = $this->folder . 'classes/';
         if (!file_exists($classFolder)) {
             return $names;
         }
