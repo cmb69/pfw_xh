@@ -7,7 +7,7 @@ Requirements
 ------------
 
 Pfw_XH is a plugin for CMSimple_XH ≥ 1.6.
-It requires PHP ≥ 5.3.0.
+It requires PHP ≥ 5.3.0 and the SimpleXML extension.
 
 Installation
 ------------

@@ -50,11 +50,11 @@ class DefaultAdminController extends AdminController
      */
     protected function systemCheck()
     {
-        $systemCheck = new SystemCheck();
+        $systemCheck = new SystemChecks\SystemCheck();
         return $systemCheck
             ->mandatory()
                 ->phpVersion('5.3')
-            ->mandatory()
+                ->extension('SimpleXML')
                 ->noMagicQuotes()
                 ->xhVersion('1.6');
     }
