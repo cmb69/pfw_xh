@@ -147,7 +147,7 @@ class Plugin
      *
      * @param string $copyright
      *
-     * @return self
+     * @return $this
      */
     public function copyright($copyright)
     {
@@ -160,7 +160,7 @@ class Plugin
      *
      * @param string $version
      *
-     * @return self
+     * @return $this
      */
     public function version($version)
     {
@@ -299,7 +299,7 @@ class Plugin
      * @param string $name
      * @param string $actionParam
      *
-     * @return self
+     * @return $this
      */
     public function func($name = null, $actionParam = null)
     {
@@ -342,7 +342,7 @@ EOS
      * @param string $name
      * @param string $actionParam
      *
-     * @return self
+     * @return $this
      */
     public function page($name, $actionParam = null)
     {

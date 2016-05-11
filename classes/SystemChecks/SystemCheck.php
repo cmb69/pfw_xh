@@ -53,7 +53,7 @@ class SystemCheck
     /**
      * Marks the following checks as mandatory
      *
-     * @return self
+     * @return $this
      */
     public function mandatory()
     {
@@ -64,7 +64,7 @@ class SystemCheck
     /**
      * Marks the following checks as optional
      *
-     * @return self
+     * @return $this
      */
     public function optional()
     {
@@ -77,7 +77,7 @@ class SystemCheck
      *
      * @param string $requiredVersion
      *
-     * @return self
+     * @return $this
      */
     public function phpVersion($requiredVersion)
     {
@@ -92,7 +92,7 @@ class SystemCheck
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      */
     public function extension($name)
     {
@@ -105,7 +105,7 @@ class SystemCheck
     /**
      * Checks that magic_quotes_runtime is off
      *
-     * @return self
+     * @return $this
      */
     public function noMagicQuotes()
     {
@@ -120,7 +120,7 @@ class SystemCheck
      *
      * @param string $requiredVersion
      *
-     * @return self
+     * @return $this
      */
     public function xhVersion($requiredVersion)
     {
@@ -135,7 +135,7 @@ class SystemCheck
      *
      * @param string $filename
      *
-     * @return self
+     * @return $this
      */
     public function writable($filename)
     {

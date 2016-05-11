@@ -95,7 +95,7 @@ class FormBuilder
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#hidden-state-(type=hidden)
      */
@@ -109,7 +109,7 @@ class FormBuilder
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#text-(type=text)-state-and-search-state-(type=search)
      */
@@ -123,7 +123,7 @@ class FormBuilder
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#password-state-(type=password)
      */
@@ -137,7 +137,7 @@ class FormBuilder
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#number-state-(type=number)
      */
@@ -151,7 +151,7 @@ class FormBuilder
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#checkbox-state-(type=checkbox)
      */
@@ -165,7 +165,7 @@ class FormBuilder
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#the-button-element
      */
@@ -179,7 +179,7 @@ class FormBuilder
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#the-select-element
      */
@@ -193,7 +193,7 @@ class FormBuilder
      *
      * @param string[] ...$options
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#the-option-element
      */
@@ -210,7 +210,7 @@ class FormBuilder
      *
      * @param string $name
      *
-     * @return self
+     * @return $this
      *
      * @link https://www.w3.org/TR/html5/forms.html#the-textarea-element
      */
@@ -224,7 +224,7 @@ class FormBuilder
      *
      * The CSRF token is automatically validated on form::validate().
      *
-     * @return self
+     * @return $this
      *
      * @link http://www.cmsimple-xh.org/dev-doc/php/XH/tutorial_XH_CSRFProtection.cls.html
      */
@@ -238,7 +238,7 @@ class FormBuilder
      *
      * @param Control $control
      *
-     * @return self
+     * @return $this
      */
     private function control(Control $control)
     {
@@ -322,7 +322,7 @@ class FormBuilder
      *
      * @param Rule $rule
      *
-     * @return self
+     * @return $this
      */
     private function rule(Rule $rule)
     {
