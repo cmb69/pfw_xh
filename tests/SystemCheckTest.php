@@ -6,6 +6,7 @@
 namespace Pfw;
 
 use org\bovigo\vfs\vfsStream;
+use Pfw\SystemChecks\SystemCheck;
 
 class SystemCheckTest extends \PHPUnit_Framework_TestCase
 {
