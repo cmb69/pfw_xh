@@ -190,7 +190,7 @@ class Plugin
     /**
      * Returns all registered user function names
      *
-     * @return array<string>
+     * @return string[]
      */
     public function functions()
     {

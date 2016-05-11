@@ -38,7 +38,7 @@ abstract class Control
     /**
      * The rules to apply
      *
-     * @var array<Rule>
+     * @var Rule[]
      */
     protected $rules;
 

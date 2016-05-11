@@ -46,7 +46,7 @@ class SystemCheck
     /**
      * The list of checks
      *
-     * @var array<Check>
+     * @var Check[]
      */
     private $checks;
 

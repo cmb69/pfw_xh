@@ -40,7 +40,7 @@ class DocumentStore
     /**
      * Returns the basenames of all existing documents
      *
-     * @return array<string>
+     * @return string[]
      */
     public function names()
     {

@@ -64,9 +64,9 @@ class Form
     private $action;
 
     /**
-     * The controls.
+     * The map from names to controls
      *
-     * @var array<$string, Control>
+     * @var Control[]
      */
     private $controls;
 

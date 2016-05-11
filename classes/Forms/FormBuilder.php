@@ -191,7 +191,7 @@ class FormBuilder
     /**
      * Adds option elements
      *
-     * @param array<string> ...$options
+     * @param string[] ...$options
      *
      * @return self
      *
