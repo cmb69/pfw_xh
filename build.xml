@@ -5,6 +5,7 @@
     <fileset id="php-sources" dir=".">
         <include name="index.php"/>
         <include name="classes/*.php"/>
+        <include name="classes/**/*.php"/>
     </fileset>
 
     <fileset id="tests" dir="tests">

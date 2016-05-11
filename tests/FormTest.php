@@ -16,7 +16,7 @@ class FormTest extends \PHPUnit_Framework_DOMTestCase
         $_XH_csrfProtection = $this->csrfMock;
         $langStub = $this->getMockBuilder('Pfw\\Lang')->disableOriginalConstructor()->getMock();
         $langStub->expects($this->any())->method('singular')->will($this->returnCallback('Pfw\\toUpper'));
-        $this->subject = (new FormBuilder('foo', $langStub, '/'))
+        $this->subject = (new Forms\FormBuilder('foo', $langStub, '/'))
             ->csrf()
             ->hidden('id')
             ->text('name')->required()->pattern('[a-z]*')
@@ -97,11 +97,6 @@ class CsrfProtection
     {
         // do nothing
     }
-}
-
-function utf8_strlen($string)
-{
-    return strlen($string);
 }
 
 function toUpper($string)
