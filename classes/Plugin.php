@@ -12,6 +12,35 @@ namespace Pfw;
 /**
  * PFW plugins
  *
+ * Every plugin that uses the plugin framework is supposed to register
+ * itself as plugin exactly once, what usually should be done in index.php.
+ * After that some simple properties (copyright, version) are supposed to be
+ * set, and the routing to the controllers is set up (admin, func, page).
+ * All that is preferable done using the fluent interface. For example:
+ *
+ *      \Pfw\Plugin::register()
+ *          ->copyright('2016 by me')
+ *          ->version('1.0')
+ *          // declare that the plugin has an administration area:
+ *          ->admin()
+ *          // declare that there is a user function
+ *          // with the name of the plugin:
+ *          ->func()
+ *          // declare that the plugins dynamically
+ *          //creates the page "dynamic":
+ *          ->page('dynamic')
+ *      ;
+ *
+ * The routing implies that there are respective controllers declared
+ * following a particular naming scheme. If a route is acknowledged by the
+ * plugin framework, it automagically creates the respective controller
+ * and calls the respective action method passing the necessary constructor
+ * and action method parameters. Routes are not exclusive, i.e. multiple
+ * routes can be acknowledged for a single plugin within a single request.
+ *
+ * The naming scheme is documented for the individual controller types,
+ * see {@see AdminController} and {@see FuncController}.
+ *
  * @property-read Config   $config    The plugin configuration (read-only)
  * @property-read string   $copyright The copyright of the plugin (read-only)
  * @property-read string   $folder    The plugin folder (read-only)
