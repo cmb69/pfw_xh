@@ -149,7 +149,7 @@ class SystemCheck
      * Adds a check
      *
      * @param Check $check
-     * 
+     *
      * @return void
      */
     private function addCheck(Check $check)
@@ -214,7 +214,7 @@ abstract class Check
 
     /**
      * Returns whether the check succeeded, i.e. the requirement is fulfilled
-     * 
+     *
      * @return bool
      */
     abstract protected function check();
@@ -417,7 +417,7 @@ class XhVersionCheck extends Check
 
     /**
      * Returns whether the check succeeded, i.e. the requirement is fulfilled
-     * 
+     *
      * @return bool
      */
     protected function check()
@@ -464,7 +464,7 @@ class WritabilityCheck extends Check
 
     /**
      * Returns whether the check succeeded, i.e. the requirement is fulfilled
-     * 
+     *
      * @return bool
      */
     protected function check()

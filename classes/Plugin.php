@@ -63,7 +63,7 @@ class Plugin
 
     /**
      * The names of the registered functions
-     * 
+     *
      * @var string[]
      */
     private $functions = array();
@@ -288,7 +288,7 @@ class Plugin
      * Returns the name of the requested action
      *
      * @return void
-     */ 
+     */
     private function adminAction()
     {
         global $action;

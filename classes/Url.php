@@ -114,7 +114,7 @@ class Url
      *
      * @param string $param
      * @param string $value
-     * 
+     *
      * @return self
      */
     public function with($param, $value)
@@ -128,7 +128,7 @@ class Url
      * Returns a new URL without a certain param
      *
      * @param string $param
-     * 
+     *
      * @return self
      */
     public function without($param)

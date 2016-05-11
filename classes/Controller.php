@@ -178,5 +178,5 @@ abstract class Controller
      *
      * @return Url
      */
-    abstract function url($action);
+    abstract public function url($action);
 }
