@@ -20,7 +20,7 @@ namespace Pfw;
  * This controller is supposed to be extended in other plugins,
  * if so desired.
  */
-class DefaultAdminController extends AdminController
+class DefaultAdminController extends Controller
 {
     /**
      * Handles the default action
@@ -29,7 +29,7 @@ class DefaultAdminController extends AdminController
      *
      * @return void
      */
-    public function handleDefault()
+    public function indexAction()
     {
         $view = $this->htmlView('info');
         $view->title = ucfirst($this->plugin->name);
