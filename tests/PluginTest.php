@@ -56,77 +56,12 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('1.0', $this->subject->version);
     }
 
-    public function testMenuShownInAdminMode()
-    {
-        $this->defineConstant('XH_ADM', true);
-        $this->registerStandardPluginMenuItemsMock->expects($this->once());
-        $this->subject->admin();
-    }
-
-    public function testMenuOnlyShownInAdminMode()
-    {
-        $this->defineConstant('XH_ADM', false);
-        $this->registerStandardPluginMenuItemsMock->expects($this->never());
-        $this->subject->admin();
-    }
-
-    public function testTestAdministration()
-    {
-        global $pfw, $admin, $action;
-
-        $this->defineConstant('XH_ADM', true);
-        $pfw = 'true';
-        $admin = 'plugin_test';
-        $action = 'plugin_test';
-        $this->subject->admin();
-        $this->assertEquals(1, TestAdminController::$testCount);
-    }
-
-    public function testDefaultFunction()
-    {
-        $this->subject->func();
-        $this->assertInternalType('callable', 'pfw');
-        runkit_function_remove('pfw');
-    }
-
-    public function testFuncDefinesFunction()
-    {
-        $this->subject->func('foo');
-        $this->assertInternalType('callable', 'pfw_foo');
-        runkit_function_remove('pfw_foo');
-    }
-
     public function testFuncReturnsSelf()
     {
         $this->assertSame(
             $this->subject,
-            $this->subject->func()
+            $this->subject->func('pfw_foo')
         );
-    }
-
-    public function testPageReturnsSelf()
-    {
-        //$this->assertSame(
-            //$this->subject, $this->subject->page('foo')
-        //);
-    }
-
-    public function testPageCallAction()
-    {
-        global $su;
-
-        $su = 'foo';
-        //$this->subject->page('foo');
-        //$this->assertEquals(1, DefaultFooPageController::$testCount);
-    }
-
-    private function defineConstant($name, $value)
-    {
-        if (defined($name)) {
-            runkit_constant_redefine($name, $value);
-        } else {
-            define($name, $value);
-        }
     }
 }
 

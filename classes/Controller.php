@@ -15,10 +15,19 @@ namespace Pfw;
  * All real functionality of plugins using the plugin framework is supposed
  * to be initiated in controllers, or more specificially in one of the
  * actions implemented by a controller. The routing, i.e. finding out
- * which action of which controller to call, is done by the {@see Plugin}.
+ * which action of which controller to call, is defined by the {@see Plugin}.
  */
 abstract class Controller
 {
+    /**
+     * The dispatcher without prefix
+     *
+     * Override this constant in your controllers to set the dispatcher.
+     *
+     * @see getDispatcher()
+     */
+    const DISPATCHER = null;
+
     /**
      * The plugin
      *
@@ -69,6 +78,24 @@ abstract class Controller
         $this->response = Response::instance();
         $this->config = $plugin->config;
         $this->lang = $plugin->lang;
+    }
+    
+    /**
+     * Returns the dispatcher
+     *
+     * The dispatcher denotes the query parameter which is used to determine
+     * the action to invoke. If the dispatcher is null, the index action
+     * will be invoked.
+     *
+     * @return string
+     */
+    public function getDispatcher()
+    {
+        if (static::DISPATCHER === null) {
+            return null;
+        } else {
+            return $this->plugin->name . '_' . static::DISPATCHER;
+        }
     }
 
     /**
@@ -178,5 +205,8 @@ abstract class Controller
      *
      * @return Url
      */
-    abstract public function url($action);
+    public function url($action)
+    {
+        return $this->request->url()->with($this->getDispatcher(), $action);
+    }
 }

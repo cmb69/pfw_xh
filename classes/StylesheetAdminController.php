@@ -12,10 +12,10 @@ namespace Pfw;
 /**
  * Stylesheet admin controllers
  *
- * This is just a small wrapper over the customary plugin loader facility
+ * Adapters for the customary plugin loader facility
  * to let the webmaster edit the plugin stylesheet in the back-end.
  */
-class StylesheetAdminController extends AdminController
+class StylesheetAdminController extends Controller
 {
     /**
      * The file edit object
@@ -26,32 +26,52 @@ class StylesheetAdminController extends AdminController
 
     /**
      * Constructs an instance
+     *
+     * @param Plugin $plugin
      */
-    public function __construct()
+    public function __construct(Plugin $plugin)
     {
         global $pth;
 
+        parent::__construct($plugin);
         include_once "{$pth['folder']['classes']}FileEdit.php";
         $this->fileEdit = new \XH_PluginTextFileEdit();
     }
 
     /**
-     * The default action handler
-     *
-     * @return void
+     * Returns the dispatcher
      */
-    public function handleText()
+    public function getDispatcher()
     {
-        echo $this->fileEdit->form();
+        return 'action';
     }
 
+// @codingStandardsIgnoreStart
     /**
-     * The save action handler
+     * The plugin_text action
      *
      * @return void
      */
-    public function handleTextsave()
+    public function plugin_textAction()
     {
+// @codingStandardsIgnoreEnd
+        $url = $this->url('plugin_textsave');
+        echo preg_replace(
+            '/<form([^>]+)action="([^"]*)"/',
+            "<form$1action=\"$url\"",
+            $this->fileEdit->form()
+        );
+    }
+
+// @codingStandardsIgnoreStart
+    /**
+     * The plugin_textsave action
+     *
+     * @return void
+     */
+    public function plugin_textsaveAction()
+    {
+// @codingStandardsIgnoreEnd
         echo $this->fileEdit->submit();
     }
 }

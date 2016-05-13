@@ -99,11 +99,39 @@ class Plugin
     private $lang;
 
     /**
-     * The names of the registered functions
+     * The general routes
      *
-     * @var string[]
+     * @var Route[]
      */
-    private $functions = array();
+    private $routes = array();
+
+    /**
+     * Whether we're inside an admin section
+     *
+     * @var bool
+     */
+    private $admin = false;
+
+    /**
+     * The admin routes
+     *
+     * @var Route[]
+     */
+    private $adminRoutes = array();
+
+    /**
+     * The map of user function names to their routes
+     *
+     * @var array
+     */
+    private $funcs = array();
+
+    /**
+     * The name of current user function
+     *
+     * @var string
+     */
+    private $currentFunc;
 
     /**
      * Registers the plugin
@@ -134,6 +162,21 @@ class Plugin
     }
 
     /**
+     * Runs all plugins
+     *
+     * This method is automagically called by the plugin framework
+     * after all plugins have been loaded.
+     *
+     * @return void
+     */
+    public static function runAll()
+    {
+        foreach (self::$instances as $instance) {
+            $instance->run();
+        }
+    }
+
+    /**
      * Constructs an instance
      */
     private function __construct()
@@ -161,7 +204,6 @@ class Plugin
             case 'config':
             case 'copyright':
             case 'folder':
-            case 'functions':
             case 'lang':
             case 'name':
             case 'version':
@@ -198,107 +240,62 @@ class Plugin
     }
 
     /**
-     * Declares that the plugin has an administration interface
+     * Returns the names of all registered user functions
      *
-     * @return void
+     * @return string[]
      */
-    public function admin()
+    public function getFuncNames()
     {
-        if (!defined('XH_ADM') || !XH_ADM) {
-            return $this;
-        }
-        $controllerNames = $this->getAdminControllerNames();
-        $this->registerAdditionalMenuItems($controllerNames);
-        XH_registerStandardPluginMenuItems(false);
-        if (!isset($GLOBALS[$this->name]) || $GLOBALS[$this->name] != 'true') {
-            return $this;
-        }
-        $controller = ucfirst($this->name) . '\\' . $this->adminController();
-        $action = $this->adminAction();
-        if (class_exists($controller)) {
-            $controller = new $controller($this);
-            ob_start();
-            $controller->{$action}();
-            Response::instance()->append(ob_get_clean());
+        return array_keys($this->funcs);
+    }
+
+    /**
+     * Returns the registered routes of a user function
+     *
+     * @param string $name A user function name
+     *
+     * @return Route[]
+     */
+    public function getFuncRoutes($name)
+    {
+        return $this->funcs[$name];
+    }
+
+    /**
+     * Registers a route
+     *
+     * Note that it's possible to register multiple routes even for the same
+     * section. That is necessary, if multiple actions of different controllers
+     * might have to be invoked for a single request.
+     *
+     * @param array $route A map of query patterns to controller names
+     *
+     * @return $this;
+     */
+    public function route(array $route)
+    {
+        if ($this->currentFunc) {
+            $this->funcs[$this->currentFunc][] = new Route($this, $route);
+        } elseif ($this->admin) {
+            $this->adminRoutes[] = new Route($this, $route);
+        } else {
+            $this->routes[] = new Route($this, $route);
         }
         return $this;
     }
 
     /**
-     * Returns the names of all available admin controllers
+     * Starts an admin section
      *
-     * @return string[]
+     * All following routes will be resolved only when we're in admin mode.
+     *
+     * @return $this
      */
-    private function getAdminControllerNames()
+    public function admin()
     {
-        $names = array();
-        $classFolder = $this->folder . 'classes/';
-        if (!file_exists($classFolder)) {
-            return $names;
-        }
-        $dirIter = new \DirectoryIterator($classFolder);
-        foreach ($dirIter as $item) {
-            if (preg_match('/^(.+)AdminController.php$/', $item->getBasename(), $matches)) {
-                $names[] = $matches[1];
-            }
-        }
-        sort($matches);
-        return $names;
-    }
-
-    /**
-     * Registers the additional (i.e. non-standard) menu items
-     *
-     * @param string[] $controllerNames
-     *
-     * @return void
-     */
-    private function registerAdditionalMenuItems($controllerNames)
-    {
-        global $sn;
-
-        foreach ($controllerNames as $name) {
-            if (in_array($name, array('Config', 'Default', 'Language', 'Stylesheet'))) {
-                continue;
-            }
-            $url = "$sn?{$this->name}&admin=plugin_" . strtolower($name) . '&normal';
-            XH_registerPluginMenuItem($this->name, $this->lang->get("menu_" . strtolower($name)), $url);
-        }
-    }
-
-    /**
-     * Returns the name of the requested admin controller
-     *
-     * @return string
-     */
-    private function adminController()
-    {
-        global $admin;
-
-        initvar('admin');
-        if (preg_match('/^plugin_(.*)$/', $admin, $matches)) {
-            $name = ucfirst($matches[1]);
-        } else {
-            $name = 'Default';
-        }
-        return "{$name}AdminController";
-    }
-
-    /**
-     * Returns the name of the requested action
-     *
-     * @return void
-     */
-    private function adminAction()
-    {
-        global $action;
-        
-        if (preg_match('/^plugin_(.*)$/', $action, $matches)) {
-            $name = ucfirst($matches[1]);
-        } else {
-            $name = 'Default';
-        }
-        return "handle$name";
+        $this->currentFunc = null;
+        $this->admin = true;
+        return $this;
     }
 
     /**
@@ -311,87 +308,70 @@ class Plugin
      * The even greater drawback with regard to the plugin framework
      * is that a plain PHP user function would have to create the
      * appropriate controller object passing the appropriate plugin
-     * as parameter, and to dynamically call the appropriate action
-     * passing the user function's arguments.
+     * as parameter, and to dynamically call the appropriate action.
      * All that is handled automagically by this method.
      * You still can write and use plain PHP functions as user functions,
-     * though this is not recommended.
+     * though this is not recommended, except maybe for extremly simple cases.
      *
-     * If the name is ommitted, the function name is just the plugin name,
-     * what is useful if there is only one user function or there is a
-     * main user function. Otherwise the function name is prefixed with
-     * the plugin name and an underscore. Example for a `foo` plugin:
-     *
-     *      func() // function foo() {}
-     *      func('bar') // function foo_bar() {}
+     * All following routes will be resolved only when the function is
+     * actually called (for instance, from the template).
      *
      * @param string $name
-     * @param string $actionParam
      *
      * @return $this
      */
-    public function func($name = null, $actionParam = null)
+    public function func($name)
     {
-        if (isset($name)) {
-            $functionName = "{$this->name}_$name";
-        } else {
-            $functionName = $this->name;
-            $name = 'default';
-        }
-        $this->functions[] = $functionName;
-        $controller = ucfirst($this->name) . '\\Default' . ucfirst($name) . 'FuncController';
-        eval(<<<EOS
-function $functionName()
-{
-    \$controller = new $controller(Pfw\\Plugin::instance('{$this->name}'), '$actionParam');
-    \$action = isset(\$_GET['$actionParam']) ? ucfirst(\$_GET['$actionParam']) : 'Default';
-    \$action = "handle\$action";
-    ob_start();
-    call_user_func_array(array(\$controller, \$action), func_get_args());
-    return ob_get_clean();
-}
-EOS
-        );
+        $this->admin = false;
+        $this->currentFunc = $name;
+        $this->funcs[$name] = array();
         return $this;
     }
 
     /**
-     * Registers a page controller
+     * Runs the plugin
      *
-     * A page controller is invoked when a certain page is requested.
-     * This is mostly useful for plugins that wish to handle certain non
-     * existing pages without the need for the user to actually create
-     * these pages.
+     * @return void
      *
-     * The check whether the page is requested uses either $name directly,
-     * or it uses the language string with key `page_$name` if it exists.
-     * In the latter case, the page name is treated as it where a normal
-     * page, i.e. it is HTML entitiy escaped and passed through `uenc`.
-     *
-     * @param string $name
-     * @param string $actionParam
-     *
-     * @return $this
+     * @todo How should we handle the plugin menu?
+     * @todo For better error reporting of user function calls in debug mode,
+     *       we might define the function with its proper parameters retrieved
+     *       via Reflection of the controllers constructor.
+     *       That might hurt performance, though, so we might want to make
+     *       this optional via a config option.
      */
-    public function page($name, $actionParam = null)
+    public function run()
     {
-        global $su;
+        global $plugin, $o;
 
-        if ($this->lang->get("page_$name")) {
-            $page = uenc(htmlspecialchars($this->lang->get("page_$name"), ENT_COMPAT, 'UTF-8'));
-        } else {
-            $page = $name;
-        }
-        if ($su != $page) {
-            return $this;
-        }
-        $controller = ucfirst($this->name) . '\\Default' . ucfirst($name) . 'PageController';
-        $action = isset($_GET[$actionParam]) ? ucfirst($_GET[$actionParam]) : 'Default';
-        $action = "handle$action";
-        $controller = new $controller($this, $actionParam);
+        $plugin = $this->name;
+        pluginFiles($this->name);
         ob_start();
-        $controller->{$action}();
-        Response::instance()->append(ob_get_clean());
-        return $this;
+        foreach ($this->routes as $route) {
+            $route->resolve();
+        }
+        $o .= ob_get_clean();
+        if (defined('XH_ADM') && XH_ADM) {
+            XH_registerStandardPluginMenuItems(false);
+            ob_start();
+            foreach ($this->adminRoutes as $route) {
+                $route->resolve();
+            }
+            $o .= ob_get_clean();
+        }
+        foreach (array_keys($this->funcs) as $name) {
+            eval(<<<EOS
+function $name()
+{
+    \$plugin = Pfw\Plugin::instance('$plugin');
+    ob_start();
+    foreach (\$plugin->getFuncRoutes('$name') as \$route) {
+        \$route->resolve(func_get_args());
+    }
+    return ob_get_clean();
+}
+EOS
+            );
+        }
     }
 }
