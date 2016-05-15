@@ -116,7 +116,7 @@ class Route
      *
      * @return Controller
      */
-    private function createController($controllerName, array $args = null)
+    protected function createController($controllerName, array $args = null)
     {
         if (isset($args)) {
             $params = $args;
