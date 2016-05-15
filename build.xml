@@ -49,10 +49,6 @@
         <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
 
-    <target name="markup" description="generates HTML help">
-        <exec command="pandoc help/help.md -t html5 --toc -s -o help/help.htm"/>
-    </target>
-
     <target name="doc" description="generates API documentation">
         <mkdir dir="docs/api"/>
         <phpdoc2 title="Pfw_XH" destdir="docs/api" defaultPackageName="Pfw"
@@ -85,8 +81,12 @@
                 <exclude name="pax_global_header"/>
                 <exclude name="phpcompatinfo.json"/>
                 <exclude name="tests/**"/>
+                <exclude name="**.md"/>
             </fileset>
         </move>
+        <exec command="pandoc export/help/help.md -t html5 --toc -s -o dist/help/help.htm"/>
+        <exec command="pandoc export/docs/faq.md -t html5 --toc -s -o dist/docs/faq.htm"/>
+        <exec command="pandoc export/docs/phonebook.md -t html5 --toc -s -o dist/docs/phonebook.htm"/>
         <delete dir="export"/>
         <copy file="dist/config/config.php"
               tofile="dist/config/defaultconfig.php"/>
