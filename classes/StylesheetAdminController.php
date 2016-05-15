@@ -18,24 +18,16 @@ namespace Pfw;
 class StylesheetAdminController extends Controller
 {
     /**
-     * The file edit object
+     * Returns an appropriate file edit object
      *
-     * @var \XH_PluginTextFileEdit
+     * @return \XH_PluginTextFileEdit
      */
-    private $fileEdit;
-
-    /**
-     * Constructs an instance
-     *
-     * @param Plugin $plugin
-     */
-    public function __construct(Plugin $plugin)
+    protected function createFileEdit()
     {
         global $pth;
 
-        parent::__construct($plugin);
         include_once "{$pth['folder']['classes']}FileEdit.php";
-        $this->fileEdit = new \XH_PluginTextFileEdit();
+        return new \XH_PluginTextFileEdit();
     }
 
     /**
@@ -59,7 +51,7 @@ class StylesheetAdminController extends Controller
         echo preg_replace(
             '/<form([^>]+)action="([^"]*)"/',
             "<form$1action=\"$url\"",
-            $this->fileEdit->form()
+            $this->createFileEdit()->form()
         );
     }
 
@@ -72,6 +64,6 @@ class StylesheetAdminController extends Controller
     public function plugin_textsaveAction()
     {
 // @codingStandardsIgnoreEnd
-        echo $this->fileEdit->submit();
+        echo $this->createFileEdit()->submit();
     }
 }

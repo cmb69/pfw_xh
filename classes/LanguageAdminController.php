@@ -18,26 +18,18 @@ namespace Pfw;
 class LanguageAdminController extends Controller
 {
     /**
-     * The file edit object
+     * Returns an appropriate file edit object
      *
-     * @var \XH_PluginLanguageFileEdit
+     * @return \XH_PluginConfigFileEdit
      */
-    private $fileEdit;
-
-    /**
-     * Constructs an instance
-     *
-     * @param Plugin $plugin
-     */
-    public function __construct(Plugin $plugin)
+    protected function createFileEdit()
     {
         global $pth;
 
-        parent::__construct($plugin);
         include_once "{$pth['folder']['classes']}FileEdit.php";
-        $this->fileEdit = new \XH_PluginLanguageFileEdit();
+        return new \XH_PluginLanguageFileEdit();
     }
-
+    
     /**
      * Returns the dispatcher
      */
@@ -59,7 +51,7 @@ class LanguageAdminController extends Controller
         echo preg_replace(
             '/<form([^>]+)action="([^"]*)"/',
             "<form$1action=\"$url\"",
-            $this->fileEdit->form()
+            $this->createFileEdit()->form()
         );
     }
 
@@ -72,6 +64,6 @@ class LanguageAdminController extends Controller
     public function plugin_saveAction()
     {
 // @codingStandardsIgnoreEnd
-        echo $this->fileEdit->submit();
+        echo $this->createFileEdit()->submit();
     }
 }

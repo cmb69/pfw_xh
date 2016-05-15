@@ -18,24 +18,16 @@ namespace Pfw;
 class ConfigAdminController extends Controller
 {
     /**
-     * The file edit object
+     * Returns an appropriate file edit object
      *
-     * @var \XH_PluginConfigFileEdit
+     * @return \XH_PluginConfigFileEdit
      */
-    private $fileEdit;
-
-    /**
-     * Constructs an instance
-     *
-     * @param Plugin $plugin
-     */
-    public function __construct(Plugin $plugin)
+    protected function createFileEdit()
     {
         global $pth;
 
-        parent::__construct($plugin);
         include_once "{$pth['folder']['classes']}FileEdit.php";
-        $this->fileEdit = new \XH_PluginConfigFileEdit();
+        return new \XH_PluginConfigFileEdit();
     }
     
     /**
@@ -59,7 +51,7 @@ class ConfigAdminController extends Controller
         echo preg_replace(
             '/<form([^>]+)action="([^"]*)"/',
             "<form$1action=\"$url\"",
-            $this->fileEdit->form()
+            $this->createFileEdit()->form()
         );
     }
 
@@ -72,6 +64,6 @@ class ConfigAdminController extends Controller
     public function plugin_saveAction()
     {
 // @codingStandardsIgnoreEnd
-        echo $this->fileEdit->submit();
+        echo $this->createFileEdit()->submit();
     }
 }
