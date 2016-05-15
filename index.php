@@ -9,7 +9,7 @@
 
 Pfw\Plugin::register()
     ->copyright('2016 Christoph M. Becker')
-    ->version('0.1')
+    ->version('@PFW_VERSION@')
     ->admin()
         ->route(array(
             'pfw&admin=plugin_config' => 'Pfw\\ConfigAdminController',
