@@ -52,6 +52,23 @@
     <target name="doc" description="generates API documentation">
         <exec command="doxygen Doxyfile"/>
     </target>
+    
+    <target name="phar" description="builds the PFW phar">
+        <fail unless="version" message="version is not defined!"/>
+        <pharpackage destfile="./pfw.phar" basedir="." clistub="pfw.php">
+        <fileset dir=".">
+            <include name="pfw.php"/>
+        </fileset>
+        <metadata>
+            <element name="version" value="${version}"/>
+            <element name="authors">
+                <element name="Christoph M. Becker">
+                    <element name="e-mail" value="cmbecker69@gmx.de"/>
+                </element>
+            </element>
+        </metadata>
+        </pharpackage>
+    </target>
 
     <target name="build" depends="doc" description="builds a distributable ZIP archive">
         <fail unless="version" message="version is not defined!"/>
