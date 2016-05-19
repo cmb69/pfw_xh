@@ -20,7 +20,7 @@ along with this program (see LICENSE).
 
 Further information can be found in the help/ directory.
 
-Christoph M. Becker
-Rheinstr. 147
-55424 Münster-Sarmsheim
+Christoph M. Becker  
+Rheinstr. 147  
+55424 Münster-Sarmsheim  
 mailto:cmbecker69@gmx.de
