@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<phpunit bootstrap="tests/bootstrap.php">
+<phpunit bootstrap="tests/unit/bootstrap.php">
     <testsuites>
         <testsuite name="coverage">
-            <directory>tests</directory>
+            <directory>tests/unit</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">classes</directory>
+            <exclude>
+                <file>classes/DefaultAdminController.php</file>
+                <file>classes/ConfigAdminController.php</file>
+                <file>classes/LanguageAdminController.php</file>
+                <file>classes/StylesheetAdminController.php</file>
+            </exclude>
         </whitelist>
     </filter>
     <logging>
