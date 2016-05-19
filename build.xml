@@ -79,7 +79,6 @@
                 <exclude name="pax_global_header"/>
                 <exclude name="phpcompatinfo.json"/>
                 <exclude name="tests/**"/>
-                <exclude name="**.md"/>
             </fileset>
         </move>
         <delete dir="export"/>
