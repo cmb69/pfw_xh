@@ -363,7 +363,7 @@ class Plugin
             $route->resolve();
         }
         $o .= ob_get_clean();
-        if (defined('XH_ADM') && XH_ADM) {
+        if (User::isAdmin()) {
             XH_registerStandardPluginMenuItems(false);
             ob_start();
             foreach ($this->adminRoutes as $route) {
