@@ -1,41 +1,49 @@
 <?php
 
-/**
- * Documents for the DocumentStores
- *
- * @copyright 2016 Christoph M. Becker
- * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
- */
+/*
+Copyright 2016 Christoph M. Becker
+ 
+This file is part of Pfw_XH.
+
+Pfw_XH is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pfw_XH is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 namespace Pfw\DataSource;
 
 /**
- * Documents for the DocumentStores
+ * Documents for the DocumentStores.
  *
  * A document carries some arbitrary text contents and a token.
  * The contents is what is read from and written to the file.
  * The token is some opaque value specifying the version of the file contents.
  *
- * @see \Pfw\DocumentStore
+ * @see DocumentStore
  */
 class Document
 {
     /**
-     * The contents
-     *
-     * @var string
+.     * @var string
      */
     private $contents;
 
     /**
-     * The token
-     *
      * @var mixed
      */
     private $token;
 
     /**
-     * Constructor
+     * Constructs an instance.
      *
      * @param string $contents
      * @param mixed  $token
@@ -47,7 +55,7 @@ class Document
     }
 
     /**
-     * Returns the token
+     * Returns the token.
      *
      * @return mixed
      */
@@ -57,7 +65,7 @@ class Document
     }
 
     /**
-     * Returns the contents
+     * Returns the contents.
      *
      * @return string
      */

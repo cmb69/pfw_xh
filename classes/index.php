@@ -19,22 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace Pfw\Forms;
-
 /**
- * Password input form controls
+ * The plugin framework.
  */
-class PasswordControl extends InputControl
-{
-    /**
-     * Renders the type attribute of the input
-     *
-     * @param \SimpleXMLElement $sxe
-     *
-     * @return void
-     */
-    public function renderTypeAttribute(\SimpleXMLElement $sxe)
-    {
-        $sxe->addAttribute('type', 'password');
-    }
-}
+namespace Pfw;

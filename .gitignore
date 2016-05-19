@@ -1,7 +1,6 @@
 /vendor
 /.komodotools
-/docs/api
 /pfw.komodoproject
-/phpDocumentor.phar
 /tests/coverage
 .vscode
+doxygen

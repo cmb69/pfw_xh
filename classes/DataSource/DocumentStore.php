@@ -1,34 +1,44 @@
 <?php
 
-/**
- * Document stores
- *
- * @copyright 2016 Christoph M. Becker
- * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GPLv3
- */
+/*
+Copyright 2016 Christoph M. Becker
+ 
+This file is part of Pfw_XH.
+
+Pfw_XH is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pfw_XH is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 namespace Pfw\DataSource;
 
 /**
- * Document stores
+ * %Document stores
  *
- * {@see Document Documents} are stored as files with arbitrary content.
+ * Documents are stored as files with arbitrary content.
  * Pessimistic online concurrency is automatically handled via file locking.
  * Optimistic offline concurrency is handled via tokens.
  *
- * @see \Pfw\Document
+ * @see Document
  */
 class DocumentStore
 {
     /**
-     * The folder
-     *
      * @var string
      */
     private $folder;
 
     /**
-     * Constructor
+     * Constructs an instance.
      *
      * @param string $folder
      */
@@ -38,7 +48,7 @@ class DocumentStore
     }
 
     /**
-     * Returns the basenames of all existing documents
+     * Returns the basenames of all existing documents.
      *
      * @return string[]
      */
@@ -54,7 +64,7 @@ class DocumentStore
     }
 
     /**
-     * Returns whether a document exists
+     * Returns whether a document exists.
      *
      * @param string $basename
      *
@@ -66,12 +76,12 @@ class DocumentStore
     }
 
     /**
-     * Inserts a new document
+     * Inserts a new document and returns whether that succeeded.
      *
      * @param string   $basename
      * @param Document $document
      *
-     * @return bool Whether that succeed
+     * @return bool
      */
     public function insert($basename, Document $document)
     {
@@ -88,11 +98,11 @@ class DocumentStore
     }
 
     /**
-     * Finds a document
+     * Returns a document from the store, or false on failure.
      *
      * @param string $basename
      *
-     * @return Document|false The found document; false on failure
+     * @return Document
      */
     public function find($basename)
     {
@@ -109,12 +119,12 @@ class DocumentStore
     }
 
     /**
-     * Updates a document
+     * Updates a document and returns whether that succeeded.
      *
      * @param string   $basename
      * @param Document $document
      *
-     * @return bool Whether that succeed
+     * @return bool
      */
     public function update($basename, Document $document)
     {
@@ -136,12 +146,12 @@ class DocumentStore
     }
 
     /**
-     * Deletes a document
+     * Deletes a document and returns whether that succeeded.
      *
      * @param string   $basename
      * @param Document $document
      *
-     * @return bool Whether that succeed
+     * @return bool
      */
     public function delete($basename, Document $document)
     {
@@ -161,10 +171,7 @@ class DocumentStore
     }
 
     /**
-     * Returns the filename
-     *
      * @param string $basename
-     *
      * @return string
      */
     private function filenameOf($basename)

@@ -1,8 +1,10 @@
 Frequently asked Questions
 ==========================
 
-Why should I use a plugin framework when there's already the plugin loader?
----------------------------------------------------------------------------
+[TOC]
+
+Why should I use a plugin framework when there's already the plugin loader? {#why}
+===========================================================================
 
 On a first glance the plugin loader seems to do an excellent job with regard to
 simplifying plugin development, as it offers nearly fully automatic
@@ -28,16 +30,16 @@ avoid the need to reinvent the wheel. Most, if not all, of such services are
 already available in highly diverse implementations, but most likely none of
 these implementations caters to the special demands of CMSimple_XH.
 
-Do I have to learn object-oriented programming to use the plugin framework?
----------------------------------------------------------------------------
+Do I have to learn object-oriented programming to use the plugin framework? {#oop}
+===========================================================================
 
 No. However, you need to understand the basics of objects and classes, and also
 some not directly related concepts, such as namespaces. That should be
 sufficient to use the plugin framework, even though your functions would have to
 be methods on the appropriate controller.
 
-Where are the models?
----------------------
+Where are the models? {#models}
+=====================
 
 These are left for the plugin developer. Most other MVC frameworks offer at
 least some model abstraction, but usually this is some variant of the Active
