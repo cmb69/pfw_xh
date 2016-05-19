@@ -82,7 +82,6 @@
                 <exclude name="**.md"/>
             </fileset>
         </move>
-        <exec command="pandoc export/help/help.md -t html5 --toc -s -o dist/help/help.htm"/>
         <delete dir="export"/>
         <copy file="dist/config/config.php"
               tofile="dist/config/defaultconfig.php"/>
