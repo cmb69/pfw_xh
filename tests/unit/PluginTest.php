@@ -21,9 +21,6 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw;
 
-require_once '../../cmsimple/functions.php';
-require_once '../../cmsimple/adminfuncs.php';
-
 class PluginTest extends \PHPUnit_Framework_TestCase
 {
     private $registerStandardPluginMenuItemsMock;
