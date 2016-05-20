@@ -86,8 +86,8 @@ abstract class Controller
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
-        $this->request = Request::instance();
-        $this->response = Response::instance();
+        $this->request = System::request();
+        $this->response = System::response();
         $this->config = $plugin->config;
         $this->lang = $plugin->lang;
     }

@@ -24,30 +24,8 @@ namespace Pfw;
 /**
  * The current HTTP response.
  */
-class Response implements Singleton
+class Response
 {
-    /**
-     * Returns the single instance
-     *
-     * @return self
-     */
-    public static function instance()
-    {
-        static $instance;
-
-        if (!isset($instance)) {
-            $instance = new self();
-        }
-        return $instance;
-    }
-
-    /**
-     * Constructs a new instance
-     */
-    private function __construct()
-    {
-    }
-
     /**
      * Appends HTML to the contents area
      *

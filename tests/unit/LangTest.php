@@ -49,36 +49,36 @@ class LangTest extends \PHPUnit_Framework_TestCase
 
     public function testExistingOption()
     {
-        $subject = Lang::instance('other');
+        $subject = System::lang('other');
         $this->assertEquals('foo', $subject->get('option1'));
     }
 
     public function testInheritedOption()
     {
-        $subject = Lang::instance('other');
+        $subject = System::lang('other');
         $this->assertEquals('baz', $subject->get('option3'));
     }
 
     public function testNonExistingOption()
     {
-        $subject = Lang::instance('other');
+        $subject = System::lang('other');
         $this->assertNull($subject->get('option4'));
     }
 
     public function testNonExistingPlugin()
     {
-        $this->assertNull(Lang::instance('foo'));
+        $this->assertNull(System::lang('foo'));
     }
 
     public function testSingular()
     {
-        $subject = Lang::instance('other');
+        $subject = System::lang('other');
         $this->assertEquals('barfoo', $subject->singular('option2', 'foo'));
     }
     
     public function testPlural()
     {
-        $subject = Lang::instance('other');
+        $subject = System::lang('other');
         $this->assertEquals('0 foos are too few', $subject->plural('option4', 0, 'too few'));
         $this->assertEquals('1 foo is fine', $subject->plural('option4', 1, 'fine'));
         $this->assertEquals('3 foos are okay', $subject->plural('option4', 3, 'okay'));

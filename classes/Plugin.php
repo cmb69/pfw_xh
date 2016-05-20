@@ -69,13 +69,6 @@ namespace Pfw;
 class Plugin
 {
     /**
-     * The plugin instances
-     *
-     * @var Plugin[]
-     */
-    private static $instances = array();
-
-    /**
      * The plugin name
      *
      * @var string
@@ -146,61 +139,17 @@ class Plugin
     private $currentFunc;
 
     /**
-     * Registers the plugin
-     *
-     * Actually, this is just an alias for `new Plugin()`,
-     * but we prefer the more explicit naming (we actually want
-     * the user to register a plugin instead of creating it)
-     * and we work around the PHP 5.3 limitation regarding
-     * class member access on instantiation.
-     *
-     * @return self
-     */
-    public static function register()
-    {
-        return new self();
-    }
-
-    /**
-     * Returns a plugin instance
-     *
-     * @param string $name
-     *
-     * @return Plugin
-     */
-    public static function instance($name)
-    {
-        return self::$instances[$name];
-    }
-
-    /**
-     * Runs all plugins
-     *
-     * This method is automagically called by the plugin framework
-     * after all plugins have been loaded.
-     *
-     * @return void
-     */
-    public static function runAll()
-    {
-        foreach (self::$instances as $instance) {
-            $instance->run();
-        }
-    }
-
-    /**
      * Constructs an instance
      */
-    private function __construct()
+    public function __construct()
     {
         global $plugin, $pth;
 
         $this->name = $plugin;
         $this->folder = $pth['folder']['plugin'];
         $this->version = 'UNKNOWN';
-        $this->config = Config::instance($plugin);
-        $this->lang = Lang::instance($plugin);
-        self::$instances[$plugin] = $this;
+        $this->config = System::config($plugin);
+        $this->lang = System::lang($plugin);
     }
     
     /**
@@ -375,7 +324,7 @@ class Plugin
             eval(<<<EOS
 function $name()
 {
-    \$plugin = Pfw\Plugin::instance('$plugin');
+    \$plugin = Pfw\System::plugin('$plugin');
     ob_start();
     foreach (\$plugin->getFuncRoutes('$name') as \$route) {
         \$route->resolve(func_get_args());

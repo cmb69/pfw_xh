@@ -22,36 +22,12 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 namespace Pfw;
 
 /**
- * The current HTTP request
- *
- * You can access this {@see Singleton} ...
+ * The current HTTP request.
  */
-class Request implements Singleton
+class Request
 {
     /**
-     * Returns the single instance
-     *
-     * @return self
-     */
-    public static function instance()
-    {
-        static $instance;
-
-        if (!isset($instance)) {
-            $instance = new self();
-        }
-        return $instance;
-    }
-
-    /**
-     * Constructs an instance
-     */
-    private function __construct()
-    {
-    }
-
-    /**
-     * Returns the current request method
+     * Returns the current request method.
      *
      * @return string
      */
@@ -61,7 +37,7 @@ class Request implements Singleton
     }
 
     /**
-     * Returns the current URL
+     * Returns the current URL.
      *
      * @return Url
      */

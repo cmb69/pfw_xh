@@ -50,7 +50,7 @@ abstract class Check
     public function __construct($isMandatory)
     {
         $this->isMandatory = $isMandatory;
-        $this->lang = Lang::instance('pfw');
+        $this->lang = \Pfw\System::lang('pfw');
     }
 
     /**

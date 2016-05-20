@@ -34,26 +34,6 @@ class Lang
     private $plugin;
 
     /**
-     * Returns an instance
-     *
-     * @param  string $plugin
-     * @return self
-     */
-    public static function instance($plugin)
-    {
-        global $plugin_tx;
-        static $instances = array();
-
-        if (!isset($plugin_tx[$plugin])) {
-            return null; // or exception or simply allow that?
-        }
-        if (!isset($instances[$plugin])) {
-            $instances[$plugin] = new self($plugin);
-        }
-        return $instances[$plugin];
-    }
-
-    /**
      * Constructs an instance
      *
      * @param string $plugin

@@ -27,13 +27,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->subject = Response::instance();
-    }
-
-    public function testConstructorIsPrivate()
-    {
-        $class = new \ReflectionClass('Pfw\\Response');
-        $this->assertTrue($class->getConstructor()->isPrivate());
+        $this->subject = System::response();
     }
 
     public function testAppend()

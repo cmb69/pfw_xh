@@ -29,7 +29,6 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->plugin = Plugin::register();
         $this->plugin = $this->getMockBuilder('Pfw\\Plugin')
             ->disableOriginalConstructor()
             ->getMock();

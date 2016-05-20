@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-Pfw\Plugin::register()
+Pfw\System::registerPlugin()
     ->copyright('2016 Christoph M. Becker')
     ->version('@PFW_VERSION@')
     ->admin()
@@ -31,4 +31,4 @@ Pfw\Plugin::register()
         ))
 ;
 
-XH_afterPluginLoading('Pfw\\Plugin::runAll');
+XH_afterPluginLoading('Pfw\\System::runPlugins');

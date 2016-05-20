@@ -39,32 +39,26 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testConstructorIsPrivate()
-    {
-        $class = new \ReflectionClass('Pfw\\Config');
-        $this->assertTrue($class->getConstructor()->isPrivate());
-    }
-
     public function testExistingOption()
     {
-        $subject = Config::instance('other');
+        $subject = System::config('other');
         $this->assertEquals('foo', $subject->get('option1'));
     }
     
     public function testInheritedOption()
     {
-        $subject = Config::instance('other');
+        $subject = System::config('other');
         $this->assertEquals('baz', $subject->get('option3'));
     }
 
     public function testNonExistingOption()
     {
-        $subject = Config::instance('other');
+        $subject = System::config('other');
         $this->assertNull($subject->get('option4'));
     }
 
     public function testNonExistingPlugin()
     {
-        $this->assertNull(Config::instance('foo'));
+        $this->assertNull(System::config('foo'));
     }
 }

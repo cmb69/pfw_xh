@@ -23,15 +23,9 @@ namespace Pfw;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConstructorIsPrivate()
-    {
-        $class = new \ReflectionClass('Pfw\\Request');
-        $this->assertTrue($class->getConstructor()->isPrivate());
-    }
-
     public function testMethod()
     {
-        $subject = Request::instance();
+        $subject = System::request();
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $this->assertEquals($_SERVER['REQUEST_METHOD'], $subject->method());
     }
@@ -42,7 +36,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
         $sn = '/xh/';
         $_SERVER['QUERY_STRING'] = 'foo=bar';
-        $subject = Request::instance();
+        $subject = System::request();
         $this->assertEquals('/xh/?foo=bar', $subject->url());
     }
 }

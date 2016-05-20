@@ -42,31 +42,11 @@ class Config
     private $plugin;
 
     /**
-     * Returns an instance.
-     *
-     * @param  string $plugin
-     * @return self
-     */
-    public static function instance($plugin)
-    {
-        global $plugin_cf;
-        static $instances = array();
-
-        if (!isset($plugin_cf[$plugin])) {
-            return null; // or exception or simply allow that?
-        }
-        if (!isset($instances[$plugin])) {
-            $instances[$plugin] = new self($plugin);
-        }
-        return $instances[$plugin];
-    }
-
-    /**
      * Constructs an instance.
      *
      * @param string $plugin
      */
-    private function __construct($plugin)
+    public function __construct($plugin)
     {
         $this->plugin = $plugin;
     }

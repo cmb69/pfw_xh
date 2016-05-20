@@ -40,7 +40,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
                 'plugin' => './plugins/pfw/'
             )
         );
-        $this->subject = Plugin::register();
+        $this->subject = System::registerPlugin();
         $this->registerStandardPluginMenuItemsMock = new \PHPUnit_Extensions_MockFunction(
             'XH_registerStandardPluginMenuItems',
             $this->subject
@@ -49,7 +49,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
     public function testRegistersTheInstance()
     {
-        $this->assertSame($this->subject, Plugin::instance('pfw'));
+        $this->assertSame($this->subject, System::plugin('pfw'));
     }
 
     public function testName()
