@@ -105,6 +105,7 @@
                 <exclude name="pax_global_header"/>
                 <exclude name="pfw.php"/>
                 <exclude name="phpcompatinfo.json"/>
+                <exclude name="sdk/**"/>
                 <exclude name="tests/**"/>
             </fileset>
         </move>
