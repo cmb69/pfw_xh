@@ -23,10 +23,12 @@ namespace Pfw;
 
 class PluginTest extends \PHPUnit_Framework_TestCase
 {
-    private $registerStandardPluginMenuItemsMock;
-
     private $subject;
 
+    private $registerStandardPluginMenuItemsMock;
+
+    private $pluginFiles;
+    
     public function setUp()
     {
         global $plugin, $pth;
@@ -40,6 +42,10 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $this->subject = System::registerPlugin();
         $this->registerStandardPluginMenuItemsMock = new \PHPUnit_Extensions_MockFunction(
             'XH_registerStandardPluginMenuItems',
+            $this->subject
+        );
+        $this->pluginFiles = new \PHPUnit_Extensions_MockFunction(
+            'pluginFiles',
             $this->subject
         );
     }
@@ -71,6 +77,30 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $this->subject->version('1.0');
         $this->assertEquals('1.0', $this->subject->version);
     }
+    
+    public function testRouteReturnsSelf()
+    {
+        $this->assertSame(
+            $this->subject,
+            $this->subject->route(array('foo' => 'Bar'))
+        );
+    }
+    
+    public function testAdminReturnsSelf()
+    {
+        $this->assertSame(
+            $this->subject,
+            $this->subject->admin()
+        );
+    }
+
+    public function testAdminRouteReturnsSelf()
+    {
+        $this->assertSame(
+            $this->subject,
+            $this->subject->admin()->route(array('foo' => 'Bar'))
+        );
+    }
 
     public function testFuncReturnsSelf()
     {
@@ -78,6 +108,47 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             $this->subject,
             $this->subject->func('pfw_foo')
         );
+    }
+    
+    public function testRegistersFunctionNames()
+    {
+        $this->subject->func('pfw_foo');
+        $this->assertEquals(
+            array('pfw_foo'),
+            $this->subject->getFuncNames()
+        );
+    }
+    
+    public function testRegistersFunctionRoutes()
+    {
+        $this->subject->func('pfw_foo')->route(array(
+            '?foo' => 'Bar'
+        ));
+        $routes = $this->subject->getFuncRoutes('pfw_foo'); 
+        $this->assertContainsOnlyInstancesOf('Pfw\\Route', $routes);
+        $this->assertCount(1, $routes);
+    }
+    
+    public function testRunDefinesFunction()
+    {
+        $this->subject->func('pfw_foo')->run();
+        $this->assertTrue(function_exists('pfw_foo'));
+    }
+    
+    public function testRunInAdminModeCallRegisterMenuItems()
+    {
+        $this->defineConstant('XH_ADM', true);
+        $this->registerStandardPluginMenuItemsMock->expects($this->once());
+        $this->subject->admin()->run();
+    }
+    
+    private function defineConstant($name, $value)
+    {
+        if (defined($name)) {
+            runkit_constant_redefine($name, $value);
+        } else {
+            define($name, $value);
+        }
     }
 }
 
