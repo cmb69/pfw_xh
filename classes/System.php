@@ -25,7 +25,7 @@ namespace Pfw;
  * The system.
  *
  * This static class represents the global state of the plugin framework.
- * It is not meant to be used directly from plugins, except for 
+ * It is not meant to be used directly from plugins, except for
  * System::registerPlugin(), which has to be called once for each plugin.
  */
 class System
