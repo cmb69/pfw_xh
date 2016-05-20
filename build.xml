@@ -69,8 +69,8 @@
         </metadata>
         </pharpackage>
     </target>
-
-    <target name="build" depends="doc" description="builds a distributable ZIP archive">
+    
+    <target name="build-plugin">
         <fail unless="version" message="version is not defined!"/>
         <exec command="git archive -o export.tar HEAD" checkreturn="true"/>
         <untar file="export.tar" todir="export"/>
@@ -94,6 +94,7 @@
                 <exclude name="docs/**"/>
                 <exclude name="Doxyfile"/>
                 <exclude name="pax_global_header"/>
+                <exclude name="pfw.php"/>
                 <exclude name="phpcompatinfo.json"/>
                 <exclude name="tests/**"/>
             </fileset>
@@ -102,11 +103,23 @@
         <copy file="dist/config/config.php"
               tofile="dist/config/defaultconfig.php"/>
         <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
-        <exec command="hhc doxygen/html/index.hhp"/>
-        <copy file="doxygen/html/index.chm" tofile="dist/help/api.chm"/>
         <zip destfile="Pfw_XH-${version}.zip" basedir="dist"
              prefix="pfw/"/>
         <delete dir="dist"/>
     </target>
+    
+    <target name="build-sdk" depends="doc, phar">
+        <fail unless="version" message="version is not defined!"/>
+        <mkdir dir="dist"/>
+        <copy file="pfw.phar" tofile="dist/pfw.phar"/>
+        <exec command="hhc doxygen/html/index.hhp"/>
+        <copy file="doxygen/html/index.chm" tofile="dist/api.chm"/>
+        <zip destfile="Pfw_XH-SDK-${version}.zip" basedir="dist"
+             prefix="pfw-sdk/"/>
+        <delete dir="dist"/>
+    </target>
+
+    <target name="build" depends="build-plugin, build-sdk"
+         description="builds the distributable ZIP archives"/>
 
 </project>
