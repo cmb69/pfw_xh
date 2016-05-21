@@ -25,7 +25,7 @@ class RequestTest extends TestCase
 {
     public function testMethod()
     {
-        $subject = System::request();
+        $subject = new Request();
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $this->assertEquals($_SERVER['REQUEST_METHOD'], $subject->method());
     }
@@ -36,7 +36,7 @@ class RequestTest extends TestCase
 
         $sn = '/xh/';
         $_SERVER['QUERY_STRING'] = 'foo=bar';
-        $subject = System::request();
+        $subject = new Request();
         $this->assertEquals('/xh/?foo=bar', $subject->url());
     }
 }

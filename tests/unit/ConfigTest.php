@@ -41,25 +41,19 @@ class ConfigTest extends TestCase
 
     public function testExistingOption()
     {
-        $subject = System::config('other');
+        $subject = new Config('other');
         $this->assertEquals('foo', $subject->get('option1'));
     }
     
     public function testInheritedOption()
     {
-        $subject = System::config('other');
+        $subject = new Config('other');
         $this->assertEquals('baz', $subject->get('option3'));
     }
 
     public function testNonExistingOption()
     {
-        $subject = System::config('other');
+        $subject = new Config('other');
         $this->assertNull($subject->get('option4'));
-    }
-
-    public function testNonExistingPlugin()
-    {
-        $this->markTestSkipped();
-        $this->assertNull(System::config('foo'));
     }
 }

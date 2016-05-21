@@ -42,7 +42,7 @@ class PluginTest extends TestCase
                 'plugin_help' => 'foo'
             )
         );
-        $this->subject = System::registerPlugin();
+        $this->subject = new Plugin();
         $this->registerPluginMenuItemMock = new \PHPUnit_Extensions_MockFunction(
             'XH_registerPluginMenuItem',
             $this->subject
@@ -51,11 +51,6 @@ class PluginTest extends TestCase
             'pluginFiles',
             $this->subject
         );
-    }
-
-    public function testRegistersTheInstance()
-    {
-        $this->assertSame($this->subject, System::plugin('pfw'));
     }
 
     public function testName()

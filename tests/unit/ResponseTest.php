@@ -27,7 +27,7 @@ class ResponseTest extends TestCase
 
     public function setUp()
     {
-        $this->subject = System::response();
+        $this->subject = new Response();
     }
 
     public function testAppend()
