@@ -1,5 +1,10 @@
 <?php
 
+$plugin_tx['pfw']['menu_config']="Config";
+$plugin_tx['pfw']['menu_language']="Language";
+$plugin_tx['pfw']['menu_stylesheet']="Stylesheet";
+$plugin_tx['pfw']['menu_help']="Help";
+
 $plugin_tx['pfw']['syscheck_title']="System Check";
 $plugin_tx['pfw']['syscheck_phpversion']="PHP Version &ge; %s";
 $plugin_tx['pfw']['syscheck_extension']="PHP extension %s loaded";
