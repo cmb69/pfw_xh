@@ -6,3 +6,4 @@ require_once '../../cmsimple/adminfuncs.php';
 require_once '../../cmsimple/classes/FileEdit.php';
 require_once './classes/required_classes.php';
 require_once './tests/unit/TestCase.php';
+require_once './tests/unit/FakeSystem.php';

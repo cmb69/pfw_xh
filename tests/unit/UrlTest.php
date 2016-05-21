@@ -25,6 +25,7 @@ class UrlTest extends TestCase
 {
     public function setUp()
     {
+        parent::setUp();
         $this->defineConstant('CMSIMPLE_URL', 'http://localhost/xh/');
     }
 

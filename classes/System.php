@@ -77,7 +77,7 @@ class System
     /**
      * This method is for testing purposes only, so that System can be faked.
      */
-    public static function loadInstance(System $system)
+    public static function loadInstance($system)
     {
         self::$instance = $system;
     }

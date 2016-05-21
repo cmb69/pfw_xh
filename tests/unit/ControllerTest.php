@@ -27,18 +27,11 @@ class ControllerTest extends TestCase
 
     private $subject;
     
-    private $systemRequest;
-    
-    private $request;
-    
-    private $systemResponse;
-    
-    private $response;
-
     public function setUp()
     {
         global $pth;
 
+        parent::setUp();
         $pth = array(
             'folder' => array(
                 'content' => 'foo/bar/baz/'
@@ -47,34 +40,12 @@ class ControllerTest extends TestCase
         $this->plugin = $this->getMockBuilder('Pfw\\Plugin')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->systemRequest = new \PHPUnit_Extensions_MockStaticMethod(
-            'Pfw\\System::request',
-            null
-        );
-        $this->request = $this->getMockBuilder('Pfw\\Request')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->systemRequest->expects($this->any())->willReturn($this->request);
-        $this->systemResponse = new \PHPUnit_Extensions_MockStaticMethod(
-            'Pfw\\System::response',
-            null
-        );
-        $this->response = $this->getMockBuilder('Pfw\\Response')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->systemResponse->expects($this->any())->willReturn($this->response);
         $this->subject = $this->getMockBuilder('Pfw\\Controller')
             ->setConstructorArgs([$this->plugin])
             ->setMethods(null)
             ->getMock();
     }
     
-    public function tearDown()
-    {
-        $this->systemRequest->restore();
-        $this->systemResponse->restore();
-    }
-
     public function testDispatcher()
     {
         $this->assertNull($this->subject->getDispatcher());
@@ -92,7 +63,7 @@ class ControllerTest extends TestCase
     
     public function testSeeOtherCallsRedirect()
     {
-        $this->response->expects($this->any())->method('redirect')
+        System::response()->expects($this->any())->method('redirect')
             ->with($this->equalTo('absolute'), $this->equalTo(303));
         $url = $this->getMockBuilder('Pfw\\Url')
             ->disableOriginalConstructor()
@@ -107,7 +78,7 @@ class ControllerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $url->expects($this->once())->method('with');
-        $this->request->expects($this->once())->method('url')->willReturn($url);
+        System::request()->expects($this->once())->method('url')->willReturn($url);
         $this->subject->url('foo');
     }
 }

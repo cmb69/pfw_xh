@@ -39,6 +39,7 @@ class DocumentStoreTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->root = vfsStream::setup();
         $this->subject = new DocumentStore($this->root->url());
         $this->filename = $this->root->url() . '/' . self::BASENAME;

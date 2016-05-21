@@ -33,6 +33,7 @@ class PluginTest extends TestCase
     {
         global $plugin, $pth;
 
+        parent::setUp();
         $plugin = 'pfw';
         $pth = array(
             'folder' => array(

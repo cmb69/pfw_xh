@@ -41,6 +41,7 @@ EOT;
     
     public function setUp()
     {
+        parent::setUp();
         $this->root = vfsStream::setup();
         $viewFolder = $this->root->url() . DIRECTORY_SEPARATOR . 'views';
         mkdir($viewFolder);

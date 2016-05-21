@@ -29,6 +29,7 @@ class RouteTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->plugin = $this->getMockBuilder('Pfw\\Plugin')
             ->disableOriginalConstructor()
             ->getMock();

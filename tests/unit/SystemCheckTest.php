@@ -30,21 +30,8 @@ class SystemCheckTest extends TestCase
 
     public function setUp()
     {
-        global $plugin_tx;
-
+        parent::setUp();
         define('CMSIMPLE_XH_VERSION', 'CMSimple_XH 1.6.7');
-        $plugin_tx = array(
-            'pfw' => array(
-                'syscheck_phpversion' => 'PHP Version &ge; %s',
-                'syscheck_extension' => 'PHP extension %s loaded',
-                'syscheck_magic_quotes' => 'Magic quotes runtime off',
-                'syscheck_xhversion' => 'CMSimple_XH version &ge; %s',
-                'syscheck_writable' => '%s is writable',
-                'syscheck_alt_success' => 'Success',
-                'syscheck_alt_warning' => 'Warning',
-                'syscheck_alt_failure' => 'Failure',
-            )
-        );
         $this->root = vfsStream::setup();
     }
 
@@ -62,11 +49,11 @@ class SystemCheckTest extends TestCase
             ->optional()
                 ->writable($this->root->url());
         $this->assertEquals(
-            '<p><img src="core/css/failure.png" alt="Failure"> PHP Version &ge; 15.3</p>
-<p><img src="core/css/warning.png" alt="Warning"> PHP extension foo loaded</p>
-<p><img src="core/css/success.png" alt="Success"> Magic quotes runtime off</p>
-<p><img src="core/css/success.png" alt="Success"> CMSimple_XH version &ge; 1.6</p>
-<p><img src="core/css/success.png" alt="Success"> vfs://root is writable</p>',
+            '<p><img src="core/css/failure.png" alt=""> </p>
+<p><img src="core/css/warning.png" alt=""> </p>
+<p><img src="core/css/success.png" alt=""> </p>
+<p><img src="core/css/success.png" alt=""> </p>
+<p><img src="core/css/success.png" alt=""> </p>',
             $subject->render()
         );
     }

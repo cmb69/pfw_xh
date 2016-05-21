@@ -31,6 +31,7 @@ class FormTest extends TestCase
     {
         global $_XH_csrfProtection;
 
+        parent::setUp();
         $this->csrfMock = $this->getMockBuilder('Pfw\\CsrfProtection')->disableOriginalConstructor()->setMethods(['check'])->getMock();
         $_XH_csrfProtection = $this->csrfMock;
         $langStub = $this->getMockBuilder('Pfw\\Lang')->disableOriginalConstructor()->getMock();

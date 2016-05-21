@@ -27,6 +27,7 @@ class ConfigTest extends TestCase
     {
         global $plugin_cf;
 
+        parent::setUp();
         $plugin_cf = array(
             'other' => array(
                 'option1' => 'foo',

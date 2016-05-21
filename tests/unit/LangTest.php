@@ -27,6 +27,7 @@ class LangTest extends TestCase
     {
         global $plugin_tx;
 
+        parent::setUp();
         $plugin_tx = array(
             'other' => array(
                 'option1' => 'foo',

@@ -21,8 +21,25 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw;
 
+/**
+ * Test cases for the plugin framework.
+ *
+ * To make sure we never test with the real system, TestCase::setUp()
+ * creates a fake system for us. That implies that we have to call 
+ * parent::setUp() if we override setUp() in individual test cases.
+ */
 class TestCase extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        System::loadInstance(new FakeSystem());
+    }
+    
+    /**
+     * Defines a constant.
+     *
+     * If the constant is already defined, it is redefined to the new value.
+     */
     protected function defineConstant($name, $value)
     {
         if (defined($name)) {
