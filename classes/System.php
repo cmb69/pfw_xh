@@ -95,10 +95,10 @@ class System
      */
     protected function request()
     {
-        if (!isset(self::instance()->request)) {
-            self::instance()->request = new Request();
+        if (!isset($this->request)) {
+            $this->request = new Request();
         }
-        return self::instance()->request;
+        return $this->request;
     }
     
     /**
@@ -106,10 +106,10 @@ class System
      */
     protected function response()
     {
-        if (!isset(self::instance()->response)) {
-            self::instance()->response = new Response();
+        if (!isset($this->response)) {
+            $this->response = new Response();
         }
-        return self::instance()->response;
+        return $this->response;
     }
     
     /**
@@ -121,7 +121,7 @@ class System
      */
     protected function plugin($name)
     {
-        return self::instance()->plugins[$name];
+        return $this->plugins[$name];
     }
     
     /**
@@ -132,10 +132,10 @@ class System
      */
     protected function config($pluginName)
     {
-        if (!isset(self::instance()->configs[$pluginName])) {
-            self::instance()->configs[$pluginName] = new Config($pluginName);
+        if (!isset($this->configs[$pluginName])) {
+            $this->configs[$pluginName] = new Config($pluginName);
         }
-        return self::instance()->configs[$pluginName];
+        return $this->configs[$pluginName];
     }
     
      /**
@@ -146,10 +146,10 @@ class System
      */
     protected function lang($pluginName)
     {
-        if (!isset(self::instance()->langs[$pluginName])) {
-            self::instance()->langs[$pluginName] = new Lang($pluginName);
+        if (!isset($this->langs[$pluginName])) {
+            $this->langs[$pluginName] = new Lang($pluginName);
         }
-        return self::instance()->langs[$pluginName];
+        return $this->langs[$pluginName];
     }
 
      /**
@@ -160,7 +160,7 @@ class System
     protected function registerPlugin()
     {
         $plugin = new Plugin();
-        self::instance()->plugins[$plugin->name] = $plugin;
+        $this->plugins[$plugin->name] = $plugin;
         return $plugin;
     }
     
@@ -174,7 +174,7 @@ class System
      */
     protected function runPlugins()
     {
-        foreach (self::instance()->plugins as $plugin) {
+        foreach ($this->plugins as $plugin) {
             $plugin->run();
         }
     }
