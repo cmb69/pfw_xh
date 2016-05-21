@@ -24,57 +24,92 @@ namespace Pfw;
 /**
  * The system.
  *
- * This static class represents the global state of the plugin framework.
+ * A singleton registry for global plugin framework state.
  * It is not meant to be used directly from plugins, except for
  * System::registerPlugin(), which has to be called once for each plugin.
  */
 class System
 {
+    private static $instance;
+    
     /**
      * @var Request
      */
-    private static $request;
+    private $request;
     
     /**
      * @var Response
      */
-    private static $response;
+    private $response;
     
     /**
      * @var Plugin[]
      */
-    private static $plugins = array();
+    private $plugins = array();
     
     /**
      * @var Config[]
      */
-    private static $configs = array();
+    private $configs = array();
     
     /**
      * @var Lang[]
      */
-    private static $langs = array();
+    private $langs = array();
+    
+    /**
+     * The protected methods are publicly available as static methods.
+     */
+    public static function __callStatic($name, $args)
+    {
+        switch ($name) {
+            case 'request':
+            case 'response':
+            case 'plugin':
+            case 'config':
+            case 'lang':
+            case 'registerPlugin':
+            case 'runPlugins':
+                return call_user_func_array(array(self::instance(), $name), $args);
+        }
+    }
+    
+    /**
+     * This method is for testing purposes only, so that System can be faked.
+     */
+    public static function loadInstance(System $system)
+    {
+        self::$instance = $system;
+    }
+    
+    private static function instance()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
     
     /**
      * @return Request
      */
-    public static function request()
+    protected function request()
     {
-        if (!isset(self::$request)) {
-            self::$request = new Request();
+        if (!isset(self::instance()->request)) {
+            self::instance()->request = new Request();
         }
-        return self::$request;
+        return self::instance()->request;
     }
     
     /**
      * @return Response
      */
-    public static function response()
+    protected function response()
     {
-        if (!isset(self::$response)) {
-            self::$response = new Response();
+        if (!isset(self::instance()->response)) {
+            self::instance()->response = new Response();
         }
-        return self::$response;
+        return self::instance()->response;
     }
     
     /**
@@ -84,9 +119,9 @@ class System
      *
      * @return Plugin
      */
-    public static function plugin($name)
+    protected function plugin($name)
     {
-        return self::$plugins[$name];
+        return self::instance()->plugins[$name];
     }
     
     /**
@@ -95,17 +130,12 @@ class System
      * @param  string $pluginName
      * @return Config
      */
-    public static function config($pluginName)
+    protected function config($pluginName)
     {
-        global $plugin_cf;
-
-        if (!isset($plugin_cf[$pluginName])) {
-            return null; // TODO: or exception or simply allow that?
+        if (!isset(self::instance()->configs[$pluginName])) {
+            self::instance()->configs[$pluginName] = new Config($pluginName);
         }
-        if (!isset(self::$configs[$pluginName])) {
-            $configs[$pluginName] = new Config($pluginName);
-        }
-        return $configs[$pluginName];
+        return self::instance()->configs[$pluginName];
     }
     
      /**
@@ -114,17 +144,12 @@ class System
      * @param  string $pluginName
      * @return Lang
      */
-    public static function lang($pluginName)
+    protected function lang($pluginName)
     {
-        global $plugin_tx;
-
-        if (!isset($plugin_tx[$pluginName])) {
-            return null; // or exception or simply allow that?
+        if (!isset(self::instance()->langs[$pluginName])) {
+            self::instance()->langs[$pluginName] = new Lang($pluginName);
         }
-        if (!isset(self::$langs[$pluginName])) {
-            self::$langs[$pluginName] = new Lang($pluginName);
-        }
-        return self::$langs[$pluginName];
+        return self::instance()->langs[$pluginName];
     }
 
      /**
@@ -132,10 +157,10 @@ class System
      *
      * @return Plugin
      */
-    public static function registerPlugin()
+    protected function registerPlugin()
     {
         $plugin = new Plugin();
-        self::$plugins[$plugin->name] = $plugin;
+        self::instance()->plugins[$plugin->name] = $plugin;
         return $plugin;
     }
     
@@ -147,9 +172,9 @@ class System
      *
      * @return void
      */
-    public static function runPlugins()
+    protected function runPlugins()
     {
-        foreach (self::$plugins as $plugin) {
+        foreach (self::instance()->plugins as $plugin) {
             $plugin->run();
         }
     }
