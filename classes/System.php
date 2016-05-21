@@ -71,9 +71,11 @@ class System
             case 'registerPlugin':
             case 'runPlugins':
                 return call_user_func_array(array(self::instance(), $name), $args);
+            default:
+                assert(false);
         }
     }
-    
+
     /**
      * This method is for testing purposes only, so that System can be faked.
      */
@@ -81,7 +83,6 @@ class System
     {
         self::$instance = $system;
     }
-    
     private static function instance()
     {
         if (!isset(self::$instance)) {
@@ -89,7 +90,7 @@ class System
         }
         return self::$instance;
     }
-    
+
     /**
      * @return Request
      */
@@ -100,7 +101,7 @@ class System
         }
         return $this->request;
     }
-    
+
     /**
      * @return Response
      */
@@ -111,7 +112,7 @@ class System
         }
         return $this->response;
     }
-    
+
     /**
      * Returns a registered plugin.
      *
@@ -123,7 +124,7 @@ class System
     {
         return $this->plugins[$name];
     }
-    
+
     /**
      * Returns a plugin configuration.
      *
@@ -137,7 +138,7 @@ class System
         }
         return $this->configs[$pluginName];
     }
-    
+
      /**
      * Returns a plugin language.
      *
@@ -163,7 +164,7 @@ class System
         $this->plugins[$plugin->name] = $plugin;
         return $plugin;
     }
-    
+
     /**
      * Runs all plugins
      *
