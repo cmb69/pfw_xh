@@ -141,7 +141,7 @@ class Plugin
     /**
      * Constructs an instance
      *
-     * @param string $name The basename of the plugin folder. 
+     * @param string $name The basename of the plugin folder.
      */
     public function __construct($name)
     {
@@ -222,6 +222,22 @@ class Plugin
     public function getFuncRoutes($name)
     {
         return $this->funcs[$name];
+    }
+    
+    /**
+     * Returns the parameters of a user function.
+     *
+     * @return \ReflectionParameter[]
+     */
+    public function funcParams($name)
+    {
+        $routes = $this->funcs[$name];
+        if (empty($routes)) {
+            return array();
+        }
+        $params = $routes[0]->controllerParams();
+        array_shift($params);
+        return $params;
     }
 
     /**

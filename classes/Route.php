@@ -67,6 +67,19 @@ class Route
     }
     
     /**
+     * Returns the parameters of the first controller of the route.
+     *
+     * @return \ReflectionParameter[]
+     */
+    public function controllerParams()
+    {
+        foreach ($this->map as $controllerName) {
+            $class = new \ReflectionClass($controllerName);
+            return $class->getConstructor()->getParameters();
+        }
+    }
+    
+    /**
      * Returns the supported plugin admin functionality.
      *
      * @return array<string,string>

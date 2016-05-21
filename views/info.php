@@ -1,7 +1,7 @@
 <h1><?php echo $this->escape($title)?></h1>
 <img class="pfw_logo" src="<?php echo $this->escape($logo)?>" alt="<?php echo $this->text('alt_logo')?>"/>
-<p>Version <?php echo $this->escape($version)?></p>
-<p>Copyright <?php echo $this->escape($copyright)?></p>
+<p>Version <?php echo $this->escape($plugin->version)?></p>
+<p>Copyright <?php echo $this->escape($plugin->copyright)?></p>
 <p class="pfw_license">This program is free software: you can redistribute it
 and/or modify it under the terms of the GNU General Public License as published
 by the Free Software Foundation, either version 3 of the License, or (at your
@@ -16,9 +16,9 @@ href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
 <h4><?php echo $this->text('syscheck_title')?></h4>
 <?php echo $systemCheck->render()?>
 <h4><?php echo $this->text('userfunc_title')?></h4>
-<dl>
-<?php foreach ($this->plugin->getFuncNames() as $function):?>
-    <dt><?php echo $this->escape($function)?></dt>
-    <dd><?php echo $this->text("userfunc_$function")?></dd>
+<dl class="pfw_userfuncs">
+<?php foreach ($plugin->getFuncNames() as $funcName):?>
+    <dt><?php echo $this->escape($userFuncSignature($funcName))?></dt>
+    <dd><?php echo $this->text("userfunc_$funcName")?></dd>
 <?php endforeach?>
 </dl>

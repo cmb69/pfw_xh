@@ -45,14 +45,14 @@ class DefaultAdminController extends Controller
     {
         $this->response->setTitle(ucfirst($this->plugin->name));
         $view = $this->htmlView('info');
+        $view->plugin = $this->plugin;
         $view->title = ucfirst($this->plugin->name);
         $view->logo = $this->plugin->folder . $this->plugin->name . '.png';
-        $view->version = $this->plugin->version;
-        $view->copyright = $this->plugin->copyright;
         $view->systemCheck = $this->systemCheck();
+        $view->userFuncSignature = $this->userFuncSignatureFunc();
         $view->render();
     }
-
+    
     /**
      * Returns the system check, ready to be rendered
      *
@@ -70,5 +70,17 @@ class DefaultAdminController extends Controller
                 ->extension('SimpleXML')
                 ->noMagicQuotes()
                 ->xhVersion('1.6');
+    }
+    
+    private function userFuncSignatureFunc()
+    {
+        $plugin = $this->plugin;
+        return function ($functionName) use ($plugin) {
+            $params = array();
+            foreach ($plugin->funcParams($functionName) as $param) {
+                $params[] = $param->getName();
+            }
+            return sprintf('%s(%s)', $functionName, implode(', ', $params));
+        };
     }
 }
