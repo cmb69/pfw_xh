@@ -1,5 +1,5 @@
 <h1><?php echo $this->escape($title)?></h1>
-<img class="pfw_logo" src="<?php echo $this->escape($logo)?>"/>
+<img class="pfw_logo" src="<?php echo $this->escape($logo)?>" alt="<?php echo $this->text('alt_logo')?>"/>
 <p>Version <?php echo $this->escape($version)?></p>
 <p>Copyright <?php echo $this->escape($copyright)?></p>
 <p class="pfw_license">This program is free software: you can redistribute it
