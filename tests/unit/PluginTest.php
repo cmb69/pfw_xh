@@ -21,7 +21,7 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw;
 
-class PluginTest extends \PHPUnit_Framework_TestCase
+class PluginTest extends TestCase
 {
     private $subject;
 
@@ -146,15 +146,6 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $this->subject->admin()
             ->route(array($this->subject->name => ''))
             ->run();
-    }
-    
-    private function defineConstant($name, $value)
-    {
-        if (defined($name)) {
-            runkit_constant_redefine($name, $value);
-        } else {
-            define($name, $value);
-        }
     }
 }
 

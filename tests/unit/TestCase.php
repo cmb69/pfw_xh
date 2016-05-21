@@ -21,13 +21,14 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw;
 
-class UserTest extends TestCase
+class TestCase extends \PHPUnit_Framework_TestCase
 {
-    public function testIsAdmin()
+    protected function defineConstant($name, $value)
     {
-        $this->defineConstant('XH_ADM', true);
-        $this->assertTrue(User::isAdmin());
-        $this->defineConstant('XH_ADM', false);
-        $this->assertFalse(User::isAdmin());
+        if (defined($name)) {
+            runkit_constant_redefine($name, $value);
+        } else {
+            define($name, $value);
+        }
     }
 }

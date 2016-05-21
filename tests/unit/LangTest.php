@@ -21,7 +21,7 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw;
 
-class LangTest extends \PHPUnit_Framework_TestCase
+class LangTest extends TestCase
 {
     public function setUp()
     {

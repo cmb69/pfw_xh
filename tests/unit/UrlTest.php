@@ -21,7 +21,7 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw;
 
-class UrlTest extends \PHPUnit_Framework_TestCase
+class UrlTest extends TestCase
 {
     public function setUp()
     {
@@ -87,14 +87,5 @@ class UrlTest extends \PHPUnit_Framework_TestCase
         return new Url('/xh/', [
             'pagemanager' => null, 'admin' => 'plugin_config', 'action' => 'plugin_save'
         ]);
-    }
-
-    private function defineConstant($name, $key)
-    {
-        if (defined($name)) {
-            runkit_constant_redefine($name, $key);
-        } else {
-            define($name, $key);
-        }
     }
 }

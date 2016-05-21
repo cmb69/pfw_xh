@@ -23,7 +23,7 @@ namespace Pfw;
 
 use org\bovigo\vfs\vfsStream;
 
-class HtmlViewTest extends \PHPUnit_Framework_TestCase
+class HtmlViewTest extends TestCase
 {
     private $subject;
     
