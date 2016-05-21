@@ -180,6 +180,9 @@ class SystemCheck
         foreach ($this->checks as $check) {
             $html[] = $check->render();
         }
-        return implode("\n", $html);
+        return sprintf(
+            "<ul class=\"pfw_syscheck\">\n%s\n</ul>",
+            implode("\n", $html)
+        );
     }
 }

@@ -60,7 +60,7 @@ abstract class Check
      */
     public function render()
     {
-        return sprintf('<p>%s %s</p>', $this->renderStatus(), $this->text());
+        return sprintf('<li>%s %s</li>', $this->renderStatus(), $this->text());
     }
 
     /**

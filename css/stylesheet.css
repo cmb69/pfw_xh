@@ -7,6 +7,12 @@
 .pfw_license {
     text-align: justify;
 }
+.pfw_syscheck {
+    padding-left: 0;
+}
+.pfw_syscheck li {
+    list-style: none;
+}
 
 .pfw_form div {
     margin: 1em 0;

@@ -49,11 +49,13 @@ class SystemCheckTest extends TestCase
             ->optional()
                 ->writable($this->root->url());
         $this->assertEquals(
-            '<p><img src="core/css/failure.png" alt=""> </p>
-<p><img src="core/css/warning.png" alt=""> </p>
-<p><img src="core/css/success.png" alt=""> </p>
-<p><img src="core/css/success.png" alt=""> </p>
-<p><img src="core/css/success.png" alt=""> </p>',
+            '<ul class="pfw_syscheck">
+<li><img src="core/css/failure.png" alt=""> </li>
+<li><img src="core/css/warning.png" alt=""> </li>
+<li><img src="core/css/success.png" alt=""> </li>
+<li><img src="core/css/success.png" alt=""> </li>
+<li><img src="core/css/success.png" alt=""> </li>
+</ul>',
             $subject->render()
         );
     }
