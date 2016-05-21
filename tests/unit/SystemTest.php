@@ -48,9 +48,7 @@ class SytemTest extends TestCase
 
     public function testPluginReturnsRegisteredPlugin()
     {
-        global $plugin;
-        
-        $this->assertSame(System::registerPlugin(), System::plugin($plugin));
+        $this->assertSame(System::registerPlugin('foo'), System::plugin('foo'));
     }
 
     public function testConfigReturnsSameInstance()
@@ -75,11 +73,9 @@ class SytemTest extends TestCase
     
     public function testRunsPlugins()
     {
-        global $plugin;
-
         $pluginFilesStub = new \PHPUnit_Extensions_MockFunction('pluginFiles', null);
         $pluginMenuStub = new \PHPUnit_Extensions_MockFunction('pluginMenu', null);
-        System::registerPlugin();
+        System::registerPlugin('foo');
         System::runPlugins();
         $pluginFilesStub->restore();
         $pluginMenuStub->restore();

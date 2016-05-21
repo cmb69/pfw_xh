@@ -76,7 +76,7 @@ EOT;
         return <<<EOT
 <?php
 
-Pfw\Plugin::register()
+Pfw\Plugin::register('{$this->name}')
     ->copyright('/* TODO: fill in your copyright */')
     ->version('/* TODO: fill in the plugin version */')
     ->admin()

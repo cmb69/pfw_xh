@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-Pfw\System::registerPlugin()
+Pfw\System::registerPlugin('pfw')
     ->copyright('2016 Christoph M. Becker')
     ->version('@PFW_VERSION@')
     ->admin()

@@ -140,16 +140,18 @@ class Plugin
 
     /**
      * Constructs an instance
+     *
+     * @param string $name The basename of the plugin folder. 
      */
-    public function __construct()
+    public function __construct($name)
     {
-        global $plugin, $pth;
+        global $pth;
 
-        $this->name = $plugin;
+        $this->name = $name;
         $this->folder = $pth['folder']['plugin'];
         $this->version = 'UNKNOWN';
-        $this->config = System::config($plugin);
-        $this->lang = System::lang($plugin);
+        $this->config = System::config($name);
+        $this->lang = System::lang($name);
     }
     
     /**

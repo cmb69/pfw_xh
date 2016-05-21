@@ -156,13 +156,13 @@ class System
      /**
      * Registers a new plugin and returns it.
      *
+     * @param string $name The basename of the plugin folder. 
      * @return Plugin
      */
-    protected function registerPlugin()
+    protected function registerPlugin($name)
     {
-        $plugin = new Plugin();
-        $this->plugins[$plugin->name] = $plugin;
-        return $plugin;
+        $this->plugins[$name] = new Plugin($name);
+        return $this->plugins[$name];
     }
 
     /**

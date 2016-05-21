@@ -31,10 +31,9 @@ class PluginTest extends TestCase
     
     public function setUp()
     {
-        global $plugin, $pth;
+        global $pth;
 
         parent::setUp();
-        $plugin = 'pfw';
         $pth = array(
             'folder' => array(
                 'plugin' => './plugins/pfw/'
@@ -43,7 +42,7 @@ class PluginTest extends TestCase
                 'plugin_help' => 'foo'
             )
         );
-        $this->subject = new Plugin();
+        $this->subject = new Plugin('pfw');
         $this->registerPluginMenuItemMock = new \PHPUnit_Extensions_MockFunction(
             'XH_registerPluginMenuItem',
             $this->subject
