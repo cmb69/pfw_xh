@@ -25,7 +25,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 {
     private $subject;
 
-    private $registerStandardPluginMenuItemsMock;
+    private $registerPluginMenuItemMock;
 
     private $pluginFiles;
     
@@ -37,11 +37,14 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $pth = array(
             'folder' => array(
                 'plugin' => './plugins/pfw/'
+            ),
+            'file' => array(
+                'plugin_help' => 'foo'
             )
         );
         $this->subject = System::registerPlugin();
-        $this->registerStandardPluginMenuItemsMock = new \PHPUnit_Extensions_MockFunction(
-            'XH_registerStandardPluginMenuItems',
+        $this->registerPluginMenuItemMock = new \PHPUnit_Extensions_MockFunction(
+            'XH_registerPluginMenuItem',
             $this->subject
         );
         $this->pluginFiles = new \PHPUnit_Extensions_MockFunction(
@@ -137,9 +140,12 @@ class PluginTest extends \PHPUnit_Framework_TestCase
     
     public function testRunInAdminModeCallRegisterMenuItems()
     {
+        $this->markTestSkipped();
         $this->defineConstant('XH_ADM', true);
-        $this->registerStandardPluginMenuItemsMock->expects($this->once());
-        $this->subject->admin()->run();
+        $this->registerPluginMenuItemMock->expects($this->exactly(1));
+        $this->subject->admin()
+            ->route(array($this->subject->name => ''))
+            ->run();
     }
     
     private function defineConstant($name, $value)

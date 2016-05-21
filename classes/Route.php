@@ -65,6 +65,29 @@ class Route
         $this->plugin = $plugin;
         $this->map = $map;
     }
+    
+    /**
+     * Returns the supported plugin admin functionality.
+     *
+     * @return array<string,string>
+     *
+     * @todo Find better name, as the route should not care about *menu* items.
+     * @todo Make more resilient. Propbably using parse_str() is appropriate.
+     */
+    public function adminMenuItems()
+    {
+        global $sn;
+        
+        $result = array();
+        foreach (array_keys($this->map) as $pattern) {
+            if (strpos($pattern, $this->plugin->name) === 0) {
+                if (preg_match('/&admin=(?:plugin_)?(?<name>.*)/', $pattern, $m)) {
+                    $result[$m['name']] = "$sn?&$pattern&normal";
+                }
+            }
+        }
+        return $result;
+    }
 
     /**
      * Resolves a route

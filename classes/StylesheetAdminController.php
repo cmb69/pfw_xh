@@ -50,15 +50,13 @@ class StylesheetAdminController extends Controller
         return 'action';
     }
 
-// @codingStandardsIgnoreStart
     /**
-     * The plugin_text action
+     * Displays the stylesheet edit form.
      *
      * @return void
      */
-    public function plugin_textAction()
+    public function indexAction()
     {
-// @codingStandardsIgnoreEnd
         $url = $this->url('plugin_textsave');
         echo preg_replace(
             '/<form([^>]+)action="([^"]*)"/',
@@ -69,7 +67,19 @@ class StylesheetAdminController extends Controller
 
 // @codingStandardsIgnoreStart
     /**
-     * The plugin_textsave action
+     * Alias of StylesheetAdminController::indexAction().
+     *
+     * @return void
+     */
+    public function plugin_textAction()
+    {
+// @codingStandardsIgnoreEnd
+        $this->indexAction();
+    }
+
+// @codingStandardsIgnoreStart
+    /**
+     * Saves the stylesheet.
      *
      * @return void
      */

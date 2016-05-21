@@ -290,16 +290,9 @@ class Plugin
     }
 
     /**
-     * Runs the plugin
+     * Runs the plugin.
      *
      * @return void
-     *
-     * @todo How should we handle the plugin menu?
-     * @todo For better error reporting of user function calls in debug mode,
-     *       we might define the function with its proper parameters retrieved
-     *       via Reflection of the controllers constructor.
-     *       That might hurt performance, though, so we might want to make
-     *       this optional via a config option.
      */
     public function run()
     {
@@ -313,15 +306,61 @@ class Plugin
         }
         $o .= ob_get_clean();
         if (User::isAdmin()) {
-            XH_registerStandardPluginMenuItems(false);
-            ob_start();
-            foreach ($this->adminRoutes as $route) {
-                $route->resolve();
-            }
-            $o .= ob_get_clean();
+            $this->runAdmin();
         }
         foreach (array_keys($this->funcs) as $name) {
-            eval(<<<EOS
+            $this->defineFunc($this->name, $name);
+        }
+    }
+    
+    private function runAdmin()
+    {
+        global $o;
+        
+        $this->buildAdminMenu();
+        ob_start();
+        foreach ($this->adminRoutes as $route) {
+            $route->resolve();
+        }
+        $o .= ob_get_clean();
+    }
+    
+    /**
+     * @return void
+     */
+    private function buildAdminMenu()
+    {
+        global $pth;
+        
+        foreach ($this->adminRoutes as $route) {
+            foreach ($route->adminMenuItems() as $key => $value) {
+                XH_registerPluginMenuItem(
+                    $this->name,
+                    $this->lang->singular("menu_$key"),
+                    $value
+                );
+            }
+        }
+        if ($pth['file']['plugin_help']) {
+            XH_registerPluginMenuItem(
+                $this->name,
+                $this->lang->singular("menu_help"),
+                $pth['file']['plugin_help'],
+                '_blank'
+            );
+        }
+    }
+
+    /**
+     * @todo For better error reporting of user function calls in debug mode,
+     *       we might define the function with its proper parameters retrieved
+     *       via Reflection of the controllers constructor.
+     *       That might hurt performance, though, so we might want to make
+     *       this optional via a config option.
+     */
+    private function defineFunc($plugin, $name)
+    {
+        eval(<<<EOS
 function $name()
 {
     \$plugin = Pfw\System::plugin('$plugin');
@@ -332,7 +371,6 @@ function $name()
     return ob_get_clean();
 }
 EOS
-            );
-        }
+        );
     }
 }

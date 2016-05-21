@@ -50,15 +50,13 @@ class ConfigAdminController extends Controller
         return 'action';
     }
 
-// @codingStandardsIgnoreStart
     /**
-     * The plugin_edit action
+     * Displays the config edit form.
      *
      * @return void
      */
-    public function plugin_editAction()
+    public function indexAction()
     {
-// @codingStandardsIgnoreEnd
         $url = $this->url('plugin_save');
         echo preg_replace(
             '/<form([^>]+)action="([^"]*)"/',
@@ -69,7 +67,19 @@ class ConfigAdminController extends Controller
 
 // @codingStandardsIgnoreStart
     /**
-     * The plugin_save
+     * Alias of ConfigAdminController::indexAction().
+     *
+     * @return void
+     */
+    public function plugin_editAction()
+    {
+// @codingStandardsIgnoreEnd
+        $this->indexAction();
+    }
+    
+// @codingStandardsIgnoreStart
+    /**
+     * Saves the configuration.
      *
      * @return void
      */
