@@ -134,9 +134,8 @@ class PluginTest extends TestCase
         $this->assertTrue(function_exists('pfw_foo'));
     }
     
-    public function testRunInAdminModeCallRegisterMenuItems()
+    public function testRunInAdminModeCallsRegisterMenuItems()
     {
-        $this->markTestSkipped();
         $this->defineConstant('XH_ADM', true);
         $this->registerPluginMenuItemMock->expects($this->exactly(1));
         $this->subject->admin()
