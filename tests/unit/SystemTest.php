@@ -78,8 +78,10 @@ class SytemTest extends TestCase
         global $plugin;
 
         $pluginFilesStub = new \PHPUnit_Extensions_MockFunction('pluginFiles', null);
+        $pluginMenuStub = new \PHPUnit_Extensions_MockFunction('pluginMenu', null);
         System::registerPlugin();
         System::runPlugins();
         $pluginFilesStub->restore();
+        $pluginMenuStub->restore();
     }
 }

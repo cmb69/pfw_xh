@@ -138,6 +138,8 @@ class PluginTest extends TestCase
     {
         $this->defineConstant('XH_ADM', true);
         $this->registerPluginMenuItemMock->expects($this->exactly(1));
+        $pluginMenuMock = new \PHPUnit_Extensions_MockFunction('pluginMenu', $this->subject);
+        $pluginMenuMock->expects($this->never());
         $this->subject->admin()
             ->route(array($this->subject->name => ''))
             ->run();

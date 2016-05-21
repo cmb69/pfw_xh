@@ -332,22 +332,39 @@ class Plugin
     {
         global $pth;
         
+        if ($this->isAdmin() && $this->config->get('show_menu')) {
+            pluginMenu('ROW');
+        }
         foreach ($this->adminRoutes as $route) {
             foreach ($route->adminMenuItems() as $key => $value) {
-                XH_registerPluginMenuItem(
-                    $this->name,
-                    $this->lang->singular("menu_$key"),
-                    $value
-                );
+                $text = $this->lang->singular("menu_$key");
+                $this->addMenuItem($text, $value);
             }
         }
         if ($pth['file']['plugin_help']) {
-            XH_registerPluginMenuItem(
-                $this->name,
-                $this->lang->singular("menu_help"),
-                $pth['file']['plugin_help'],
-                '_blank'
-            );
+            $text = $this->lang->singular("menu_help");
+            $this->addMenuItem($text, $pth['file']['plugin_help'], 'target="_blank"');
+        }
+        if ($this->isAdmin() && $this->config->get('show_menu')) {
+            System::response()->append(pluginMenu('SHOW'));
+        }
+    }
+    
+    /**
+     * Returns whether the plugin administration is requested.
+     *
+     * @warning This method doesn't check whether we're in admin mode, though.
+     */
+    private function isAdmin()
+    {
+        return isset($GLOBALS[$this->name]) && $GLOBALS[$this->name] == 'true';
+    }
+    
+    private function addMenuItem($text, $url, $target = null)
+    {
+        XH_registerPluginMenuItem($this->name, $text, $url);
+        if ($this->isAdmin() && $this->config->get('show_menu')) {
+            pluginMenu('TAB', $url, $target, $text);
         }
     }
 
