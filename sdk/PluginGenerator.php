@@ -66,7 +66,7 @@ EOT;
         return <<<EOT
 <?php
 
-\$plugin_tx['{$this->name}']['']="";
+\$plugin_tx['{$this->name}']['alt_logo']="FIXME";
 
 EOT;
     }
@@ -76,9 +76,9 @@ EOT;
         return <<<EOT
 <?php
 
-Pfw\Plugin::register('{$this->name}')
-    ->copyright('/* TODO: fill in your copyright */')
-    ->version('/* TODO: fill in the plugin version */')
+Pfw\System::registerPlugin('{$this->name}')
+    ->copyright('FIXME')
+    ->version('FIXME')
     ->admin()
         ->route(array(
             '{$this->name}&admin=plugin_config' => 'Pfw\\\\ConfigAdminController',
