@@ -132,8 +132,9 @@
         <fail unless="version" message="version is not defined!"/>
         <mkdir dir="dist"/>
         <copy file="pfw.phar" tofile="dist/pfw.phar"/>
-        <exec command="hhc doxygen/html/index.hhp"/>
-        <copy file="doxygen/html/index.chm" tofile="dist/api.chm"/>
+        <copy todir="dist/docs">
+            <fileset dir="doxygen/html"/>
+        </copy>
         <copy file="sdk/README.md" tofile="dist/README.md"/>
         <copy file="LICENSE" tofile="dist/LICENSE"/>
         <zip destfile="Pfw_XH-SDK-${version}.zip" basedir="dist"
