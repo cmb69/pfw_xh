@@ -227,4 +227,24 @@ class View
     {
         return $string;
     }
+    
+    /**
+     * Returns the properly escaped URL of the given action of the current
+     * controller.
+     *
+     * Actually, this is just a convenience wrapper for simple URLs to other
+     * actions.  More complex cases (such as setting additional query
+     * parameters) would require to use $this->controller->url() and manually
+     * escaping of the URL, or preferably – because we don't want to access
+     * private View properties, to pass a respective function to the view
+     * from the controller.
+     *
+     * @param string $action
+     * @return string
+     * @see Controller::url()
+     */
+    protected function url($action)
+    {
+        return $this->escape($this->controller->url($action));
+    }
 }
