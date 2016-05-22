@@ -210,7 +210,7 @@ abstract class Controller
      * Returns an URL for the given action
      *
      * Actually, the current URL is modified so that it points to the given
-     * action of this controller. All other query paramaters are kept as they
+     * action of this controller. All other query parameters are kept as they
      * are.
      *
      * @param string $action
