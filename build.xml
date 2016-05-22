@@ -95,7 +95,7 @@
                 </replacetokens>
             </filterchain>
         </move>
-        <move todir="export">
+        <move todir="dist">
             <fileset dir="export">
                 <include name="views/*.php"/>
             </fileset>
