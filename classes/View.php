@@ -46,6 +46,13 @@ namespace Pfw;
  * Anyhow, complex output such as the system check or forms are probably
  * best passed to the view before they're rendered, and `render` is called
  * in the template. Language strings are automatically escaped, anyway.
+ *
+ * @todo Would it be preferable to access the view variables as view 
+ *       properties and methods, respectively (instead of as local variables)?
+ *       That would make them seem to actually belong to View, what supports
+ *       the notion of inheritance. On the other hand, that would result in
+ *       more verbose template code.  Anyhow, if we change it, we wouldn't need
+ *       View::preventAccess() anymore.
  */
 class View
 {
@@ -101,6 +108,25 @@ class View
         $this->plugin = $controller->plugin();
         $this->lang = $this->plugin->lang();
         $this->data = array();
+    }
+    
+    /**
+     * Call this at the beginning of the templates, to prevent direct access.
+     *
+     * Usually, the view/ folder is not protected against HTTP access.
+     * This allows malicious users to trigger execution of the templates,
+     * what might be a security issue, if register_globals is enabled,
+     * which is still supported (though deprecated) on PHP 5.3.
+     *
+     * Calling *any* method in the template will result in a fatal error,
+     * and as such prevent potential vulnerabilities, because even if
+     * register_globals is enabled, it is not possible to submit an object.
+     * We're offering a dedicated method nonetheless, which describes its
+     * purpose.
+     */
+    public function preventAccess()
+    {
+        // do nothing
     }
 
     /**

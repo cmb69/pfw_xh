@@ -1,3 +1,4 @@
+<?php $this->preventAccess()?>
 <section class="pfw_about">
     <h1><?=$this->escape($title)?></h1>
     <img class="pfw_logo" src="<?=$this->escape($logo)?>" alt="<?=$this->text('alt_logo')?>"/>
