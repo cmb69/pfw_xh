@@ -93,7 +93,7 @@ class Route
         
         $result = array();
         foreach (array_keys($this->map) as $pattern) {
-            if (strpos($pattern, $this->plugin->name) === 0) {
+            if (strpos($pattern, $this->plugin->name()) === 0) {
                 if (preg_match('/&admin=(?:plugin_)?(?<name>.*)/', $pattern, $m)) {
                     $result[$m['name']] = "$sn?&$pattern&normal";
                 }
@@ -207,7 +207,7 @@ class Route
         $method = new \ReflectionMethod($controller, $methodName);
         $params = array();
         foreach ($method->getParameters() as $param) {
-            $name = $this->plugin->name . '_' . $param->getName();
+            $name = $this->plugin->name() . '_' . $param->getName();
             if (isset($_GET[$name])) {
                 $params[] = $_GET[$name];
             } else {

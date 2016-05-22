@@ -99,7 +99,7 @@ class View
         $this->controller = $controller;
         $this->template = $template;
         $this->plugin = $controller->plugin();
-        $this->lang = $this->plugin->lang;
+        $this->lang = $this->plugin->lang();
         $this->data = array();
     }
 
@@ -181,11 +181,11 @@ class View
      */
     private function templatePath()
     {
-        $filename = $this->plugin->folder . "views/{$this->template}.php";
+        $filename = $this->plugin->folder() . "views/{$this->template}.php";
         if (file_exists($filename)) {
             return $filename;
         }
-        return $this->plugin->folder . "../pfw/views/{$this->template}.php";
+        return $this->plugin->folder() . "../pfw/views/{$this->template}.php";
     }
 
     /**

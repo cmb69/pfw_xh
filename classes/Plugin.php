@@ -50,17 +50,6 @@ namespace Pfw;
  * and action method parameters. Routes are not exclusive, i.e. multiple
  * routes can be acknowledged for a single plugin within a single request.
  *
- * The naming scheme is documented for the individual controller types,
- * see {@see AdminController} and {@see FuncController}.
- *
- * @property-read Config   $config    The plugin configuration (read-only)
- * @property-read string   $copyright The copyright of the plugin (read-only)
- * @property-read string   $folder    The plugin folder (read-only)
- * @property-read string[] $functions The names of the registered user functions (read-only)
- * @property-read Lang     $lang      The plugin language (read-only)
- * @property-read string   $name      The plugin name (read-only)
- * @property-read string   $version   The plugin version (read-only)
- *
  * @todo Check whether it's possible to actually run the plugin after
  *       plugin loading (seems to be an issue with plugin_admin_common).
  *       This would imply that admin() and func() would actually register
@@ -88,6 +77,11 @@ class Plugin
      * @var string
      */
     private $version;
+    
+    /**
+     * @var string
+     */
+    private $copyright;
 
     /**
      * The plugin configuration
@@ -155,49 +149,73 @@ class Plugin
     }
     
     /**
-     * Makes some properties available
+     * Returns the plugin name.
      *
-     * @param string $name
-     *
-     * @return mixed
+     * @return string
      */
-    public function __get($name)
+    public function name()
     {
-        switch ($name) {
-            case 'config':
-            case 'copyright':
-            case 'folder':
-            case 'lang':
-            case 'name':
-            case 'version':
-                return $this->{$name};
-            default:
-                assert(false);
-        }
+        return $this->name;
+    }
+    
+    /**
+     * Returns the plugin configuration.
+     *
+     * @return Config
+     */
+    public function config()
+    {
+        return $this->config;
+    }
+    
+    /**
+     * Returns the plugin language.
+     *
+     * @return Lang
+     */
+    public function lang()
+    {
+        return $this->lang;
+    }
+    
+    /**
+     * Returns the path of the plugin folder.
+     *
+     * @return string
+     */
+    public function folder()
+    {
+        return $this->folder;
     }
 
     /**
-     * Sets the copyright
+     * Gets or sets the copyright.
      *
      * @param string $copyright
      *
      * @return $this
      */
-    public function copyright($copyright)
+    public function copyright($copyright = null)
     {
+        if (!isset($copyright)) {
+            return $this->copyright;
+        }
         $this->copyright = $copyright;
         return $this;
     }
 
     /**
-     * Sets the plugin version
+     * Gets or sets the plugin version
      *
      * @param string $version
      *
      * @return $this
      */
-    public function version($version)
+    public function version($version = null)
     {
+        if (!isset($version)) {
+            return $this->version;
+        }
         $this->version = $version;
         return $this;
     }

@@ -55,12 +55,10 @@ EOT;
         $lang = $this->getMockBuilder('Pfw\\Lang')
             ->disableOriginalConstructor()
             ->getMock();
-        $map = array(
-            array('folder', $this->root->url() . '/'),
-            array('lang', $lang)
-        );
-        $plugin->expects($this->any())->method('__get')
-            ->will($this->returnValueMap($map));
+        $plugin->expects($this->any())->method('lang')
+            ->willReturn($lang);
+        $plugin->expects($this->any())->method('folder')
+            ->willReturn($this->root->url() . '/');
         $controller->expects($this->any())->method('plugin')->willReturn($plugin);
         $this->subject = new HtmlView($controller, 'foo');
     }

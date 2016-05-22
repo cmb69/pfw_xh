@@ -35,7 +35,7 @@ class RouteTest extends TestCase
             ->getMock();
         $this->plugin
             ->expects($this->any())
-            ->method('__get')
+            ->method('name')
             ->willReturn('pfw');
         $this->controller = $this->getMockBuilder('Pfw\\FooController')
             ->disableOriginalConstructor()

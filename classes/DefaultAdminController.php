@@ -43,11 +43,12 @@ class DefaultAdminController extends Controller
      */
     public function indexAction()
     {
-        $this->response->setTitle(ucfirst($this->plugin->name));
+        $title = ucfirst($this->plugin->name());
+        $this->response->setTitle($title);
         $view = $this->htmlView('info');
         $view->plugin = $this->plugin;
-        $view->title = ucfirst($this->plugin->name);
-        $view->logo = $this->plugin->folder . $this->plugin->name . '.png';
+        $view->title = $title;
+        $view->logo = $this->plugin->folder() . $this->plugin->name() . '.png';
         $view->systemCheck = $this->systemCheck();
         $view->userFuncSignature = $this->userFuncSignatureFunc();
         $view->render();

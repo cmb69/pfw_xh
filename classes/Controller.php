@@ -88,8 +88,8 @@ abstract class Controller
         $this->plugin = $plugin;
         $this->request = System::request();
         $this->response = System::response();
-        $this->config = $plugin->config;
-        $this->lang = $plugin->lang;
+        $this->config = $plugin->config();
+        $this->lang = $plugin->lang();
     }
     
     /**
