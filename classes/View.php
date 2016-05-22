@@ -47,7 +47,7 @@ namespace Pfw;
  * best passed to the view before they're rendered, and `render` is called
  * in the template. Language strings are automatically escaped, anyway.
  *
- * @todo Would it be preferable to access the view variables as view 
+ * @todo Would it be preferable to access the view variables as view
  *       properties and methods, respectively (instead of as local variables)?
  *       That would make them seem to actually belong to View, what supports
  *       the notion of inheritance. On the other hand, that would result in
