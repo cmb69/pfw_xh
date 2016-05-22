@@ -49,11 +49,6 @@ namespace Pfw;
  * and calls the respective action method passing the necessary constructor
  * and action method parameters. Routes are not exclusive, i.e. multiple
  * routes can be acknowledged for a single plugin within a single request.
- *
- * @todo Check whether it's possible to actually run the plugin after
- *       plugin loading (seems to be an issue with plugin_admin_common).
- *       This would imply that admin() and func() would actually register
- *       only, and that we would need a run() method for immediate tasks.
  */
 class Plugin
 {
