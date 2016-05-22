@@ -156,7 +156,7 @@ class System
      /**
      * Registers a new plugin and returns it.
      *
-     * @param string $name The basename of the plugin folder. 
+     * @param string $name The basename of the plugin folder.
      * @return Plugin
      */
     protected function registerPlugin($name)
