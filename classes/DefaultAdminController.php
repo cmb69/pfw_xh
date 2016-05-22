@@ -50,6 +50,13 @@ class DefaultAdminController extends Controller
         $view->title = $title;
         $view->logo = $this->plugin->folder() . $this->plugin->name() . '.png';
         $view->systemCheck = $this->systemCheck();
+        $plugin = $this->plugin;
+        $view->statusIcon = function ($check) use ($plugin) {
+            return $plugin->folder() . 'images/' . $check->status() . '.png';
+        };
+        $view->statusAlt = function ($check) {
+            return 'syscheck_alt_' . $check->status();
+        };
         $view->userFuncSignature = $this->userFuncSignatureFunc();
         $view->render();
     }

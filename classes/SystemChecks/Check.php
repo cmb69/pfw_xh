@@ -54,16 +54,6 @@ abstract class Check
     }
 
     /**
-     * Renders the check
-     *
-     * @eturn string HTML
-     */
-    public function render()
-    {
-        return sprintf('<li>%s %s</li>', $this->renderStatus(), $this->text());
-    }
-
-    /**
      * Returns whether the check succeeded, i.e. the requirement is fulfilled
      *
      * @return bool
@@ -75,29 +65,14 @@ abstract class Check
      *
      * @return string
      */
-    abstract protected function text();
-
-    /**
-     * Renders the appropriate status icon
-     *
-     * @return string
-     */
-    private function renderStatus()
-    {
-        global $pth;
-
-        $status = $this->status();
-        $src = "{$pth['folder']['base']}core/css/$status.png";
-        $alt = $this->lang->get("syscheck_alt_$status");
-        return tag(sprintf('img src="%s" alt="%s"', $src, $alt));
-    }
+    abstract public function text();
 
     /**
      * Returns the status ('success', 'warning', 'failure')
      *
      * @returns string
      */
-    private function status()
+    public function status()
     {
         if ($this->check()) {
             return 'success';

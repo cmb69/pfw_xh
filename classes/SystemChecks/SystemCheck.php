@@ -168,21 +168,14 @@ class SystemCheck
     {
         $this->checks[] = $check;
     }
-
+    
     /**
-     * Renders the result of the checks
+     * Returns all checks.
      *
-     * @return string HTML
+     * @return Check[]
      */
-    public function render()
+    public function checks()
     {
-        $html = array();
-        foreach ($this->checks as $check) {
-            $html[] = $check->render();
-        }
-        return sprintf(
-            "<ul class=\"pfw_syscheck\">\n%s\n</ul>",
-            implode("\n", $html)
-        );
+        return $this->checks;
     }
 }

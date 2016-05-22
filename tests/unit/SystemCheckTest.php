@@ -27,41 +27,64 @@ use Pfw\SystemChecks\SystemCheck;
 class SystemCheckTest extends TestCase
 {
     private $root;
+    
+    private $subject;
 
     public function setUp()
     {
         parent::setUp();
-        define('CMSIMPLE_XH_VERSION', 'CMSimple_XH 1.6.7');
+        $this->defineConstant('CMSIMPLE_XH_VERSION', 'CMSimple_XH 1.6.7');
         $this->root = vfsStream::setup();
-    }
+        $this->subject = new SystemCheck();
+   }
 
-    public function testIt()
+    public function testPhpVersion()
     {
-        $subject = new SystemCheck();
-        $subject
-            ->mandatory()
-                ->phpVersion('15.3')
-            ->optional()
-                ->extension('foo')
-            ->mandatory()
-                ->noMagicQuotes()
-                ->xhVersion('1.6')
-            ->optional()
-                ->writable($this->root->url());
-        $this->assertEquals(
-            '<ul class="pfw_syscheck">
-<li><img src="core/css/failure.png" alt=""> </li>
-<li><img src="core/css/warning.png" alt=""> </li>
-<li><img src="core/css/success.png" alt=""> </li>
-<li><img src="core/css/success.png" alt=""> </li>
-<li><img src="core/css/success.png" alt=""> </li>
-</ul>',
-            $subject->render()
-        );
+        $this->subject->mandatory()->phpVersion('12345');
+        $this->assertEquals('failure', $this->firstCheck()->status());
+        System::lang('pfw')->expects($this->once())->method('singular')
+            ->with('syscheck_phpversion', '12345');
+        $this->firstCheck()->text();
     }
-}
-
-function tag($html)
-{
-    return "<$html>";
+    
+    public function testExtension()
+    {
+        $this->subject->optional()->extension('foo');
+        $this->assertEquals('warning', $this->firstCheck()->status());
+        System::lang('pfw')->expects($this->once())->method('singular')
+            ->with('syscheck_extension', 'foo');
+        $this->firstCheck()->text();
+    }
+    
+    public function testNoMagicQuotes()
+    {
+        $this->subject->mandatory()->noMagicQuotes();
+        $this->assertEquals('success', $this->firstCheck()->status());
+        System::lang('pfw')->expects($this->once())->method('get')
+            ->with('syscheck_magic_quotes');
+        $this->firstCheck()->text();
+    }
+    
+    public function testXhVersion()
+    {
+        $this->subject->mandatory()->xhVersion('1.6');
+        $this->assertEquals('success', $this->firstCheck()->status());
+        System::lang('pfw')->expects($this->once())->method('singular')
+            ->with('syscheck_xhversion', '1.6');
+        $this->firstCheck()->text();
+    }
+    
+    public function testWritable()
+    {
+        $this->subject->optional()->writable($this->root->url());
+        $this->assertEquals('success', $this->firstCheck()->status());
+        System::lang('pfw')->expects($this->once())->method('singular')
+            ->with('syscheck_writable', $this->root->url());
+        $this->firstCheck()->text();
+    }
+    
+    private function firstCheck()
+    {
+        return $this->subject->checks()[0];
+    }
 }

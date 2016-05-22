@@ -22,7 +22,14 @@
     </p>
     <section class="pfw_syscheck">
         <h4><?=$this->text('syscheck_title')?></h4>
-        <?=$systemCheck->render()?>
+        <ul class="pfw_syscheck">
+<?php foreach ($systemCheck->checks() as $check):?>
+            <li>
+                <img src="<?=$this->escape($statusIcon($check))?>" alt="<?=$this->text($statusAlt($check))?>">
+                <?=$this->escape($check->text())?>
+            </li>
+<?php endforeach?>
+        </ul>
     </section>
     <section class="pfw_userfuncs">
         <h4><?=$this->text('userfunc_title')?></h4>

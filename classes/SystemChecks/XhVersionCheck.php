@@ -66,7 +66,7 @@ class XhVersionCheck extends Check
      *
      * @return string
      */
-    protected function text()
+    public function text()
     {
         return $this->lang->singular('syscheck_xhversion', $this->requiredVersion);
     }

@@ -31,7 +31,7 @@ class FakeSystem extends \PHPUnit_Framework_TestCase
     
     private $configs = array();
     
-    private $lang = array();
+    private $langs = array();
     
     public function request()
     {
@@ -65,22 +65,22 @@ class FakeSystem extends \PHPUnit_Framework_TestCase
 
     public function config($name)
     {
-        if (!isset($this->config[$name])) {
-            $this->config[$name] = $this->getMockBuilder('Pfw\\Lang')
+        if (!isset($this->configs[$name])) {
+            $this->configs[$name] = $this->getMockBuilder('Pfw\\Config')
                 ->disableOriginalConstructor()
                 ->getMock();
         }
-        return $this->config[$name];
+        return $this->configs[$name];
     }
     
     public function lang($name)
     {
-        if (!isset($this->lang[$name])) {
-            $this->lang[$name] = $this->getMockBuilder('Pfw\\Lang')
+        if (!isset($this->langs[$name])) {
+            $this->langs[$name] = $this->getMockBuilder('Pfw\\Lang')
                 ->disableOriginalConstructor()
                 ->getMock();
         }
-        return $this->lang[$name];
+        return $this->langs[$name];
     }
     
     public function registerPlugin()
