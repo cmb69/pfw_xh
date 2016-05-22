@@ -52,7 +52,7 @@ class DefaultAdminController extends Controller
         $view->systemCheck = $this->systemCheck();
         $plugin = $this->plugin;
         $view->statusIcon = function ($check) use ($plugin) {
-            return $plugin->folder() . 'images/' . $check->status() . '.png';
+            return System::plugin('pfw')->folder() . 'images/' . $check->status() . '.png';
         };
         $view->statusAlt = function ($check) {
             return 'syscheck_alt_' . $check->status();
