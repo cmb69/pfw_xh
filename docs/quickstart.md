@@ -66,7 +66,7 @@ Pfw\System::registerPlugin('foo')
             'foo&admin=plugin_config' => 'Pfw\\ConfigAdminController',
             'foo&admin=plugin_language' => 'Pfw\\LanguageAdminController',
             'foo&admin=plugin_stylesheet' => 'Pfw\\StylesheetAdminController',
-            'foo' => 'Pfw\DefaultAdminController'
+            'foo' => 'Pfw\\PluginInfoController'
         ))
 ;
 ~~~~
@@ -98,7 +98,7 @@ a controller provided by the plugin framework.
 Controllers {#controllers}
 ===========
 
-So have a look at pfw/classes/DefaultAdminController.php.
+So have a look at pfw/classes/PluginInfoController.php.
 As this controller doesn't define a dispatcher,
 the action to be invoked will always be indexAction().
 This action uses the controller's response property to set the page title.

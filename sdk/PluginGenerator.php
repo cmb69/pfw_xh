@@ -84,7 +84,7 @@ Pfw\System::registerPlugin('{$this->name}')
             '{$this->name}&admin=plugin_config' => 'Pfw\\\\ConfigAdminController',
             '{$this->name}&admin=plugin_language' => 'Pfw\\\\LanguageAdminController',
             '{$this->name}&admin=plugin_stylesheet' => 'Pfw\\\\StylesheetAdminController',
-            '{$this->name}' => 'Pfw\\DefaultAdminController'
+            '{$this->name}' => 'Pfw\\PluginInfoController'
         ))
 ;
 

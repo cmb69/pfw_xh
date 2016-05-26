@@ -27,7 +27,7 @@ Pfw\System::registerPlugin('pfw')
             'pfw&admin=plugin_config' => 'Pfw\\ConfigAdminController',
             'pfw&admin=plugin_language' => 'Pfw\\LanguageAdminController',
             'pfw&admin=plugin_stylesheet' => 'Pfw\\StylesheetAdminController',
-            'pfw' => 'Pfw\\DefaultAdminController'
+            'pfw' => 'Pfw\\PluginInfoController'
         ))
 ;
 

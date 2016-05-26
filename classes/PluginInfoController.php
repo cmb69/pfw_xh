@@ -22,17 +22,14 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 namespace Pfw;
 
 /**
- * Default admin controllers
+ * Plugin info controllers
  *
- * The default admin controller handles the plugin administration
- * when there is no `admin` parameter given. This is typically the case
- * when the webmaster selects the plugin in the plugin menu directly
- * (i.e. not any of its submenu entries).
+ * The plugin info controller shows information about a plugin,
+ * namely version, copyright, system check and user functions.
  *
- * This controller is supposed to be extended in other plugins,
- * if so desired.
+ * This controller can be extended by other plugins, if so desired.
  */
-class DefaultAdminController extends Controller
+class PluginInfoController extends Controller
 {
     /**
      * Handles the default action
