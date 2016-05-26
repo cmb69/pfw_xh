@@ -116,7 +116,7 @@ and occassionaly a few `if` statements.
 
 participant "aController" as controller
 participant "aView" as view
-participant "template.php" as template
+database "views/" as views
 
 create view
 controller -> view : htmlView('template.php')
@@ -127,8 +127,7 @@ end
 controller -> view : render()
 activate view
 view -> view : extract()
-create template
-view -> template : include
+view -> views : include 'template.php'
 deactivate view
 
 hide footbox
@@ -145,3 +144,27 @@ For more complex actions, however,
 it is deemed useful to delegate to one or more model objects,
 so the controller can [concentrate](https://en.wikipedia.org/wiki/Separation_of_concerns)
 on coordinating the handling of the request.
+
+Namespaces and Autoloading
+==========================
+
+To prevent nameclashes with other plugins,
+it is best practice to namespace all global identifiers used by plugins.
+The plugin framework particularly supports this notion
+by offering a respective class [autoloader](http://php.net/manual/en/language.oop5.autoload.php).
+The topmost namespace is mapped to the classes/ folder of the plugin,
+and subnamespaces map to subfolders thereof.
+The classname maps to the respective .php file.
+Even though PHP's namespaces and classes are case-insensitive,
+the autoloader doesn't cater to this,
+but rather looks for folders and files in a case-insensitive way,
+what implies that you have to take care that the identifiers match the
+folder- and filenames exactly
+(what does not matter on case-insensitive file systems such as Windows NTFS,
+but not all file systems are case-insensitive).
+Note that there is a single exception from this rule,
+namely that the topmost namespace is `lcfirst()`'d when looking for the plugin folder.
+
+For instance, consider a plugin in plugins/foo/.
+When the class Foo\\Model\\Bar is needed,
+the autoloader tries to include plugins/foo/classes/Model/Bar.php.
