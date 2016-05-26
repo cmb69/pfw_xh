@@ -9,7 +9,7 @@ Why should I use a plugin framework when there's already the plugin loader? {#wh
 On a first glance the plugin loader seems to do an excellent job with regard to
 simplifying plugin development, as it offers nearly fully automatic
 administration of configuration, language files and stylesheets. But on a closer
-look, that's nearly all it has to offer. The rest is just the automatic
+look, that's already all it has to offer. The rest is just the automatic
 inclusion of index.php and admin.php, and the general CMSimple_XH API, what is
 hardly more than some global variables.
 
@@ -28,15 +28,19 @@ outside the plugin framework.
 Furthermore, the plugin framework offers several services which are supposed to
 avoid the need to reinvent the wheel. Most, if not all, of such services are
 already available in highly diverse implementations, but most likely none of
-these implementations caters to the special demands of CMSimple_XH.
+these implementations caters to the special demands of CMSimple_XH,
+and usually nameclashes have to be expected,
+if a certain service is used by several plugins.
 
 Do I have to learn object-oriented programming to use the plugin framework? {#oop}
 ===========================================================================
 
-No. However, you need to understand the basics of objects and classes, and also
-some not directly related concepts, such as namespaces. That should be
-sufficient to use the plugin framework, even though your functions would have to
-be methods on the appropriate controller.
+Not really. However, you need to understand the basics of
+[objects and classes](http://php.net/manual/en/language.oop5.php),
+and also some not directly related concepts, such as
+[namespaces](http://php.net/manual/en/language.namespaces.php).
+That should be sufficient to use the plugin framework,
+even though your functions would have to be methods on the appropriate controller.
 
 Where are the models? {#models}
 =====================
