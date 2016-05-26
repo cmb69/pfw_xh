@@ -16,7 +16,7 @@ and the related terms, such as route and action,
 because this guide avoids general explanations and defintions of those for 
 brevity.
 
-Installation {#installion}
+Installation {#installation}
 ============
 
 To be able to develop plugins using the Pfw_XH plugin framework, you have to
@@ -45,7 +45,7 @@ The customary Config, Language, Stylesheet and Help plugin menu items are
 also available and are supposed to be fully functional (except, of course,
 that the help file has no content, yet).
 
-All in all, we have created a nearly complete plugin without any real 
+All in all, we have created a nearly complete plugin without any real
 functionality, and the rest of this guide will not add any, but we rather
 concentrate on roughly understanding how Pfw_XH works.
 
