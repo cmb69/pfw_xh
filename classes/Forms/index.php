@@ -20,6 +20,6 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * Services to handle simple HTTP POST forms.
+ * Handling of simple HTTP POST forms.
  */
 namespace Pfw\Forms;

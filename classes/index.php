@@ -20,6 +20,6 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * The plugin framework.
+ * The top-level namespace of the plugin framework.
  */
 namespace Pfw;

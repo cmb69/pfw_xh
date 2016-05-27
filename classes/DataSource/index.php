@@ -20,6 +20,6 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * Services for dealing with external data
+ * Dealing with external data.
  */
 namespace Pfw\DataSource;

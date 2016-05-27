@@ -20,6 +20,6 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**
- * Services for handling the system check.
+ * Handling the system check.
  */
 namespace Pfw\SystemChecks;
