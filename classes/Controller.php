@@ -27,7 +27,7 @@ namespace Pfw;
  * All real functionality of plugins using the plugin framework is supposed
  * to be initiated in controllers, or more specificially in one of the
  * actions implemented by a controller. The routing, i.e. finding out
- * which action of which controller to call, is defined by the {@see Plugin}.
+ * which action of which controller to call, is defined by the Plugin.
  */
 abstract class Controller
 {
@@ -43,35 +43,35 @@ abstract class Controller
     /**
      * The plugin
      *
-     * @var Plugin
+     * @var Plugin $plugin
      */
     protected $plugin;
 
     /**
      * The current request
      *
-     * @var Request
+     * @var Request $request
      */
     protected $request;
 
     /**
      * The current response
      *
-     * @var Response
+     * @var Response $response
      */
     protected $response;
 
     /**
      * The configuration
      *
-     * @var Config
+     * @var Config $config
      */
     protected $config;
 
     /**
      * The language
      *
-     * @var Lang
+     * @var Lang $lang
      */
     protected $lang;
 
@@ -121,9 +121,7 @@ abstract class Controller
     }
 
     /**
-     * Returns the path of CMSimple_XH's general content folder
-     *
-     * Note, that this is the content folder of the current language.
+     * Returns the path of CMSimple_XH's content folder of the current language.
      *
      * @return string
      */
@@ -150,7 +148,7 @@ abstract class Controller
      * Creates a view associated to a certain template
      *
      * This is the preferred way to create a view; don't create views
-     * directly (i.e. via new View).
+     * directly (i.e. via `new %View`).
      *
      * @param string $template
      *
@@ -165,7 +163,7 @@ abstract class Controller
      * Creates an HTML view associated to a certain template
      *
      * This is the preferred way to create a view; don't create views
-     * directly (i.e. via new View).
+     * directly (i.e. via `new %View`).
      *
      * @param string $template
      *
@@ -195,7 +193,7 @@ abstract class Controller
      *
      * Actually, of course only the respective header is sent to the user agent,
      * which is supposed to relocate to the new URL. In any way, the script is
-     * terminated, and this function will not return.     *
+     * terminated, and this function will not return.
      *
      * @param Url $url
      *

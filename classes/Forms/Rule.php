@@ -33,14 +33,14 @@ abstract class Rule
     /**
      * The control the rule belongs to
      *
-     * @var Control
+     * @var Control $control
      */
     protected $control;
 
     /**
      * The language
      *
-     * @var Lang
+     * @var Lang $lang
      */
     protected $lang;
 

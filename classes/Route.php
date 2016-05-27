@@ -69,7 +69,7 @@ class Route
     /**
      * Returns the parameters of the first controller of the route.
      *
-     * @return \ReflectionParameter[]
+     * @return array<ReflectionParameter>
      */
     public function controllerParams()
     {

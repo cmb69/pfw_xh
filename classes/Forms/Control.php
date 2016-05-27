@@ -29,35 +29,35 @@ abstract class Control
     /**
      * The form
      *
-     * @var Form
+     * @var Form $form
      */
     protected $form;
 
     /**
      * The language
      *
-     * @var \Pfw\Lang
+     * @var Lang $lang
      */
     protected $lang;
 
     /**
      * The name without prefix
      *
-     * @var string
+     * @var string $name
      */
     protected $name;
 
     /**
      * The rules to apply
      *
-     * @var Rule[]
+     * @var array<Rule> $rules
      */
     protected $rules;
 
     /**
      * The ID without prefix
      *
-     * @var int
+     * @var int $id
      */
     private $id;
 

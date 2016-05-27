@@ -22,13 +22,11 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 namespace Pfw\DataSource;
 
 /**
- * Documents for the DocumentStores.
+ * Documents for the @ref DocumentStore "DocumentStores".
  *
  * A document carries some arbitrary text contents and a token.
  * The contents is what is read from and written to the file.
  * The token is some opaque value specifying the version of the file contents.
- *
- * @see DocumentStore
  */
 class Document
 {

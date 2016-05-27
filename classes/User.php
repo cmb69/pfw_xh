@@ -27,7 +27,7 @@ namespace Pfw;
  * Currently this class has only a single method, namely to check
  * whether the current user is the administrator.
  * It might be extended in the future to offer an interface for
- * memberpages like plugins.
+ * memberpages-like plugins.
  */
 class User
 {

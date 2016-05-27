@@ -22,13 +22,11 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 namespace Pfw\DataSource;
 
 /**
- * %Document stores
+ * Document stores
  *
  * Documents are stored as files with arbitrary content.
  * Pessimistic online concurrency is automatically handled via file locking.
  * Optimistic offline concurrency is handled via tokens.
- *
- * @see Document
  */
 class DocumentStore
 {

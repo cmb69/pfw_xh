@@ -22,11 +22,12 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 namespace Pfw\Forms;
 
 /**
- * Form builders
+ * %Form builders
  *
- * The form builder offers a fluent interface for creation of forms.
+ * The form [builder](http://martinfowler.com/bliki/ExpressionBuilder.html)
+ * offers a fluent interface for creation of forms.
  * You can freely mix controls and rules, whereby rules automatically
- * are applied to the latest control.
+ * are applied to the most recent control.
  *
  * All controls accept a $name parameter.
  * This is used to build the value of the name attribute of the form control,
@@ -38,12 +39,10 @@ namespace Pfw\Forms;
  * This way validation on the client side occurs, if supported by the browser.
  * Of course, all validation is done on the server side nonetheless.
  *
- * An example:
+ * An example from a Controller method:
  *
  *      // create a form builder
- *      $builder = new FormBuilder('plugin', Lang::instance('plugin'), './');
- *      // build the form
- *      $form = $builder
+ *      $builder = $this->formBuilder('./')
  *          // add a required text input
  *          ->text('name')->required()
  *          // add a number input which checks that the value is at least 18
@@ -52,8 +51,6 @@ namespace Pfw\Forms;
  *          ->button('save')
  *          // return the form
  *          ->build();
- *
- * @link http://martinfowler.com/bliki/ExpressionBuilder.html
  *
  * @todo Rename `render*` where appropriate. Actually, we usually add elements
  *       or attributes.
@@ -101,13 +98,10 @@ class FormBuilder
     }
 
     /**
-     * Adds a hidden input form control
+     * Adds a hidden input form control.
      *
      * @param string $name
-     *
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#hidden-state-(type=hidden)
      */
     public function hidden($name)
     {
@@ -115,13 +109,10 @@ class FormBuilder
     }
 
     /**
-     * Adds a text input form control
+     * Adds a text input form control.
      *
      * @param string $name
-     *
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#text-(type=text)-state-and-search-state-(type=search)
      */
     public function text($name)
     {
@@ -132,10 +123,7 @@ class FormBuilder
      * Adds a password input form control
      *
      * @param string $name
-     *
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#password-state-(type=password)
      */
     public function password($name)
     {
@@ -146,10 +134,7 @@ class FormBuilder
      * Adds a number input form control
      *
      * @param string $name
-     *
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#number-state-(type=number)
      */
     public function number($name)
     {
@@ -160,10 +145,7 @@ class FormBuilder
      * Adds a checkbox input form control
      *
      * @param string $name
-     *
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#checkbox-state-(type=checkbox)
      */
     public function checkbox($name)
     {
@@ -174,10 +156,7 @@ class FormBuilder
      * Adds a submit button form control
      *
      * @param string $name
-     *
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-button-element
      */
     public function button($name)
     {
@@ -188,10 +167,7 @@ class FormBuilder
      * Adds a select form control
      *
      * @param string $name
-     *
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-select-element
      */
     public function select($name)
     {
@@ -201,11 +177,8 @@ class FormBuilder
     /**
      * Adds option elements
      *
-     * @param string[] ...$options
-     *
+     * @param array<string> ...$options
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-option-element
      */
     public function options()
     {
@@ -219,10 +192,7 @@ class FormBuilder
      * Adds a textarea form control
      *
      * @param string $name
-     *
      * @return $this
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-textarea-element
      */
     public function textarea($name)
     {
@@ -235,8 +205,6 @@ class FormBuilder
      * The CSRF token is automatically validated on form::validate().
      *
      * @return $this
-     *
-     * @link http://www.cmsimple-xh.org/dev-doc/php/XH/tutorial_XH_CSRFProtection.cls.html
      */
     public function csrf()
     {
@@ -247,7 +215,6 @@ class FormBuilder
      * Adds a control
      *
      * @param Control $control
-     *
      * @return $this
      */
     private function control(Control $control)
@@ -261,8 +228,7 @@ class FormBuilder
      * Adds a minlength rule
      *
      * @param int $length
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-maxlength-and-minlength-attributes
+     * @return $this
      */
     public function minlength($length)
     {
@@ -273,8 +239,7 @@ class FormBuilder
      * Adds a maxlength rule
      *
      * @param int $length
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-maxlength-and-minlength-attributes
+     * @return $this
      */
     public function maxlength($length)
     {
@@ -284,7 +249,7 @@ class FormBuilder
     /**
      * Adds a required rule
      *
-     * @link https://www.w3.org/TR/html5/forms.html#the-required-attribute
+     * @return $this
      */
     public function required()
     {
@@ -295,8 +260,7 @@ class FormBuilder
      * Adds a pattern rule
      *
      * @param string $pattern
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-pattern-attribute
+     * @return $this
      */
     public function pattern($pattern)
     {
@@ -307,8 +271,7 @@ class FormBuilder
      * Adds a min rule
      *
      * @param number $value
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-min-and-max-attributes
+     * @return $this
      */
     public function min($value)
     {
@@ -319,8 +282,7 @@ class FormBuilder
      * Adds a max rule
      *
      * @param number $value
-     *
-     * @link https://www.w3.org/TR/html5/forms.html#the-min-and-max-attributes
+     * @return $this
      */
     public function max($value)
     {
@@ -331,7 +293,6 @@ class FormBuilder
      * Adds a rule
      *
      * @param Rule $rule
-     *
      * @return $this
      */
     private function rule(Rule $rule)

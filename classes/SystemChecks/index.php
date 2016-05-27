@@ -21,5 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Handling the system check.
+ *
+ * Usually only SystemCheck is used directly; all other classes in this
+ * namespace could therefore be ignored.
  */
 namespace Pfw\SystemChecks;

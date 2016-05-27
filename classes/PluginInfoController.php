@@ -22,7 +22,7 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 namespace Pfw;
 
 /**
- * Plugin info controllers
+ * %Plugin info controllers
  *
  * The plugin info controller shows information about a plugin,
  * namely version, copyright, system check and user functions.
@@ -32,9 +32,7 @@ namespace Pfw;
 class PluginInfoController extends Controller
 {
     /**
-     * Handles the default action
-     *
-     * Displays some information about the plugin.
+     * Displays information about the plugin.
      *
      * @return void
      */
@@ -64,7 +62,7 @@ class PluginInfoController extends Controller
      * Supposed to be overriden in other plugins, if these have more demanding
      * or further requirements than the plugin framework itself.
      *
-     * @return SystemCheck
+     * @return SystemChecks\SystemCheck
      */
     protected function systemCheck()
     {

@@ -29,9 +29,9 @@ use Pfw\Lang;
  * The class handles rendering and validation,
  * including displaying of error messages.
  *
- * Example:
+ * Example from a Controller method:
  *
- *      if (Request::instance()->method() != 'POST') {
+ *      if ($this->request->method() != 'POST') {
  *          // populate the form with some data
  *          $form->populate($data);
  *      } else {
@@ -40,9 +40,9 @@ use Pfw\Lang;
  *          // in case of invalid data, $data is false
  *          if ($data) {
  *              // do something with the data, e.g. store in DB
- *              process($data);
+ *              $this->process($data);
  *              // immediately redirect on success
- *              Response::instance()->redirect($url);
+ *              $this->response->seeOther($url);
  *          } else {
  *              // nothing to do here, as the form is already populated with
  *              // the posted data, which will be rendered below, including
@@ -80,14 +80,14 @@ class Form
     /**
      * The map from names to controls
      *
-     * @var Control[]
+     * @var array<Control>
      */
     private $controls;
 
     /**
      * The form data
      *
-     * @var string[]
+     * @var array<string>
      */
     private $data;
 
@@ -140,7 +140,7 @@ class Form
     /**
      * Populates the form with data
      *
-     * @param string[] $data A map
+     * @param array<string,string> $data
      *
      * @return void
      */
@@ -150,7 +150,7 @@ class Form
     }
 
     /**
-     * Returns the data (aka. value) of a certain control
+     * Returns the data (aka.\ value) of a certain control
      *
      * @param string $key Actually, the name of the control
      *

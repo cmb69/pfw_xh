@@ -27,28 +27,28 @@ namespace Pfw;
  * Every plugin that uses the plugin framework is supposed to register
  * itself as plugin exactly once, what usually should be done in index.php.
  * After that some simple properties (copyright, version) are supposed to be
- * set, and the routing to the controllers is set up (admin, func, page).
+ * set, and the @ref Route "routing" to the @ref Controller "controllers" is set up.
  * All that is preferable done using the fluent interface. For example:
  *
- *      \Pfw\Plugin::register()
+ *      \Pfw\System::registerPlugin('my_plugin')
  *          ->copyright('2016 by me')
  *          ->version('1.0')
- *          // declare that the plugin has an administration area:
+ *          // set up general routes
+ *          ->route(array(
+ *              // ...
+ *          ))
+ *          // set up routes for admin mode
  *          ->admin()
- *          // declare that there is a user function
- *          // with the name of the plugin:
- *          ->func()
- *          // declare that the plugins dynamically
- *          //creates the page "dynamic":
- *          ->page('dynamic')
+ *              ->route(array(
+ *                  // ...
+ *              ))
+ *          // declare a user function
+ *          ->func('my_plugin_do_it')
+ *              // and set up routes for this function
+ *              ->route(array(
+ *                  // ...
+ *              ))
  *      ;
- *
- * The routing implies that there are respective controllers declared
- * following a particular naming scheme. If a route is acknowledged by the
- * plugin framework, it automagically creates the respective controller
- * and calls the respective action method passing the necessary constructor
- * and action method parameters. Routes are not exclusive, i.e. multiple
- * routes can be acknowledged for a single plugin within a single request.
  */
 class Plugin
 {
@@ -218,7 +218,7 @@ class Plugin
     /**
      * Returns the names of all registered user functions
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFuncNames()
     {
@@ -230,7 +230,7 @@ class Plugin
      *
      * @param string $name A user function name
      *
-     * @return Route[]
+     * @return array<Route>
      */
     public function getFuncRoutes($name)
     {
@@ -240,7 +240,7 @@ class Plugin
     /**
      * Returns the parameters of a user function.
      *
-     * @return \ReflectionParameter[]
+     * @return array<ReflectionParameter>
      */
     public function funcParams($name)
     {
@@ -262,7 +262,7 @@ class Plugin
      *
      * @param array $route A map of query patterns to controller names
      *
-     * @return $this;
+     * @return $this
      */
     public function route(array $route)
     {

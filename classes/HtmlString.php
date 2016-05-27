@@ -25,7 +25,7 @@ namespace Pfw;
  * Simple value objects which encapsulate an HTML string.
  *
  * Encapsulating any HTML fragment as HtmlString is useful if such strings
- * will be `echo`d by a HtmlView, because the HtmlView::escape() doesn't
+ * will be `echo`d by a HtmlView, because HtmlView::escape() doesn't
  * escape HtmlStrings again.  This way we can always call HtmlView::escape()
  * regardless of whether we're dealing with text or HTML strings.
  */

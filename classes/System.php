@@ -78,11 +78,18 @@ class System
 
     /**
      * This method is for testing purposes only, so that System can be faked.
+     *
+     * @param System $system
+     * @return void
      */
     public static function loadInstance($system)
     {
         self::$instance = $system;
     }
+
+    /**
+     * @return self
+     */
     private static function instance()
     {
         if (!isset(self::$instance)) {
@@ -92,6 +99,8 @@ class System
     }
 
     /**
+     * Returns the current request.
+     *
      * @return Request
      */
     protected function request()
@@ -103,6 +112,8 @@ class System
     }
 
     /**
+     * Returns the current response.
+     *
      * @return Response
      */
     protected function response()

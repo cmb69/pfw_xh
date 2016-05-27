@@ -32,7 +32,7 @@ class ConfigAdminController extends Controller
     /**
      * Returns an appropriate file edit object
      *
-     * @return \XH_PluginConfigFileEdit
+     * @return XH_PluginConfigFileEdit
      */
     protected function createFileEdit()
     {

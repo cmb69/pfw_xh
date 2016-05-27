@@ -21,5 +21,7 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Handling of simple HTTP POST forms.
+ *
+ * Usually, only FormBuilder and Form are directly accessed.
  */
 namespace Pfw\Forms;

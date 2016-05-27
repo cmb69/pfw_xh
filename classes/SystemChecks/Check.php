@@ -38,7 +38,7 @@ abstract class Check
     /**
      * The language
      *
-     * @var Lang
+     * @var Lang $lang
      */
     protected $lang;
 
@@ -54,7 +54,7 @@ abstract class Check
     }
 
     /**
-     * Returns whether the check succeeded, i.e. the requirement is fulfilled
+     * Returns whether the check succeeded, i.e.\ the requirement is fulfilled
      *
      * @return bool
      */
@@ -68,9 +68,9 @@ abstract class Check
     abstract public function text();
 
     /**
-     * Returns the status ('success', 'warning', 'failure')
+     * Returns the status.
      *
-     * @returns string
+     * @returns string ('success', 'warning', 'failure')
      */
     public function status()
     {

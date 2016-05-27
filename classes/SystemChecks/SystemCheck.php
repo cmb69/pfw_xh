@@ -22,11 +22,11 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 namespace Pfw\SystemChecks;
 
 /**
- * System checks
+ * %System checks
  *
- * System checks are supposed to check for any requirements a plugin might
+ * %System checks are supposed to check for any requirements a plugin might
  * have. The actual checks are done by Check and its subclasses, but the
- * SystemChecks are the preferred way to build the collection of Checks.
+ * SystemCheck is the preferred way to build the collection of Checks.
  *
  * Example:
  *

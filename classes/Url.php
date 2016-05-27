@@ -34,12 +34,12 @@ namespace Pfw;
  *
  * One of the main motivations for having a plugin framework was to abstract
  * the URL handling as much as possible. This is realized by Plugin acting as
- * router and the concept of different kinds of controllers, and hopefully
+ * router and the controllers, and hopefully
  * sufficiently supported by this class. Manual construction of URLs via
- * string manipulation is therefore highly discouraged. Instead use {@see with}
- * and {@see without} or preferable where possible, {@see Controller::url()}.
+ * string manipulation is therefore highly discouraged. Instead use with()
+ * and without() an Request::url() or preferably where possible, Controller::url().
  * This is also important to not incidentially mess around with query
- * parameters set and required by other plugins. Just set and remove your
+ * parameters set and required by other plugins. Only set and remove your
  * own parameters.
  */
 class Url
@@ -122,7 +122,7 @@ class Url
     }
 
     /**
-     * Returns a new URL with a certain param
+     * Returns a new URL with a certain param set.
      *
      * @param string $param
      * @param string $value

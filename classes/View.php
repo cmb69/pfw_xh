@@ -115,8 +115,8 @@ class View
      * Calling *any* method in the template will result in a fatal error,
      * and as such prevent potential vulnerabilities, because even if
      * register_globals is enabled, it is not possible to submit an object.
-     * We're offering a dedicated method nonetheless, which describes its
-     * purpose.
+     * We're offering a dedicated method nonetheless, which clearly describes
+     * its purpose.
      */
     public function preventAccess()
     {
@@ -134,7 +134,8 @@ class View
      * identifier would be accepted as $name.  However, the template may
      * try to access these properties, but that is not possible if a real
      * property/method with this $name is defined.  Therefore we don't allow
-     * to set $names which couldn't be retrieved later.
+     * to set $names which couldn't be retrieved later, and throw a warning
+     * in this case.
      *
      * @param string $name
      * @param string $value
@@ -268,16 +269,16 @@ class View
      * Returns the properly escaped URL of the given action of the current
      * controller.
      *
-     * Actually, this is just a convenience wrapper for simple URLs to other
-     * actions.  More complex cases (such as setting additional query
-     * parameters) would require to use $this->controller->url() and manually
-     * escaping of the URL, or preferably – because we don't want to access
-     * private View properties, to pass a respective function to the view
+     * Actually, this is just a convenience wrapper for Controller::url().
+     * More complex cases (such as setting additional query
+     * parameters) would require to pass a respective function to the view
      * from the controller.
      *
      * @param string $action
      * @return string
-     * @see Controller::url()
+     *
+     * @todo Consider having a HtmlUrl which subclasses Url and overrides
+     *       __toString().
      */
     protected function url($action)
     {

@@ -23,14 +23,6 @@ namespace Pfw;
 
 /**
  * Access to the configuration of the plugins
- *
- * For instance, to check whether the `autoload` option
- * of jQuery4CMSimple is enabled, do:
- *
- *      $config = Config::instance('jquery');
- *      if ($config->get('autoload')) {
- *          ...
- *      }
  */
 class Config
 {

@@ -51,7 +51,7 @@ class PhpVersionCheck extends Check
     }
 
     /**
-     * Returns whether the check succeeded, i.e. the requirement is fulfilled
+     * Returns whether the check succeeded, i.e.\ the requirement is fulfilled
      *
      * @return bool
      */

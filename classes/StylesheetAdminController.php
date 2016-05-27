@@ -32,7 +32,7 @@ class StylesheetAdminController extends Controller
     /**
      * Returns an appropriate file edit object
      *
-     * @return \XH_PluginTextFileEdit
+     * @return XH_PluginTextFileEdit
      */
     protected function createFileEdit()
     {

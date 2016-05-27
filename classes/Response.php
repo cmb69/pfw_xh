@@ -103,7 +103,7 @@ class Response
     }
 
     /**
-     * Redirect to a URL with a certain status code and exit script
+     * Redirects to a URL with a certain status code and exit script.
      *
      * @param string $url
      * @param int    $code
