@@ -29,23 +29,10 @@ class HtmlViewTest extends TestCase
     
     private $root;
     
-    private $template = <<<EOT
-<?php echo \$foo? >
-<?php echo \$this->text('foo')? >
-<?php echo \$this->plural('bar', 3)? >
-EOT;
-
-    private $output = <<<EOT
-foo
-EOT;
-    
     public function setUp()
     {
         parent::setUp();
         $this->root = vfsStream::setup();
-        $viewFolder = $this->root->url() . DIRECTORY_SEPARATOR . 'views';
-        mkdir($viewFolder);
-        file_put_contents("$viewFolder/foo.php", str_replace('? >', '?>', $this->template));
         $controller = $this->getMockBuilder('Pfw\\Controller')
             ->disableOriginalConstructor()
             ->getMock();
@@ -63,10 +50,26 @@ EOT;
         $this->subject = new HtmlView($controller, 'foo');
     }
     
-    public function testRender()
+    public function testEscapesStrings()
     {
-        $this->subject->foo = 'foo';
-        $this->expectOutputString($this->output);
+        $this->setUpTemplate('<?php echo $this->escape($foo)? >');
+        $this->subject->foo = '<"&>';
+        $this->expectOutputString('&lt;&quot;&amp;&gt;');
         $this->subject->render();
+    }
+
+    public function testDoesNotEscapeHtmlStrings()
+    {
+        $this->setUpTemplate('<?php echo $this->escape($foo)? >');
+        $this->subject->foo = new HtmlString('<"&>');
+        $this->expectOutputString('<"&>');
+        $this->subject->render();
+    }
+    
+    private function setUpTemplate($contents)
+    {
+        $viewFolder = $this->root->url() . DIRECTORY_SEPARATOR . 'views';
+        mkdir($viewFolder);
+        file_put_contents("$viewFolder/foo.php", str_replace('? >', '?>', $contents));
     }
 }

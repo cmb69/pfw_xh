@@ -2,7 +2,7 @@
 
 /*
 Copyright 2016 Christoph M. Becker
- 
+
 This file is part of Pfw_XH.
 
 Pfw_XH is free software: you can redistribute it and/or modify
@@ -22,22 +22,34 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 namespace Pfw;
 
 /**
- * HTML views
+ * Simple value objects which encapsulate an HTML string.
+ *
+ * Encapsulating any HTML fragment as HtmlString is useful if such strings
+ * will be `echo`d by a HtmlView, because the HtmlView::escape() doesn't
+ * escape HtmlStrings again.  This way we can always call HtmlView::escape()
+ * regardless of whether we're dealing with text or HTML strings.
  */
-class HtmlView extends View
+class HtmlString
 {
+    private $contents;
+
     /**
-     * Returns a properly HTML escaped string.
+     * Constructs an instance.
      *
-     * @param string $string
+     * @param string $contents
+     */
+    public function __construct($contents)
+    {
+        $this->contents = $contents;
+    }
+
+    /**
+     * Returns the string representation.
      *
      * @return string
      */
-    protected function escape($string)
+    public function __toString()
     {
-        if ($string instanceof HtmlString) {
-            return (string) $string;
-        }
-        return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+        return $this->contents;
     }
 }
