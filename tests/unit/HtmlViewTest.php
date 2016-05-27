@@ -49,10 +49,34 @@ class HtmlViewTest extends TestCase
         $controller->expects($this->any())->method('plugin')->willReturn($plugin);
         $this->subject = new HtmlView($controller, 'foo');
     }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     */
+    public function testIllegalPropertyName()
+    {
+        $this->subject->data = 'foo';
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     */
+    public function testIllegalMethodName()
+    {
+        $this->subject->escape = 'trim';
+    }
     
     public function testEscapesStrings()
     {
         $this->setUpTemplate('<?php echo $this->escape($foo)? >');
+        $this->subject->foo = '<"&>';
+        $this->expectOutputString('&lt;&quot;&amp;&gt;');
+        $this->subject->render();
+    }
+
+    public function testAutoEscapesProperties()
+    {
+        $this->setUpTemplate('<?php echo $this->foo? >');
         $this->subject->foo = '<"&>';
         $this->expectOutputString('&lt;&quot;&amp;&gt;');
         $this->subject->render();
@@ -66,6 +90,26 @@ class HtmlViewTest extends TestCase
         $this->subject->render();
     }
     
+    public function testEscapesCallbacks()
+    {
+        $this->setUpTemplate('<?php echo $this->escape($foo())? >');
+        $this->subject->foo = function () {
+            return '<"&>';
+        };
+        $this->expectOutputString('&lt;&quot;&amp;&gt;');
+        $this->subject->render();
+    }
+
+    public function testAutoEscapesCallbackProperties()
+    {
+        $this->setUpTemplate('<?php echo $this->foo()? >');
+        $this->subject->foo = function () {
+            return '<"&>';
+        };
+        $this->expectOutputString('&lt;&quot;&amp;&gt;');
+        $this->subject->render();
+    }
+
     private function setUpTemplate($contents)
     {
         $viewFolder = $this->root->url() . DIRECTORY_SEPARATOR . 'views';

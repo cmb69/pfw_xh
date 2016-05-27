@@ -27,32 +27,26 @@ namespace Pfw;
  * Views are helper objects that render a given PHP template, i.e. `echo` it.
  * The template usually contains PHP tags, which preferably are constrained
  * to simple loops and `echo` statements. To keep logic out of the templates,
- * the controller sets arbitrary view properties, which are available in the
- * template as local variables. These properties/variables are not restricted
- * to pure data, but may actually be callables, what supports the notion of
- * views as helper objects, opposed to having to inherit from View for
- * individual views.
+ * the controller sets arbitrary view properties, which can have values of any
+ * type; notably, callables are supported.
+ *
+ * These properties are available in the template as local variables,
+ * and additionally as properties and methods, respectively, in which case they
+ * yield properly escaped strings according to the view class.
+ * Note, that all real view methods also return escaped strings.
  *
  * While the template has access to all private class members, this is
- * discouraged. Instead only the protected methods and the local variables
- * should be used.
+ * discouraged. Instead only the protected and public members and the local
+ * variables should be used.
  *
- * The output of all `echo` statements is supposed to be properly escaped.
- * A simple convention would be to explicitly escape all local variables in the
- * template. This implies that local variables never contain HTML strings,
- * what appears to be a problem in some cases. We might need an HtmlString
- * class, which could be treated specially in `escape`.
- *
- * Anyhow, complex output such as the system check or forms are probably
- * best passed to the view before they're rendered, and `render` is called
- * in the template. Language strings are automatically escaped, anyway.
- *
- * @todo Would it be preferable to access the view variables as view
- *       properties and methods, respectively (instead of as local variables)?
- *       That would make them seem to actually belong to View, what supports
- *       the notion of inheritance. On the other hand, that would result in
- *       more verbose template code.  Anyhow, if we change it, we wouldn't need
- *       View::preventAccess() anymore.
+ * To avoid XSS and garbled output (such as unescaped < in HTML) everything
+ * that's `echo`'d from the template has to be properly escaped.
+ * A simple convention supports this requirement: only `echo` view properties
+ * and the results of calling view methods (as both are already escaped), i.e.
+ * after each `echo` there should be a `$this->`.
+ * To avoid escaping of strings containing HTML, use HtmlString.
+ * Use the local variables when you don't `echo` (e.g. to iterate over them
+ * with a foreach loop), or explicitly pass them to View::escape().
  */
 class View
 {
@@ -130,21 +124,63 @@ class View
     }
 
     /**
-     * Supports setting view properties by clients
+     * Allows to set data and callbacks as properties of the view.
      *
-     * This is some PHP magic which allows clients to treat as if they
-     * were subclasses particularly created for the given template.
+     * These properties are available in the template as local variables,
+     * as well as properties of the view.  Accessing as view properties
+     * automagically escapes the (return) values.
      *
-     * All properties are available in the template as local variables.
+     * As __set() will be triggered from outside the view, any valid PHP
+     * identifier would be accepted as $name.  However, the template may
+     * try to access these properties, but that is not possible if a real
+     * property/method with this $name is defined.  Therefore we don't allow
+     * to set $names which couldn't be retrieved later.
      *
      * @param string $name
      * @param string $value
-     *
      * @return void
      */
     public function __set($name, $value)
     {
+        if (is_callable($value)) {
+            $forbidden = method_exists($this, $name);
+        } else {
+            $forbidden = property_exists($this, $name);
+        }
+        if ($forbidden) {
+            trigger_error("property $name not allowed", E_USER_WARNING);
+            return;
+        }
         $this->data[$name] = $value;
+    }
+
+    /**
+     * Allows to retrieve previously set data as view property.
+     *
+     * The data will be escaped.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function __get($name)
+    {
+        return $this->escape($this->data[$name]);
+    }
+
+    /**
+     * Allows to call previously set callbacks as view methods.
+     *
+     * The return value will be escaped.
+     *
+     * @param string $name
+     * @param array  ...$args
+     *
+     * @return string
+     */
+    public function __call($name, $args)
+    {
+        return $this->escape(call_user_func_array($this->data[$name], $args));
     }
 
     /**

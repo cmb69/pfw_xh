@@ -1,9 +1,9 @@
 <?php $this->preventAccess()?>
 <section class="pfw_about">
-    <h1><?=$this->escape($title)?></h1>
-    <img class="pfw_logo" src="<?=$this->escape($logo)?>" alt="<?=$this->text('alt_logo')?>"/>
-    <p>Version <?=$this->escape($plugin->version())?></p>
-    <p>Copyright <?=$this->escape($plugin->copyright())?></p>
+    <h1><?=$this->title?></h1>
+    <img class="pfw_logo" src="<?=$this->logo?>" alt="<?=$this->text('alt_logo')?>"/>
+    <p>Version <?=$this->escape($model->version())?></p>
+    <p>Copyright <?=$this->escape($model->copyright())?></p>
     <p class="pfw_license">
         This program is free software: you can redistribute it
         and/or modify it under the terms of the GNU General Public License as published
@@ -26,7 +26,7 @@
         <ul class="pfw_syscheck">
 <?php foreach ($systemCheck->checks() as $check):?>
             <li>
-                <img src="<?=$this->escape($statusIcon($check))?>" alt="<?=$this->text($statusAlt($check))?>">
+                <img src="<?=$this->statusIcon($check)?>" alt="<?=$this->text($statusAlt($check))?>">
                 <?=$this->escape($check->text())?>
             </li>
 <?php endforeach?>
@@ -35,8 +35,8 @@
     <section class="pfw_userfuncs">
         <h4><?=$this->text('userfunc_title')?></h4>
         <dl class="pfw_userfuncs">
-<?php foreach ($plugin->getFuncNames() as $funcName):?>
-            <dt><?=$this->escape($userFuncSignature($funcName))?></dt>
+<?php foreach ($model->getFuncNames() as $funcName):?>
+            <dt><?=$this->userFuncSignature($funcName)?></dt>
             <dd><?=$this->text("userfunc_$funcName")?></dd>
 <?php endforeach?>
         </dl>

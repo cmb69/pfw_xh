@@ -43,7 +43,7 @@ class PluginInfoController extends Controller
         $title = ucfirst($this->plugin->name());
         $this->response->setTitle($title);
         $view = $this->htmlView('info');
-        $view->plugin = $this->plugin;
+        $view->model = $this->plugin;
         $view->title = $title;
         $view->logo = $this->plugin->folder() . $this->plugin->name() . '.png';
         $view->systemCheck = $this->systemCheck();
