@@ -106,7 +106,7 @@ abstract class Controller
         if (static::DISPATCHER === null) {
             return null;
         } else {
-            return $this->plugin->name . '_' . static::DISPATCHER;
+            return $this->plugin->name() . '_' . static::DISPATCHER;
         }
     }
 
@@ -185,7 +185,7 @@ abstract class Controller
      */
     protected function formBuilder($action)
     {
-        return new FormBuilder($this->plugin->name(), $this->lang, $action);
+        return new Forms\FormBuilder($this->plugin->name(), $this->lang, $action);
     }
 
     /**
