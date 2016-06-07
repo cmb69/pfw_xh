@@ -235,6 +235,19 @@ class View
     }
 
     /**
+     * Returns the rendered template.
+     *
+     * @return string
+     * @since 0.2.0
+     */
+    public function __toString()
+    {
+        ob_start();
+        $this->render();
+        return ob_get_clean();
+    }
+
+    /**
      * Returns the path of the template file
      *
      * If the template is not found in the current plugin view folder,
