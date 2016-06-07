@@ -175,14 +175,20 @@ class FormBuilder
     }
 
     /**
-     * Adds option elements
+     * Adds option elements.
      *
-     * @param array<string> ...$options
+     * The options may be given either as a single array, or as a variable
+     * argument list consisting of strings.
+     *
+     * @param array<string> $options
      * @return $this
      */
-    public function options()
+    public function options($options)
     {
-        foreach (func_get_args() as $option) {
+        if (!is_array($options)) {
+            $options = func_get_args();
+        }
+        foreach ($options as $option) {
             $this->currentControl->addOption($option);
         }
         return $this;
