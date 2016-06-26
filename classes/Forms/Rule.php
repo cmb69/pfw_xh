@@ -21,6 +21,7 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
 use Pfw\Lang;
 
 /**
@@ -59,11 +60,11 @@ abstract class Rule
     /**
      * Renders the rule as attribute of the given element
      *
-     * @param \SimpleXMLElement $sxe
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    abstract public function render(\SimpleXMLElement $sxe);
+    abstract public function render(XMLWriter $writer);
 
     /**
      * Returns whether the rule is fulfilled
@@ -77,10 +78,25 @@ abstract class Rule
     /**
      * Renders a validation error message
      *
-     * @param float             $value The actual value
-     * @param \SimpleXMLElement $field
+     * @param float     $value The actual value
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    abstract public function renderValidationError($value, \SimpleXMLElement $field);
+    abstract public function renderValidationError($value, XMLWriter $writer);
+
+    /**
+     * Actually renders a validation error message
+     *
+     * @param string $text
+     * @param XMLWriter $writer
+     * @return void
+     */
+    protected function doRenderValidationError($text, XMLWriter $writer)
+    {
+        $writer->startElement('div');
+        $writer->writeAttribute('class', 'pfw_validation_error');
+        $writer->text($text);
+        $writer->endElement();
+    }
 }

@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * CSRF protection form controls
  */
@@ -29,20 +31,21 @@ class CsrfControl extends Control
     /**
      * Renders the control
      *
-     * @param \SimpleXMLElement $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function render(\SimpleXMLElement $form)
+    public function render(XMLWriter $writer)
     {
         global $_XH_csrfProtection;
 
         $html = $_XH_csrfProtection->tokenInput();
         preg_match('/value="([a-z0-9]+)"/', $html, $matches);
-        $input = $form->addChild('input');
-        $input->addAttribute('type', 'hidden');
-        $input->addAttribute('name', 'xh_csrf_token');
-        $input->addAttribute('value', $matches[1]);
+        $writer->startElement('input');
+        $writer->writeAttribute('type', 'hidden');
+        $writer->writeAttribute('name', 'xh_csrf_token');
+        $writer->writeAttribute('value', $matches[1]);
+        $writer->endElement();
     }
 
     /**

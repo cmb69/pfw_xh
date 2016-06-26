@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Textarea form controls
  */
@@ -29,18 +31,21 @@ class TextareaControl extends Control
     /**
      * Renders the control
      *
-     * @param \SimpleXMLElement $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function render(\SimpleXMLElement $form)
+    public function render(XMLWriter $writer)
     {
-        $field = $form->addChild('div');
-        $this->renderLabel($field);
-        $textarea = $field->addChild('textarea', $this->data());
-        $textarea->addAttribute('id', $this->id());
-        $textarea->addAttribute('name', $this->name());
-        $this->renderRuleAttributes($textarea);
-        $this->renderValidationErrors($field);
+        $writer->startElement('div');
+        $this->renderLabel($writer);
+        $writer->startElement('textarea');
+        $writer->writeAttribute('id', $this->id());
+        $writer->writeAttribute('name', $this->name());
+        $this->renderRuleAttributes($writer);
+        $writer->text($this->data());
+        $writer->endElement();
+        $this->renderValidationErrors($writer);
+        $writer->endElement();
     }
 }

@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Button form controls
  */
@@ -29,15 +31,18 @@ class ButtonControl extends Control
     /**
      * Renders the control
      *
-     * @param \SimpleXMLElement $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function render(\SimpleXMLElement $form)
+    public function render(XMLWriter $writer)
     {
-        $field = $form->addChild('div');
+        $writer->startElement('div');
         $label = "label_{$this->name}";
-        $button = $field->addChild('button', $this->lang->singular($label));
-        $button->addAttribute('name', $this->name());
+        $writer->startElement('button');
+        $writer->writeAttribute('name', $this->name());
+        $writer->text($this->lang->singular($label));
+        $writer->endElement();
+        $writer->endElement();
     }
 }

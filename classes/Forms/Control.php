@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Form controls
  */
@@ -130,23 +132,25 @@ abstract class Control
      * The control is rendered inside a `<div>` with a `<label>` and
      * additional elements, where appropriate.
      *
-     * @param \SimpleXMLElement $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    abstract public function render(\SimpleXMLElement $form);
+    abstract public function render(XMLWriter $writer);
 
     /**
      * Renders the control's label
      *
-     * @param \SimpleXMLElement $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    protected function renderLabel(\SimpleXMLElement $form)
+    protected function renderLabel(XMLWriter $writer)
     {
-        $label = $form->addChild('label', $this->label());
-        $label->addAttribute('for', $this->id());
+        $writer->startElement('label');
+        $writer->writeAttribute('for', $this->id());
+        $writer->text($this->label());
+        $writer->endElement();
     }
 
     /**
@@ -169,14 +173,14 @@ abstract class Control
     /**
      * Renders the attributes of all attached rules
      *
-     * @param \SimpleXMLElement $control
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    protected function renderRuleAttributes(\SimpleXMLElement $control)
+    protected function renderRuleAttributes(XMLWriter $writer)
     {
         foreach ($this->rules as $rule) {
-            $rule->render($control);
+            $rule->render($writer);
         }
     }
 
@@ -198,16 +202,16 @@ abstract class Control
     /**
      * Renders the validation error messages, if any
      *
-     * @param \SimpleXMLElement $field
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function renderValidationErrors(\SimpleXMLElement $field)
+    public function renderValidationErrors(XMLWriter $writer)
     {
         if ($this->form->validated()) {
             foreach ($this->rules as $rule) {
                 if (!$rule->validate($this->data())) {
-                    $rule->renderValidationError($this->data(), $field);
+                    $rule->renderValidationError($this->data(), $writer);
                 }
             }
         }

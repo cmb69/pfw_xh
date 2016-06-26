@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Select form controls
  */
@@ -48,24 +50,28 @@ class SelectControl extends Control
     /**
      * Renders the control
      *
-     * @param \SimpleXMLElement $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function render(\SimpleXMLElement $form)
+    public function render(XMLWriter $writer)
     {
-        $field = $form->addChild('div');
-        $this->renderLabel($field);
-        $select = $field->addChild('select');
-        $select->addAttribute('id', $this->id());
-        $select->addAttribute('name', $this->name());
+        $writer->startElement('div');
+        $this->renderLabel($writer);
+        $writer->startElement('select');
+        $writer->writeAttribute('id', $this->id());
+        $writer->writeAttribute('name', $this->name());
         foreach ($this->options as $option) {
-            $option = $select->addChild('option', $option);
+            $writer->startElement('option');
             if ($this->data() == $option) {
-                $option->addAttribute('selected', 'selected');
+                $writer->writeAttribute('selected', 'selected');
             }
+            $writer->text($option);
+            $writer->endElement();
         }
-        $this->renderRuleAttributes($select);
-        $this->renderValidationErrors($field);
+        $this->renderRuleAttributes($writer);
+        $writer->endElement();
+        $this->renderValidationErrors($writer);
+        $writer->endElement();
     }
 }

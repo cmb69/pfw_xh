@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Password input form controls
  */
@@ -29,12 +31,12 @@ class PasswordControl extends InputControl
     /**
      * Renders the type attribute of the input
      *
-     * @param \SimpleXMLElement $sxe
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function renderTypeAttribute(\SimpleXMLElement $sxe)
+    public function renderTypeAttribute(XMLWriter $writer)
     {
-        $sxe->addAttribute('type', 'password');
+        $writer->writeAttribute('type', 'password');
     }
 }

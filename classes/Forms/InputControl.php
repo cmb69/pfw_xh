@@ -21,28 +21,40 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Simple input form controls
  */
-class InputControl extends Control
+abstract class InputControl extends Control
 {
     /**
      * Renders the control
      *
-     * @param \SimpleXMLElement $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function render(\SimpleXMLElement $form)
+    public function render(XMLWriter $writer)
     {
-        $field = $form->addChild('div');
-        $this->renderLabel($field);
-        $input = $field->addChild('input');
-        $input->addAttribute('id', $this->id());
-        $this->renderTypeAttribute($input);
-        $input->addAttribute('name', $this->name());
-        $input->addAttribute('value', $this->data());
-        $this->renderRuleAttributes($input);
-        $this->renderValidationErrors($field);
+        $writer->startElement('div');
+        $this->renderLabel($writer);
+        $writer->startElement('input');
+        $writer->writeAttribute('id', $this->id());
+        $this->renderTypeAttribute($writer);
+        $writer->writeAttribute('name', $this->name());
+        $writer->writeAttribute('value', $this->data());
+        $this->renderRuleAttributes($writer);
+        $writer->endElement();
+        $this->renderValidationErrors($writer);
+        $writer->endElement();
     }
+
+    /**
+     * Renders the type attribute
+     *
+     * @param XMLWriter $writer
+     * @return void
+     */
+    abstract protected function renderTypeAttribute(XMLWriter $writer);
 }

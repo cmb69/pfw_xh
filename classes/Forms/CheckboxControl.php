@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Checkbox input form controls
  */
@@ -34,27 +36,30 @@ class CheckboxControl extends Control
      * name just before the checkbox. Thanks for svasti to making me aware
      * of this trick.
      *
-     * @param Form $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function render(\SimpleXMLElement $form)
+    public function render(XMLWriter $writer)
     {
-        $field = $form->addChild('div');
-        $this->renderLabel($field);
-        $hidden = $field->addChild('input');
-        $hidden->addAttribute('type', 'hidden');
-        $hidden->addAttribute('name', $this->name());
-        $hidden->addAttribute('value', '');
-        $checkbox = $field->addChild('input');
-        $checkbox->addAttribute('id', $this->id());
-        $checkbox->addAttribute('type', 'checkbox');
-        $checkbox->addAttribute('name', $this->name());
-        $checkbox->addAttribute('value', '1');
+        $writer->startElement('div');
+        $this->renderLabel($writer);
+        $writer->startElement('input');
+        $writer->writeAttribute('type', 'hidden');
+        $writer->writeAttribute('name', $this->name());
+        $writer->writeAttribute('value', '');
+        $writer->endElement();
+        $writer->startElement('input');
+        $writer->writeAttribute('id', $this->id());
+        $writer->writeAttribute('type', 'checkbox');
+        $writer->writeAttribute('name', $this->name());
+        $writer->writeAttribute('value', '1');
         if ($this->data()) {
-            $checkbox->addAttribute('checked', 'checked');
+            $writer->writeAttribute('checked', 'checked');
         }
-        $this->renderRuleAttributes($checkbox);
-        $this->renderValidationErrors($field);
+        $writer->endElement();
+        $this->renderRuleAttributes($writer);
+        $this->renderValidationErrors($writer);
+        $writer->endElement();
     }
 }

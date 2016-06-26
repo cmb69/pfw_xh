@@ -21,6 +21,7 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
 use Pfw\Lang;
 
 /**
@@ -169,15 +170,17 @@ class Form
      */
     public function render()
     {
-        $form = new \SimpleXMLElement('<form/>');
-        $form->addAttribute('method', 'POST');
-        $form->addAttribute('action', $this->action);
-        $form->addAttribute('class', "{$this->prefix}_form");
+        $writer = new XMLWriter();
+        $writer->openMemory();
+        $writer->startElement('form');
+        $writer->writeAttribute('method', 'POST');
+        $writer->writeAttribute('action', $this->action);
+        $writer->writeAttribute('class', "{$this->prefix}_form");
         foreach ($this->controls as $control) {
-            $control->render($form);
+            $control->render($writer);
         }
-        $element = dom_import_simplexml($form);
-        return $element->C14N();
+        $writer->endElement();
+        return $writer->outputMemory();
     }
 
     /**

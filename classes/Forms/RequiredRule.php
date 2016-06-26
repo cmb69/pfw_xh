@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Rules stating a non-empty requirement
  *
@@ -31,13 +33,13 @@ class RequiredRule extends Rule
     /**
      * Renders the rule as attribute of the given element
      *
-     * @param \SimpleXMLElement $sxe
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function render(\SimpleXMLElement $sxe)
+    public function render(XMLWriter $writer)
     {
-        $sxe->addAttribute('required', 'required');
+        $writer->writeAttribute('required', 'required');
     }
 
     /**
@@ -55,15 +57,16 @@ class RequiredRule extends Rule
     /**
      * Renders a validation error message
      *
-     * @param float             $value The actual value
-     * @param \SimpleXMLElement $field
+     * @param float     $value The actual value
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function renderValidationError($value, \SimpleXMLElement $field)
+    public function renderValidationError($value, XMLWriter $writer)
     {
-        $text = $this->lang->singular('validation_required', $this->control->label());
-        $div = $field->addChild('div', $text);
-        $div->addAttribute('class', 'pfw_validation_error');
+        $this->doRenderValidationError(
+            $this->lang->singular('validation_required', $this->control->label()),
+            $writer
+        );
     }
 }

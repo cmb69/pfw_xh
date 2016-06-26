@@ -21,6 +21,8 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw\Forms;
 
+use XMLWriter;
+
 /**
  * Hidden input form controls
  */
@@ -29,13 +31,13 @@ class HiddenControl extends InputControl
     /**
      * Renders the type attribute of the input
      *
-     * @param \SimpleXMLElement $sxe
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function renderTypeAttribute(\SimpleXMLElement $sxe)
+    public function renderTypeAttribute(XMLWriter $writer)
     {
-        $sxe->addAttribute('type', 'hidden');
+        $writer->writeAttribute('type', 'hidden');
     }
 
     /**
@@ -43,11 +45,11 @@ class HiddenControl extends InputControl
      *
      * As hidden input controls don't need a label, we simply do nothing here.
      *
-     * @param \SimpleXMLElement $form
+     * @param XMLWriter $writer
      *
      * @return void
      */
-    public function renderLabel(\SimpleXMLElement $form)
+    public function renderLabel(XMLWriter $writer)
     {
         // do nothing
     }
