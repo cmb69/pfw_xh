@@ -211,7 +211,6 @@ class View
      * Returns the rendered template.
      *
      * @return string
-     * @since 0.2.0
      */
     public function __toString()
     {
