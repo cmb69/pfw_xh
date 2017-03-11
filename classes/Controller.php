@@ -38,7 +38,7 @@ abstract class Controller
      *
      * @see getDispatcher()
      */
-    const DISPATCHER = null;
+    const DISPATCHER = '';
 
     /**
      * The plugin
@@ -103,7 +103,7 @@ abstract class Controller
      */
     public function getDispatcher()
     {
-        if (static::DISPATCHER === null) {
+        if (static::DISPATCHER === '') {
             return null;
         } else {
             return $this->plugin->getName() . '_' . static::DISPATCHER;
