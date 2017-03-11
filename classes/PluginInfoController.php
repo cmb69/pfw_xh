@@ -51,7 +51,6 @@ class PluginInfoController extends Controller
                 'statusAlt' => 'syscheck_alt_' . $check->status()
             );
         }, $this->systemCheck()->checks());
-        $plugin = $this->plugin;
         $view->userFuncs = array_map(function ($funcName) {
             return (object) ['name' => $funcName, 'signature' => $this->userFuncSignature($funcName)];
         }, $this->plugin->getFuncNames());
