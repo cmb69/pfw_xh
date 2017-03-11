@@ -97,7 +97,7 @@ class Form
      *
      * @var bool
      */
-    private $validated;
+    private $isValidated;
 
     /**
      * Constructs an instance
