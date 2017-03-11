@@ -123,8 +123,3 @@ function toUpper($string)
 {
     return strtoupper($string);
 }
-
-function stsl($string)
-{
-    return $string;
-}

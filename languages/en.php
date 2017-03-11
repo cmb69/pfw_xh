@@ -10,7 +10,6 @@ $plugin_tx['pfw']['alt_logo']="Magic wand";
 $plugin_tx['pfw']['syscheck_title']="System Check";
 $plugin_tx['pfw']['syscheck_phpversion']="PHP Version ≥ %s";
 $plugin_tx['pfw']['syscheck_extension']="PHP extension %s loaded";
-$plugin_tx['pfw']['syscheck_magic_quotes']="Magic quotes runtime off";
 $plugin_tx['pfw']['syscheck_xhversion']="CMSimple_XH version ≥ %s";
 $plugin_tx['pfw']['syscheck_writable']="%s is writable";
 $plugin_tx['pfw']['syscheck_alt_success']="Success";

@@ -56,15 +56,6 @@ class SystemCheckTest extends TestCase
         $this->firstCheck()->text();
     }
     
-    public function testNoMagicQuotes()
-    {
-        $this->subject->mandatory()->noMagicQuotes();
-        $this->assertEquals('success', $this->firstCheck()->status());
-        System::lang('pfw')->expects($this->once())->method('get')
-            ->with('syscheck_magic_quotes');
-        $this->firstCheck()->text();
-    }
-    
     public function testXhVersion()
     {
         $this->subject->mandatory()->xhVersion('1.6');

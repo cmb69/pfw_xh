@@ -115,19 +115,6 @@ class SystemCheck
     }
 
     /**
-     * Checks that magic_quotes_runtime is off
-     *
-     * @return $this
-     */
-    public function noMagicQuotes()
-    {
-        $this->addCheck(
-            new NoMagicQuotesCheck($this->isMandatory)
-        );
-        return $this;
-    }
-
-    /**
      * Checks for a minimum CMSimple_XH version
      *
      * @param string $requiredVersion

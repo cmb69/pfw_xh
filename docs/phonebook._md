@@ -267,14 +267,13 @@ Obviously, this requires a save action in our main controller:
     public function handleSave()
     {
         $filename = $this->contentFolder() . 'phonebook.json';
-        $contents = stsl($_POST['phonebook_contents']);
+        $contents = _POST['phonebook_contents'];
         file_put_contents($filename, $contents);
         $this->seeOther($this->url('text'));
     }
 
 We simply write the posted contents to our `phonebook.json` file.
-Note that we use stsl() to counter the effects of magic_quotes_gpc,
-and that we make use of the post/redirect/get pattern.
+Note that we make use of the post/redirect/get pattern.
 Error handling is omitted for brevity.
 
 To use this save handler, we finally have to enter the edit form's `action`
