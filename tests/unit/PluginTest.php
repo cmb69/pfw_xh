@@ -1,7 +1,7 @@
 <?php
 
 /*
-Copyright 2016 Christoph M. Becker
+Copyright 2016-2017 Christoph M. Becker
  
 This file is part of Pfw_XH.
 
@@ -65,7 +65,7 @@ class PluginTest extends TestCase
 
     public function testCopyright()
     {
-        $copyright = '2016 Christoph M. Becker';
+        $copyright = '2016-2017 Christoph M. Becker';
         $this->subject->copyright($copyright);
         $this->assertEquals($copyright, $this->subject->copyright());
     }

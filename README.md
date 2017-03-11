@@ -3,7 +3,7 @@ Pfw_XH
 
 A plugin framework for CMSimple_XH packaged as a CMSimple_XH plugin.
 
-Copyright 2016 Christoph M. Becker
+Copyright 2016-2017 Christoph M. Becker
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

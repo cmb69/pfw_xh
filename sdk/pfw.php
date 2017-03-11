@@ -1,7 +1,7 @@
 <?php
 
 /*
-Copyright 2016 Christoph M. Becker
+Copyright 2016-2017 Christoph M. Becker
  
 This file is part of Pfw_XH.
 
@@ -29,7 +29,7 @@ if (isset($options['v'])) {
     echo <<<EOT
 PFW_XH @PFW_VERSION@
 
-Copyright 2016 Christoph M. Becker
+Copyright 2016-2017 Christoph M. Becker
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

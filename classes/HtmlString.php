@@ -1,7 +1,7 @@
 <?php
 
 /*
-Copyright 2016 Christoph M. Becker
+Copyright 2016-2017 Christoph M. Becker
 
 This file is part of Pfw_XH.
 
