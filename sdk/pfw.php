@@ -48,8 +48,7 @@ EOT;
     exit;
 }
 if (isset($options['g'])) {
-    $generator = new PluginGenerator($options['g'], isset($options['c']));
-    $generator->plugin();
+    (new PluginGenerator($options['g'], isset($options['c'])))->plugin();
     exit;
 }
 echo <<<EOT

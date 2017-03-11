@@ -30,8 +30,7 @@ namespace Pfw\SystemChecks;
  *
  * Example:
  *
- *      $systemCheck = new SystemCheck();
- *      echo $systemCheck
+ *      echo (new SystemCheck)
  *          ->mandatory()
  *              ->phpVersion('5.3')
  *          ->optional()

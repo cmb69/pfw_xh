@@ -46,8 +46,8 @@ class PluginInfoController extends Controller
         $view->logo = $this->plugin->folder() . $this->plugin->name() . '.png';
         $view->systemCheck = $this->systemCheck();
         $plugin = $this->plugin;
-        $view->statusIcon = function ($check) use ($plugin) {
-            return System::plugin('pfw')->folder() . 'images/' . $check->status() . '.png';
+        $view->statusIcon = function ($check) {
+            return $this->plugin->folder() . 'images/' . $check->status() . '.png';
         };
         $view->statusAlt = function ($check) {
             return 'syscheck_alt_' . $check->status();
@@ -66,8 +66,7 @@ class PluginInfoController extends Controller
      */
     protected function systemCheck()
     {
-        $systemCheck = new SystemChecks\SystemCheck();
-        return $systemCheck
+        return (new SystemChecks\SystemCheck)
             ->mandatory()
                 ->phpVersion('5.3')
                 ->extension('SimpleXML')
@@ -77,10 +76,9 @@ class PluginInfoController extends Controller
     
     private function userFuncSignatureFunc()
     {
-        $plugin = $this->plugin;
-        return function ($functionName) use ($plugin) {
+        return function ($functionName) {
             $params = array();
-            foreach ($plugin->funcParams($functionName) as $param) {
+            foreach ($this->plugin->funcParams($functionName) as $param) {
                 $params[] = $param->getName();
             }
             return sprintf('%s(%s)', $functionName, implode(', ', $params));

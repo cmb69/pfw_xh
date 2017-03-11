@@ -74,8 +74,7 @@ class Route
     public function controllerParams()
     {
         foreach ($this->map as $controllerName) {
-            $class = new \ReflectionClass($controllerName);
-            return $class->getConstructor()->getParameters();
+            return (new \ReflectionClass($controllerName))->getConstructor()->getParameters();
         }
     }
     
@@ -172,8 +171,7 @@ class Route
         } else {
             $params = array($this->plugin);
         }
-        $class = new \ReflectionClass($controllerName);
-        return $class->newInstanceArgs($params);
+        return (new \ReflectionClass($controllerName))->newInstanceArgs($params);
     }
 
     /**
