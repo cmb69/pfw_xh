@@ -29,15 +29,14 @@ class HtmlView extends View
     /**
      * Returns a properly HTML escaped string.
      *
-     * @param string $string
-     *
+     * @param mixed $value
      * @return string
      */
-    protected function escape($string)
+    protected function escape($value)
     {
-        if ($string instanceof HtmlString) {
-            return (string) $string;
+        if ($value instanceof HtmlString) {
+            return (string) $value;
         }
-        return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+        return htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
     }
 }

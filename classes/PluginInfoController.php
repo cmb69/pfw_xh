@@ -44,15 +44,17 @@ class PluginInfoController extends Controller
         $view->model = $this->plugin;
         $view->title = $title;
         $view->logo = $this->plugin->folder() . $this->plugin->name() . '.png';
-        $view->systemCheck = $this->systemCheck();
+        $view->checks = array_map(function ($check) {
+            return (object) array(
+                'text' => $check->text(),
+                'statusIcon' => $this->plugin->folder() . 'images/' . $check->status() . '.png',
+                'statusAlt' => 'syscheck_alt_' . $check->status()
+            );
+        }, $this->systemCheck()->checks());
         $plugin = $this->plugin;
-        $view->statusIcon = function ($check) {
-            return $this->plugin->folder() . 'images/' . $check->status() . '.png';
-        };
-        $view->statusAlt = function ($check) {
-            return 'syscheck_alt_' . $check->status();
-        };
-        $view->userFuncSignature = $this->userFuncSignatureFunc();
+        $view->userFuncs = array_map(function ($funcName) {
+            return (object) ['name' => $funcName, 'signature' => $this->userFuncSignature($funcName)];
+        }, $this->plugin->getFuncNames());
         $view->render();
     }
     
@@ -72,15 +74,17 @@ class PluginInfoController extends Controller
                 ->extension('XMLWriter')
                 ->xhVersion('1.6');
     }
-    
-    private function userFuncSignatureFunc()
+
+    /**
+     * @param string $functionName
+     * @return string
+     */
+    private function userFuncSignature($functionName)
     {
-        return function ($functionName) {
-            $params = [];
-            foreach ($this->plugin->funcParams($functionName) as $param) {
-                $params[] = $param->getName();
-            }
-            return sprintf('%s(%s)', $functionName, implode(', ', $params));
-        };
+        $params = [];
+        foreach ($this->plugin->funcParams($functionName) as $param) {
+            $params[] = $param->getName();
+        }
+        return sprintf('%s(%s)', $functionName, implode(', ', $params));
     }
 }

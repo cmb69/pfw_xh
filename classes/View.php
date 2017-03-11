@@ -27,26 +27,23 @@ namespace Pfw;
  * Views are helper objects that render a given PHP template, i.e. `echo` it.
  * The template usually contains PHP tags, which preferably are constrained
  * to simple loops and `echo` statements. To keep logic out of the templates,
- * the controller sets arbitrary view properties, which can have values of any
- * type; notably, callables are supported.
+ * the controller sets arbitrary view properties.
  *
- * These properties are available in the template as local variables,
- * and additionally as properties and methods, respectively, in which case they
- * yield properly escaped strings according to the view class.
+ * These properties are available in the template as properties of `$this`,
+ * and additionally as methods, in which case they
+ * return properly escaped strings according to the view class.
  * Note, that all real view methods also return escaped strings.
  *
- * While the template has access to all private class members, this is
- * discouraged. Instead only the protected and public members and the local
- * variables should be used.
+ * While the template has access to all private class members, using these is
+ * discouraged. Instead only the protected and public members should be used.
  *
  * To avoid XSS and garbled output (such as unescaped < in HTML) everything
  * that's `echo`'d from the template has to be properly escaped.
- * A simple convention supports this requirement: only `echo` view properties
- * and the results of calling view methods (as both are already escaped), i.e.
- * after each `echo` there should be a `$this->`.
+ * A simple convention supports this requirement: only `echo`
+ * the results of calling view methods (as these are already escaped).
  * To avoid escaping of strings containing HTML, use HtmlString.
- * Use the local variables when you don't `echo` (e.g. to iterate over them
- * with a foreach loop), or explicitly pass them to View::escape().
+ * Use the properties when you don't `echo` (e.g. to iterate over them
+ * with a foreach loop).
  */
 class View
 {
@@ -81,8 +78,6 @@ class View
     /**
      * The store for the supplied properties
      *
-     * This are available in the template as local variables.
-     *
      * @var array
      *
      * @see __set()
@@ -105,11 +100,10 @@ class View
     }
     
     /**
-     * Allows to set data and callbacks as properties of the view.
+     * Allows to set data as properties and methods of the view.
      *
-     * These properties are available in the template as local variables,
-     * as well as properties of the view.  Accessing as view properties
-     * automagically escapes the (return) values.
+     * These data are available as properties and methods of the view.
+     * Accessing them as view methods automagically escapes the values.
      *
      * As __set() will be triggered from outside the view, any valid PHP
      * identifier would be accepted as $name.  However, the template may
@@ -124,12 +118,7 @@ class View
      */
     public function __set($name, $value)
     {
-        if (is_callable($value)) {
-            $forbidden = method_exists($this, $name);
-        } else {
-            $forbidden = property_exists($this, $name);
-        }
-        if ($forbidden) {
+        if (property_exists($this, $name) || method_exists($this, $name)) {
             trigger_error("property $name not allowed", E_USER_WARNING);
             return;
         }
@@ -137,44 +126,50 @@ class View
     }
 
     /**
-     * Allows to retrieve previously set data as view property.
-     *
-     * The data will be escaped.
+     * Checks whether a certain data item has been assigned and is not null.
      *
      * @param string $name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return isset($this->data[$name]);
+    }
+
+    /**
+     * Allows to retrieve previously set data as view property.
      *
-     * @return string
+     * The data will be returned as set.
+     *
+     * @param string $name
+     * @return mixed
      */
     public function __get($name)
+    {
+        return $this->data[$name];
+    }
+
+    /**
+     * Allows to retrieve previously set data as view method.
+     *
+     * The data value will be escaped.
+     *
+     * @param string $name
+     * @return string
+     */
+    public function __call($name, $args)
     {
         return $this->escape($this->data[$name]);
     }
 
     /**
-     * Allows to call previously set callbacks as view methods.
-     *
-     * The return value will be escaped.
-     *
-     * @param string $name
-     * @param array  ...$args
-     *
-     * @return string
-     */
-    public function __call($name, $args)
-    {
-        return $this->escape(call_user_func_array($this->data[$name], $args));
-    }
-
-    /**
      * Returns an escaped language string
      *
-     * Additional paramters are processed in an sprintf style.
+     * Additional parameters are processed in an sprintf style.
      *
      * @param string $key
      * @param array  ...$args
-     *
      * @return string
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function text($key)
@@ -187,14 +182,12 @@ class View
     /**
      * Returns an escaped pluralized language string
      *
-     * Additional paramters are processed in an sprintf style.
+     * Additional parameters are processed in an sprintf style.
      *
      * @param string $key
      * @param int    $count
      * @param array  ...$args
-     *
      * @return string
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function plural($key, $count)
@@ -211,7 +204,6 @@ class View
      */
     public function render()
     {
-        extract($this->data);
         include $this->templatePath();
     }
 
@@ -251,7 +243,6 @@ class View
      * This base implementation simply returns the string as is.
      *
      * @param string $string
-     *
      * @return string
      */
     protected function escape($string)
@@ -265,7 +256,7 @@ class View
      *
      * Actually, this is just a convenience wrapper for Controller::url().
      * More complex cases (such as setting additional query
-     * parameters) would require to pass a respective function to the view
+     * parameters) would require to pass an appropriate URL to the view
      * from the controller.
      *
      * @param string $action

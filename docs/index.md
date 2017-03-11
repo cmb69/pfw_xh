@@ -107,8 +107,8 @@ which outlines the structure of the output,
 whereby PHP tags are used to insert indidual content.
 While it would be possible to put complex logic into the template,
 this is frowned upon.
-Instead view related logic should be passed as callbacks from the controller
-to the view or a view helper object should be employed.
+Instead view related logic should be handled in the controller by passing
+prepared data transfer objects to the view, or a view helper object should be employed.
 So views are supposed to consist only of `echo` statements, `foreach` loops,
 and occassionaly a few `if` statements.
 
@@ -122,11 +122,9 @@ create view
 controller -> view : htmlView('template.php')
 loop
     controller -> view : data = "..."
-    controller -> view : func = function () {}
 end
 controller -> view : render()
 activate view
-view -> view : extract()
 view -> views : include 'template.php'
 deactivate view
 

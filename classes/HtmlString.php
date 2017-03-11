@@ -40,7 +40,7 @@ class HtmlString
      */
     public function __construct($contents)
     {
-        $this->contents = $contents;
+        $this->contents = (string) $contents;
     }
 
     /**
