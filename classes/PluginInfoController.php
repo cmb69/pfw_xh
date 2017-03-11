@@ -69,7 +69,7 @@ class PluginInfoController extends Controller
         return (new SystemChecks\SystemCheck)
             ->mandatory()
                 ->phpVersion('5.4.0')
-                ->extension('SimpleXML')
+                ->extension('XMLWriter')
                 ->xhVersion('1.6');
     }
     
