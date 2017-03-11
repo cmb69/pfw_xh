@@ -50,7 +50,7 @@ class DocumentStore
      *
      * @return string[]
      */
-    public function names()
+    public function getNames()
     {
         $names = [];
         foreach (scandir($this->folder) as $basename) {
@@ -70,7 +70,7 @@ class DocumentStore
      */
     public function exists($basename)
     {
-        return file_exists($this->filenameOf($basename));
+        return file_exists($this->getFilenameOf($basename));
     }
 
     /**
@@ -83,13 +83,13 @@ class DocumentStore
      */
     public function insert($basename, Document $document)
     {
-        $filename = $this->filenameOf($basename);
+        $filename = $this->getFilenameOf($basename);
         $stream = fopen($filename, 'x');
         if (!$stream) {
             return false;
         }
         flock($stream, LOCK_EX);
-        fwrite($stream, $document->contents());
+        fwrite($stream, $document->getContents());
         flock($stream, LOCK_UN);
         fclose($stream);
         return true;
@@ -104,7 +104,7 @@ class DocumentStore
      */
     public function find($basename)
     {
-        $stream = fopen($this->filenameOf($basename), 'r');
+        $stream = fopen($this->getFilenameOf($basename), 'r');
         if (!$stream) {
             return false;
         }
@@ -126,21 +126,21 @@ class DocumentStore
      */
     public function update($basename, Document $document)
     {
-        $stream = fopen($this->filenameOf($basename), 'r+');
+        $stream = fopen($this->getFilenameOf($basename), 'r+');
         if (!$stream) {
             return false;
         }
         flock($stream, LOCK_EX);
         $contents = stream_get_contents($stream);
         $token = md5($contents);
-        if ($token == $document->token()) {
+        if ($token == $document->getToken()) {
             rewind($stream);
-            fwrite($stream, $document->contents());
+            fwrite($stream, $document->getContents());
             ftruncate($stream, ftell($stream));
         }
         flock($stream, LOCK_UN);
         fclose($stream);
-        return $token == $document->token();
+        return $token == $document->getToken();
     }
 
     /**
@@ -153,7 +153,7 @@ class DocumentStore
      */
     public function delete($basename, Document $document)
     {
-        $stream = fopen($this->filenameOf($basename), 'r+');
+        $stream = fopen($this->getFilenameOf($basename), 'r+');
         if (!$stream) {
             return false;
         }
@@ -162,8 +162,8 @@ class DocumentStore
         flock($stream, LOCK_UN);
         fclose($stream);
         $token = md5($contents);
-        if ($token == $document->token()) {
-            return unlink($this->filenameOf($basename));
+        if ($token == $document->getToken()) {
+            return unlink($this->getFilenameOf($basename));
         }
         return false;
     }
@@ -172,7 +172,7 @@ class DocumentStore
      * @param string $basename
      * @return string
      */
-    private function filenameOf($basename)
+    private function getFilenameOf($basename)
     {
         return $this->folder . DIRECTORY_SEPARATOR . $basename;
     }

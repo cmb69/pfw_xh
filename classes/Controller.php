@@ -86,10 +86,10 @@ abstract class Controller
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
-        $this->request = System::request();
-        $this->response = System::response();
-        $this->config = $plugin->config();
-        $this->lang = $plugin->lang();
+        $this->request = System::getRequest();
+        $this->response = System::getResponse();
+        $this->config = $plugin->getConfig();
+        $this->lang = $plugin->getLang();
     }
     
     /**
@@ -106,7 +106,7 @@ abstract class Controller
         if (static::DISPATCHER === null) {
             return null;
         } else {
-            return $this->plugin->name() . '_' . static::DISPATCHER;
+            return $this->plugin->getName() . '_' . static::DISPATCHER;
         }
     }
 
@@ -185,7 +185,7 @@ abstract class Controller
      */
     protected function formBuilder($action)
     {
-        return new Forms\FormBuilder($this->plugin->name(), $this->lang, $action);
+        return new Forms\FormBuilder($this->plugin->getName(), $this->lang, $action);
     }
 
     /**
@@ -201,7 +201,7 @@ abstract class Controller
      */
     public function seeOther(Url $url)
     {
-        $this->response->redirect($url->absolute(), 303);
+        $this->response->redirect($url->getAbsolute(), 303);
     }
 
     /**

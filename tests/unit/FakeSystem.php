@@ -33,7 +33,7 @@ class FakeSystem extends \PHPUnit_Framework_TestCase
     
     private $langs = [];
     
-    public function request()
+    public function getRequest()
     {
         if (!isset($this->request)) {
             $this->request = $this->getMockBuilder('Pfw\\Request')
@@ -43,7 +43,7 @@ class FakeSystem extends \PHPUnit_Framework_TestCase
         return $this->request;
     }
     
-    public function response()
+    public function getResponse()
     {
         if (!isset($this->response)) {
             $this->response = $this->getMockBuilder('Pfw\\Response')
@@ -53,7 +53,7 @@ class FakeSystem extends \PHPUnit_Framework_TestCase
         return $this->response;
     }
     
-    public function plugin($name)
+    public function getPlugin($name)
     {
         if (!isset($this->plugins[$name])) {
             $this->plugins[$name] = $this->getMockBuilder('Pfw\\Plugin')
@@ -63,7 +63,7 @@ class FakeSystem extends \PHPUnit_Framework_TestCase
         return $this->plugins[$name];
     }
 
-    public function config($name)
+    public function getConfig($name)
     {
         if (!isset($this->configs[$name])) {
             $this->configs[$name] = $this->getMockBuilder('Pfw\\Config')
@@ -73,7 +73,7 @@ class FakeSystem extends \PHPUnit_Framework_TestCase
         return $this->configs[$name];
     }
     
-    public function lang($name)
+    public function getLang($name)
     {
         if (!isset($this->langs[$name])) {
             $this->langs[$name] = $this->getMockBuilder('Pfw\\Lang')

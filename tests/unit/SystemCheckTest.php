@@ -41,41 +41,41 @@ class SystemCheckTest extends TestCase
     public function testPhpVersion()
     {
         $this->subject->mandatory()->phpVersion('12345');
-        $this->assertEquals('failure', $this->firstCheck()->status());
-        System::lang('pfw')->expects($this->once())->method('singular')
+        $this->assertEquals('failure', $this->firstCheck()->getStatus());
+        System::getLang('pfw')->expects($this->once())->method('singular')
             ->with('syscheck_phpversion', '12345');
-        $this->firstCheck()->text();
+        $this->firstCheck()->getText();
     }
     
     public function testExtension()
     {
         $this->subject->optional()->extension('foo');
-        $this->assertEquals('warning', $this->firstCheck()->status());
-        System::lang('pfw')->expects($this->once())->method('singular')
+        $this->assertEquals('warning', $this->firstCheck()->getStatus());
+        System::getLang('pfw')->expects($this->once())->method('singular')
             ->with('syscheck_extension', 'foo');
-        $this->firstCheck()->text();
+        $this->firstCheck()->getText();
     }
     
     public function testXhVersion()
     {
         $this->subject->mandatory()->xhVersion('1.6');
-        $this->assertEquals('success', $this->firstCheck()->status());
-        System::lang('pfw')->expects($this->once())->method('singular')
+        $this->assertEquals('success', $this->firstCheck()->getStatus());
+        System::getLang('pfw')->expects($this->once())->method('singular')
             ->with('syscheck_xhversion', '1.6');
-        $this->firstCheck()->text();
+        $this->firstCheck()->getText();
     }
     
     public function testWritable()
     {
         $this->subject->optional()->writable($this->root->url());
-        $this->assertEquals('success', $this->firstCheck()->status());
-        System::lang('pfw')->expects($this->once())->method('singular')
+        $this->assertEquals('success', $this->firstCheck()->getStatus());
+        System::getLang('pfw')->expects($this->once())->method('singular')
             ->with('syscheck_writable', $this->root->url());
-        $this->firstCheck()->text();
+        $this->firstCheck()->getText();
     }
     
     private function firstCheck()
     {
-        return $this->subject->checks()[0];
+        return $this->subject->getChecks()[0];
     }
 }

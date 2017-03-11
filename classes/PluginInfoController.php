@@ -38,19 +38,19 @@ class PluginInfoController extends Controller
      */
     public function indexAction()
     {
-        $title = ucfirst($this->plugin->name());
+        $title = ucfirst($this->plugin->getName());
         $this->response->setTitle($title);
         $view = $this->htmlView('info');
         $view->model = $this->plugin;
         $view->title = $title;
-        $view->logo = $this->plugin->folder() . $this->plugin->name() . '.png';
+        $view->logo = $this->plugin->getFolder() . $this->plugin->getName() . '.png';
         $view->checks = array_map(function ($check) {
             return (object) array(
-                'text' => $check->text(),
-                'statusIcon' => $this->plugin->folder() . 'images/' . $check->status() . '.png',
-                'statusAlt' => 'syscheck_alt_' . $check->status()
+                'text' => $check->getText(),
+                'statusIcon' => $this->plugin->getFolder() . 'images/' . $check->getStatus() . '.png',
+                'statusAlt' => 'syscheck_alt_' . $check->getStatus()
             );
-        }, $this->systemCheck()->checks());
+        }, $this->systemCheck()->getChecks());
         $view->userFuncs = array_map(function ($funcName) {
             return (object) ['name' => $funcName, 'signature' => $this->userFuncSignature($funcName)];
         }, $this->plugin->getFuncNames());
@@ -81,7 +81,7 @@ class PluginInfoController extends Controller
     private function userFuncSignature($functionName)
     {
         $params = [];
-        foreach ($this->plugin->funcParams($functionName) as $param) {
+        foreach ($this->plugin->getFuncParams($functionName) as $param) {
             $params[] = $param->getName();
         }
         return sprintf('%s(%s)', $functionName, implode(', ', $params));

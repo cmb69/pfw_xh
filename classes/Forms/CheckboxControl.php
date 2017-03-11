@@ -46,15 +46,15 @@ class CheckboxControl extends Control
         $this->renderLabel($writer);
         $writer->startElement('input');
         $writer->writeAttribute('type', 'hidden');
-        $writer->writeAttribute('name', $this->name());
+        $writer->writeAttribute('name', $this->getName());
         $writer->writeAttribute('value', '');
         $writer->endElement();
         $writer->startElement('input');
-        $writer->writeAttribute('id', $this->id());
+        $writer->writeAttribute('id', $this->getId());
         $writer->writeAttribute('type', 'checkbox');
-        $writer->writeAttribute('name', $this->name());
+        $writer->writeAttribute('name', $this->getName());
         $writer->writeAttribute('value', '1');
-        if ($this->data()) {
+        if ($this->getData()) {
             $writer->writeAttribute('checked', 'checked');
         }
         $writer->endElement();

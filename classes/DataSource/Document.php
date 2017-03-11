@@ -57,7 +57,7 @@ class Document
      *
      * @return mixed
      */
-    public function token()
+    public function getToken()
     {
         return $this->token;
     }
@@ -67,7 +67,7 @@ class Document
      *
      * @return string
      */
-    public function contents()
+    public function getContents()
     {
         return $this->contents;
     }

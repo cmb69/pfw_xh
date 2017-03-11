@@ -29,19 +29,19 @@ class UrlTest extends TestCase
         $this->defineConstant('CMSIMPLE_URL', 'http://localhost/xh/');
     }
 
-    public function testRelative()
+    public function testGetRelative()
     {
         $this->assertEquals(
             '/xh/?pagemanager&admin=plugin_config&action=plugin_save',
-            $this->pagemanagerConfigUrl()->relative()
+            $this->pagemanagerConfigUrl()->getRelative()
         );
     }
 
-    public function testAbsolute()
+    public function testGetAbsolute()
     {
         $this->assertEquals(
             'http://localhost/xh/?pagemanager&admin=plugin_config&action=plugin_save',
-            $this->pagemanagerConfigUrl()->absolute()
+            $this->pagemanagerConfigUrl()->getAbsolute()
         );
     }
 

@@ -38,37 +38,37 @@ class SytemTest extends TestCase
 
     public function testRequestReturnsSameInstance()
     {
-        $this->assertSame(System::request(), System::request());
+        $this->assertSame(System::getRequest(), System::getRequest());
     }
 
     public function testResponseReturnsSameInstance()
     {
-        $this->assertSame(System::response(), System::response());
+        $this->assertSame(System::getResponse(), System::getResponse());
     }
 
     public function testPluginReturnsRegisteredPlugin()
     {
-        $this->assertSame(System::registerPlugin('foo'), System::plugin('foo'));
+        $this->assertSame(System::registerPlugin('foo'), System::getPlugin('foo'));
     }
 
     public function testConfigReturnsSameInstance()
     {
-        $this->assertSame(System::config('foo'), System::config('foo'));
+        $this->assertSame(System::getConfig('foo'), System::getConfig('foo'));
     }
 
     public function testConfigReturnsIndividualInstances()
     {
-        $this->assertNotSame(System::config('foo'), System::config('bar'));
+        $this->assertNotSame(System::getConfig('foo'), System::getConfig('bar'));
     }
 
     public function testLangReturnsSameInstance()
     {
-        $this->assertSame(System::lang('foo'), System::lang('foo'));
+        $this->assertSame(System::getLang('foo'), System::getLang('foo'));
     }
 
     public function testLangReturnsIndividualInstances()
     {
-        $this->assertNotSame(System::lang('foo'), System::lang('bar'));
+        $this->assertNotSame(System::getLang('foo'), System::getLang('bar'));
     }
     
     public function testRunsPlugins()

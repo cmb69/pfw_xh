@@ -139,8 +139,8 @@ class Plugin
         $this->name = $name;
         $this->folder = $pth['folder']['plugin'];
         $this->version = 'UNKNOWN';
-        $this->config = System::config($name);
-        $this->lang = System::lang($name);
+        $this->config = System::getConfig($name);
+        $this->lang = System::getLang($name);
     }
     
     /**
@@ -148,7 +148,7 @@ class Plugin
      *
      * @return string
      */
-    public function name()
+    public function getName()
     {
         return $this->name;
     }
@@ -158,7 +158,7 @@ class Plugin
      *
      * @return Config
      */
-    public function config()
+    public function getConfig()
     {
         return $this->config;
     }
@@ -168,7 +168,7 @@ class Plugin
      *
      * @return Lang
      */
-    public function lang()
+    public function getLang()
     {
         return $this->lang;
     }
@@ -178,39 +178,51 @@ class Plugin
      *
      * @return string
      */
-    public function folder()
+    public function getFolder()
     {
         return $this->folder;
     }
 
     /**
-     * Gets or sets the copyright.
+     * Returns the copyright.
+     *
+     * @return string
+     */
+    public function getCopyright()
+    {
+        return $this->copyright;
+    }
+
+    /**
+     * Sets the copyright.
      *
      * @param string $copyright
-     *
      * @return $this
      */
     public function copyright($copyright = null)
     {
-        if (!isset($copyright)) {
-            return $this->copyright;
-        }
         $this->copyright = $copyright;
         return $this;
     }
 
     /**
-     * Gets or sets the plugin version
+     * Returns the plugin version.
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Sets the plugin version
      *
      * @param string $version
-     *
      * @return $this
      */
     public function version($version = null)
     {
-        if (!isset($version)) {
-            return $this->version;
-        }
         $this->version = $version;
         return $this;
     }
@@ -242,7 +254,7 @@ class Plugin
      *
      * @return array<ReflectionParameter>
      */
-    public function funcParams($name)
+    public function getFuncParams($name)
     {
         $routes = $this->funcs[$name];
         if (empty($routes)) {
@@ -377,7 +389,7 @@ class Plugin
             $this->addMenuItem($text, $pth['file']['plugin_help'], 'target="_blank"');
         }
         if ($this->isAdmin() && $this->config->get('show_menu')) {
-            System::response()->append(pluginMenu('SHOW'));
+            System::getResponse()->append(pluginMenu('SHOW'));
         }
     }
     
@@ -411,7 +423,7 @@ class Plugin
         eval(<<<EOS
 function $name()
 {
-    \$plugin = Pfw\System::plugin('$plugin');
+    \$plugin = Pfw\System::getPlugin('$plugin');
     ob_start();
     foreach (\$plugin->getFuncRoutes('$name') as \$route) {
         \$route->resolve(func_get_args());

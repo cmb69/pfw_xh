@@ -60,7 +60,7 @@ class WritabilityCheck extends Check
      *
      * @return string
      */
-    public function text()
+    public function getText()
     {
         return $this->lang->singular('syscheck_writable', $this->filename);
     }

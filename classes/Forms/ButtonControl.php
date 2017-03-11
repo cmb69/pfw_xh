@@ -40,7 +40,7 @@ class ButtonControl extends Control
         $writer->startElement('div');
         $label = "label_{$this->name}";
         $writer->startElement('button');
-        $writer->writeAttribute('name', $this->name());
+        $writer->writeAttribute('name', $this->getName());
         $writer->text($this->lang->singular($label));
         $writer->endElement();
         $writer->endElement();

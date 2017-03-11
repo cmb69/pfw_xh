@@ -1,8 +1,8 @@
 <section class="pfw_about">
     <h1><?=$this->title()?></h1>
     <img class="pfw_logo" src="<?=$this->logo()?>" alt="<?=$this->text('alt_logo')?>"/>
-    <p>Version <?=$this->escape($this->model->version())?></p>
-    <p>Copyright <?=$this->escape($this->model->copyright())?></p>
+    <p>Version <?=$this->escape($this->model->getVersion())?></p>
+    <p>Copyright <?=$this->escape($this->model->getCopyright())?></p>
     <p class="pfw_license">
         This program is free software: you can redistribute it
         and/or modify it under the terms of the GNU General Public License as published

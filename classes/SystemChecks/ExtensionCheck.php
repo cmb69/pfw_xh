@@ -65,7 +65,7 @@ class ExtensionCheck extends Check
      *
      * @return string
      */
-    public function text()
+    public function getText()
     {
         return $this->lang->singular('syscheck_extension', $this->extensionName);
     }

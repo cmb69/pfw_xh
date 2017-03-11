@@ -59,11 +59,11 @@ class SelectControl extends Control
         $writer->startElement('div');
         $this->renderLabel($writer);
         $writer->startElement('select');
-        $writer->writeAttribute('id', $this->id());
-        $writer->writeAttribute('name', $this->name());
+        $writer->writeAttribute('id', $this->getId());
+        $writer->writeAttribute('name', $this->getName());
         foreach ($this->options as $option) {
             $writer->startElement('option');
-            if ($this->data() == $option) {
+            if ($this->getData() == $option) {
                 $writer->writeAttribute('selected', 'selected');
             }
             $writer->text($option);

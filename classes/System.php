@@ -63,11 +63,11 @@ class System
     public static function __callStatic($name, $args)
     {
         switch ($name) {
-            case 'request':
-            case 'response':
-            case 'plugin':
-            case 'config':
-            case 'lang':
+            case 'getRequest':
+            case 'getResponse':
+            case 'getPlugin':
+            case 'getConfig':
+            case 'getLang':
             case 'registerPlugin':
             case 'runPlugins':
                 return call_user_func_array([self::instance(), $name], $args);
@@ -103,7 +103,7 @@ class System
      *
      * @return Request
      */
-    protected function request()
+    protected function getRequest()
     {
         if (!isset($this->request)) {
             $this->request = new Request();
@@ -116,7 +116,7 @@ class System
      *
      * @return Response
      */
-    protected function response()
+    protected function getResponse()
     {
         if (!isset($this->response)) {
             $this->response = new Response();
@@ -131,7 +131,7 @@ class System
      *
      * @return Plugin
      */
-    protected function plugin($name)
+    protected function getPlugin($name)
     {
         return $this->plugins[$name];
     }
@@ -142,7 +142,7 @@ class System
      * @param  string $pluginName
      * @return Config
      */
-    protected function config($pluginName)
+    protected function getConfig($pluginName)
     {
         if (!isset($this->configs[$pluginName])) {
             $this->configs[$pluginName] = new Config($pluginName);
@@ -156,7 +156,7 @@ class System
      * @param  string $pluginName
      * @return Lang
      */
-    protected function lang($pluginName)
+    protected function getLang($pluginName)
     {
         if (!isset($this->langs[$pluginName])) {
             $this->langs[$pluginName] = new Lang($pluginName);

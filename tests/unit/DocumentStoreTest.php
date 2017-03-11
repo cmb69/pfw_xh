@@ -81,12 +81,12 @@ class DocumentStoreTest extends TestCase
         );
     }
 
-    public function testNames()
+    public function testGetNames()
     {
         file_put_contents($this->filename, self::CONTENTS);
         $this->assertEquals(
             [self::BASENAME],
-            $this->subject->names()
+            $this->subject->getNames()
         );
     }
 
@@ -94,7 +94,7 @@ class DocumentStoreTest extends TestCase
     {
         file_put_contents($this->filename, self::CONTENTS);
         $document = $this->subject->find(self::BASENAME);
-        $this->assertEquals(self::CONTENTS, $document->contents());
+        $this->assertEquals(self::CONTENTS, $document->getContents());
     }
 
     public function testFindNonExisting()
@@ -108,7 +108,7 @@ class DocumentStoreTest extends TestCase
     {
         file_put_contents($this->filename, self::CONTENTS);
         $document = $this->subject->find(self::BASENAME);
-        $document = new Document('another text', $document->token());
+        $document = new Document('another text', $document->getToken());
         $this->assertTrue(
             $this->subject->update(self::BASENAME, $document)
         );

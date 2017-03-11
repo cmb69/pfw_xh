@@ -160,7 +160,7 @@ class SystemCheck
      *
      * @return Check[]
      */
-    public function checks()
+    public function getChecks()
     {
         return $this->checks;
     }

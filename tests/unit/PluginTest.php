@@ -52,27 +52,27 @@ class PluginTest extends TestCase
         );
     }
 
-    public function testName()
+    public function testGetName()
     {
-        $this->assertEquals('pfw', $this->subject->name());
+        $this->assertEquals('pfw', $this->subject->getName());
     }
 
-    public function testFolder()
+    public function testGetFolder()
     {
-        $this->assertEquals('./plugins/pfw/', $this->subject->folder());
+        $this->assertEquals('./plugins/pfw/', $this->subject->getFolder());
     }
 
     public function testCopyright()
     {
         $copyright = '2016-2017 Christoph M. Becker';
         $this->subject->copyright($copyright);
-        $this->assertEquals($copyright, $this->subject->copyright());
+        $this->assertEquals($copyright, $this->subject->getCopyright());
     }
 
     public function testVersion()
     {
         $this->subject->version('1.0');
-        $this->assertEquals('1.0', $this->subject->version());
+        $this->assertEquals('1.0', $this->subject->getVersion());
     }
     
     public function testRouteReturnsSelf()
@@ -134,7 +134,7 @@ class PluginTest extends TestCase
         $pluginMenuMock = new \PHPUnit_Extensions_MockFunction('pluginMenu', $this->subject);
         $pluginMenuMock->expects($this->never());
         $this->subject->admin()
-            ->route([$this->subject->name() => ''])
+            ->route([$this->subject->getName() => ''])
             ->run();
     }
 }

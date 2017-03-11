@@ -95,7 +95,7 @@ class View
         $this->controller = $controller;
         $this->template = $template;
         $this->plugin = $controller->plugin();
-        $this->lang = $this->plugin->lang();
+        $this->lang = $this->plugin->getLang();
         $this->data = [];
     }
     
@@ -204,7 +204,7 @@ class View
      */
     public function render()
     {
-        include $this->templatePath();
+        include $this->findTemplatePath();
     }
 
     /**
@@ -228,13 +228,13 @@ class View
      *
      * @return string
      */
-    private function templatePath()
+    private function findTemplatePath()
     {
-        $filename = $this->plugin->folder() . "views/{$this->template}.php";
+        $filename = $this->plugin->getFolder() . "views/{$this->template}.php";
         if (file_exists($filename)) {
             return $filename;
         }
-        return $this->plugin->folder() . "../pfw/views/{$this->template}.php";
+        return $this->plugin->getFolder() . "../pfw/views/{$this->template}.php";
     }
 
     /**

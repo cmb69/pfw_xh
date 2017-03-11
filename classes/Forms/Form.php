@@ -113,7 +113,7 @@ class Form
         $this->action = $action;
         $this->controls = [];
         $this->data = [];
-        $this->validated = false;
+        $this->isValidated = false;
     }
 
     /**
@@ -121,7 +121,7 @@ class Form
      *
      * @return string
      */
-    public function prefix()
+    public function getPrefix()
     {
         return $this->prefix;
     }
@@ -135,7 +135,7 @@ class Form
      */
     public function addControl(Control $control)
     {
-        $this->controls[$control->name()] = $control;
+        $this->controls[$control->getName()] = $control;
     }
 
     /**
@@ -157,7 +157,7 @@ class Form
      *
      * @return string
      */
-    public function data($key)
+    public function getData($key)
     {
         return isset($this->data[$key]) ? $this->data[$key] : null;
     }
@@ -192,7 +192,7 @@ class Form
     public function validate()
     {
         $this->populateFromPost();
-        $this->validated = true;
+        $this->isValidated = true;
         foreach ($this->controls as $control) {
             if (!$control->validate()) {
                 return false;
@@ -206,9 +206,9 @@ class Form
      *
      * @return bool
      */
-    public function validated()
+    public function isValidated()
     {
-        return $this->validated;
+        return $this->isValidated;
     }
 
     /**

@@ -40,10 +40,10 @@ abstract class InputControl extends Control
         $writer->startElement('div');
         $this->renderLabel($writer);
         $writer->startElement('input');
-        $writer->writeAttribute('id', $this->id());
+        $writer->writeAttribute('id', $this->getId());
         $this->renderTypeAttribute($writer);
-        $writer->writeAttribute('name', $this->name());
-        $writer->writeAttribute('value', $this->data());
+        $writer->writeAttribute('name', $this->getName());
+        $writer->writeAttribute('value', $this->getData());
         $this->renderRuleAttributes($writer);
         $writer->endElement();
         $this->renderValidationErrors($writer);

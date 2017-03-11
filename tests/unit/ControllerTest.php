@@ -61,12 +61,12 @@ class ControllerTest extends TestCase
     
     public function testSeeOtherCallsRedirect()
     {
-        System::response()->expects($this->any())->method('redirect')
-            ->with($this->equalTo('absolute'), $this->equalTo(303));
+        System::getResponse()->expects($this->any())->method('redirect')
+            ->with($this->equalTo('getAbsolute'), $this->equalTo(303));
         $url = $this->getMockBuilder('Pfw\\Url')
             ->disableOriginalConstructor()
             ->getMock();
-        $url->expects($this->once())->method('absolute')->willReturn('absolute');
+        $url->expects($this->once())->method('getAbsolute')->willReturn('getAbsolute');
         $this->subject->seeOther($url);
     }
     
@@ -76,7 +76,7 @@ class ControllerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $url->expects($this->once())->method('with');
-        System::request()->expects($this->once())->method('url')->willReturn($url);
+        System::getRequest()->expects($this->once())->method('url')->willReturn($url);
         $this->subject->url('foo');
     }
 }

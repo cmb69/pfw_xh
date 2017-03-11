@@ -50,7 +50,7 @@ abstract class Check
     public function __construct($isMandatory)
     {
         $this->isMandatory = $isMandatory;
-        $this->lang = \Pfw\System::lang('pfw');
+        $this->lang = \Pfw\System::getLang('pfw');
     }
 
     /**
@@ -65,14 +65,14 @@ abstract class Check
      *
      * @return string
      */
-    abstract public function text();
+    abstract public function getText();
 
     /**
      * Returns the status.
      *
      * @returns string ('success', 'warning', 'failure')
      */
-    public function status()
+    public function getStatus()
     {
         if ($this->check()) {
             return 'success';

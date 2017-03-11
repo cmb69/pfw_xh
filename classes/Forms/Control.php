@@ -86,9 +86,9 @@ abstract class Control
      *
      * @return string
      */
-    public function name()
+    public function getName()
     {
-        return $this->form->prefix() . '_' . $this->name;
+        return $this->form->getPrefix() . '_' . $this->name;
     }
 
     /**
@@ -99,9 +99,9 @@ abstract class Control
      * @todo Rename to `value`? That might be misleading wrt. `<textarea>`s.
      *       `data` isn't more clarifying, though.
      */
-    protected function data()
+    protected function getData()
     {
-        return $this->form->data($this->name);
+        return $this->form->getData($this->name);
     }
 
     /**
@@ -109,7 +109,7 @@ abstract class Control
      *
      * @return string
      */
-    protected function id()
+    protected function getId()
     {
         return 'pfw_control_' . $this->id;
     }
@@ -148,7 +148,7 @@ abstract class Control
     protected function renderLabel(XMLWriter $writer)
     {
         $writer->startElement('label');
-        $writer->writeAttribute('for', $this->id());
+        $writer->writeAttribute('for', $this->getId());
         $writer->text($this->label());
         $writer->endElement();
     }
@@ -192,7 +192,7 @@ abstract class Control
     public function validate()
     {
         foreach ($this->rules as $rule) {
-            if (!$rule->validate($this->data())) {
+            if (!$rule->validate($this->getData())) {
                 return false;
             }
         }
@@ -208,10 +208,10 @@ abstract class Control
      */
     public function renderValidationErrors(XMLWriter $writer)
     {
-        if ($this->form->validated()) {
+        if ($this->form->isValidated()) {
             foreach ($this->rules as $rule) {
-                if (!$rule->validate($this->data())) {
-                    $rule->renderValidationError($this->data(), $writer);
+                if (!$rule->validate($this->getData())) {
+                    $rule->renderValidationError($this->getData(), $writer);
                 }
             }
         }

@@ -105,7 +105,7 @@ class FormBuilder
      */
     public function hidden($name)
     {
-        return $this->control(new HiddenControl($this->form, $this->lang, $name));
+        return $this->addControl(new HiddenControl($this->form, $this->lang, $name));
     }
 
     /**
@@ -116,7 +116,7 @@ class FormBuilder
      */
     public function text($name)
     {
-        return $this->control(new TextControl($this->form, $this->lang, $name));
+        return $this->addControl(new TextControl($this->form, $this->lang, $name));
     }
 
     /**
@@ -127,7 +127,7 @@ class FormBuilder
      */
     public function password($name)
     {
-        return $this->control(new PasswordControl($this->form, $this->lang, $name));
+        return $this->addControl(new PasswordControl($this->form, $this->lang, $name));
     }
 
     /**
@@ -138,7 +138,7 @@ class FormBuilder
      */
     public function number($name)
     {
-        return $this->control(new NumberControl($this->form, $this->lang, $name));
+        return $this->addControl(new NumberControl($this->form, $this->lang, $name));
     }
 
     /**
@@ -149,7 +149,7 @@ class FormBuilder
      */
     public function checkbox($name)
     {
-        return $this->control(new CheckboxControl($this->form, $this->lang, $name));
+        return $this->addControl(new CheckboxControl($this->form, $this->lang, $name));
     }
 
     /**
@@ -160,7 +160,7 @@ class FormBuilder
      */
     public function button($name)
     {
-        return $this->control(new ButtonControl($this->form, $this->lang, $name));
+        return $this->addControl(new ButtonControl($this->form, $this->lang, $name));
     }
 
     /**
@@ -171,7 +171,7 @@ class FormBuilder
      */
     public function select($name)
     {
-        return $this->control(new SelectControl($this->form, $this->lang, $name));
+        return $this->addControl(new SelectControl($this->form, $this->lang, $name));
     }
 
     /**
@@ -202,7 +202,7 @@ class FormBuilder
      */
     public function textarea($name)
     {
-        return $this->control(new TextareaControl($this->form, $this->lang, $name));
+        return $this->addControl(new TextareaControl($this->form, $this->lang, $name));
     }
 
     /**
@@ -214,7 +214,7 @@ class FormBuilder
      */
     public function csrf()
     {
-        return $this->control(new CSRFControl($this->form, $this->lang, null));
+        return $this->addControl(new CSRFControl($this->form, $this->lang, null));
     }
 
     /**
@@ -223,7 +223,7 @@ class FormBuilder
      * @param Control $control
      * @return $this
      */
-    private function control(Control $control)
+    private function addControl(Control $control)
     {
         $this->currentControl = $control;
         $this->form->addControl($control);
@@ -238,7 +238,7 @@ class FormBuilder
      */
     public function minlength($length)
     {
-        return $this->rule(new MinlengthRule($this->currentControl, $this->lang, $length));
+        return $this->addRule(new MinlengthRule($this->currentControl, $this->lang, $length));
     }
 
     /**
@@ -249,7 +249,7 @@ class FormBuilder
      */
     public function maxlength($length)
     {
-        return $this->rule(new MaxlengthRule($this->currentControl, $this->lang, $length));
+        return $this->addRule(new MaxlengthRule($this->currentControl, $this->lang, $length));
     }
 
     /**
@@ -259,7 +259,7 @@ class FormBuilder
      */
     public function required()
     {
-        return $this->rule(new RequiredRule($this->currentControl, $this->lang));
+        return $this->addRule(new RequiredRule($this->currentControl, $this->lang));
     }
 
     /**
@@ -270,7 +270,7 @@ class FormBuilder
      */
     public function pattern($pattern)
     {
-        return $this->rule(new PatternRule($this->currentControl, $this->lang, $pattern));
+        return $this->addRule(new PatternRule($this->currentControl, $this->lang, $pattern));
     }
 
     /**
@@ -281,7 +281,7 @@ class FormBuilder
      */
     public function min($value)
     {
-        return $this->rule(new MinRule($this->currentControl, $this->lang, $value));
+        return $this->addRule(new MinRule($this->currentControl, $this->lang, $value));
     }
 
     /**
@@ -292,7 +292,7 @@ class FormBuilder
      */
     public function max($value)
     {
-        return $this->rule(new MaxRule($this->currentControl, $this->lang, $value));
+        return $this->addRule(new MaxRule($this->currentControl, $this->lang, $value));
     }
 
     /**
@@ -301,7 +301,7 @@ class FormBuilder
      * @param Rule $rule
      * @return $this
      */
-    private function rule(Rule $rule)
+    private function addRule(Rule $rule)
     {
         $this->currentControl->addRule($rule);
         return $this;

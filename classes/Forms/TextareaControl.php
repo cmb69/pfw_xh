@@ -40,10 +40,10 @@ class TextareaControl extends Control
         $writer->startElement('div');
         $this->renderLabel($writer);
         $writer->startElement('textarea');
-        $writer->writeAttribute('id', $this->id());
-        $writer->writeAttribute('name', $this->name());
+        $writer->writeAttribute('id', $this->getId());
+        $writer->writeAttribute('name', $this->getName());
         $this->renderRuleAttributes($writer);
-        $writer->text($this->data());
+        $writer->text($this->getData());
         $writer->endElement();
         $this->renderValidationErrors($writer);
         $writer->endElement();

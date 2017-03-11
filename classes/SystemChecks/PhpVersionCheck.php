@@ -65,7 +65,7 @@ class PhpVersionCheck extends Check
      *
      * @return string
      */
-    public function text()
+    public function getText()
     {
         return $this->lang->singular('syscheck_phpversion', $this->requiredVersion);
     }

@@ -77,7 +77,7 @@ class Url
      */
     public function __toString()
     {
-        return $this->relative();
+        return $this->getRelative();
     }
 
     /**
@@ -85,9 +85,9 @@ class Url
      *
      * @return string
      */
-    public function relative()
+    public function getRelative()
     {
-        return $this->path . '?' . $this->queryString();
+        return $this->path . '?' . $this->assembleQueryString();
     }
 
     /**
@@ -95,9 +95,9 @@ class Url
      *
      * @return string
      */
-    public function absolute()
+    public function getAbsolute()
     {
-        return CMSIMPLE_URL . '?' . $this->queryString();
+        return CMSIMPLE_URL . '?' . $this->assembleQueryString();
     }
 
     /**
@@ -105,7 +105,7 @@ class Url
      *
      * @return string
      */
-    private function queryString()
+    private function assembleQueryString()
     {
         $params = array_map(
             function ($name, $value) {
