@@ -52,7 +52,7 @@ class DocumentStore
      */
     public function names()
     {
-        $names = array();
+        $names = [];
         foreach (scandir($this->folder) as $basename) {
             if (strpos($basename, '.') !== 0) {
                 $names[] = $basename;

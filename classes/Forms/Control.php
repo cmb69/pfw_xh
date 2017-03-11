@@ -77,7 +77,7 @@ abstract class Control
         $this->form = $form;
         $this->lang = $lang;
         $this->name = $name;
-        $this->rules = array();
+        $this->rules = [];
         $this->id = ++$id;
     }
 

@@ -90,7 +90,7 @@ class Route
     {
         global $sn;
         
-        $result = array();
+        $result = [];
         foreach (array_keys($this->map) as $pattern) {
             if (strpos($pattern, $this->plugin->name()) === 0) {
                 if (preg_match('/&admin=(?:plugin_)?(?<name>.*)/', $pattern, $m)) {
@@ -169,7 +169,7 @@ class Route
             $params = $args;
             array_unshift($params, $this->plugin);
         } else {
-            $params = array($this->plugin);
+            $params = [$this->plugin];
         }
         return (new \ReflectionClass($controllerName))->newInstanceArgs($params);
     }
@@ -203,7 +203,7 @@ class Route
     private function invokeAction(Controller $controller, $methodName)
     {
         $method = new \ReflectionMethod($controller, $methodName);
-        $params = array();
+        $params = [];
         foreach ($method->getParameters() as $param) {
             $name = $this->plugin->name() . '_' . $param->getName();
             if (isset($_GET[$name])) {

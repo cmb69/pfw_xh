@@ -76,7 +76,7 @@ class PluginInfoController extends Controller
     private function userFuncSignatureFunc()
     {
         return function ($functionName) {
-            $params = array();
+            $params = [];
             foreach ($this->plugin->funcParams($functionName) as $param) {
                 $params[] = $param->getName();
             }

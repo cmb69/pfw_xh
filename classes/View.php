@@ -101,7 +101,7 @@ class View
         $this->template = $template;
         $this->plugin = $controller->plugin();
         $this->lang = $this->plugin->lang();
-        $this->data = array();
+        $this->data = [];
     }
     
     /**
@@ -180,7 +180,7 @@ class View
     protected function text($key)
     {
         return $this->escape(
-            call_user_func_array(array($this->lang, 'singular'), func_get_args())
+            call_user_func_array([$this->lang, 'singular'], func_get_args())
         );
     }
 
@@ -200,7 +200,7 @@ class View
     protected function plural($key, $count)
     {
         return $this->escape(
-            call_user_func_array(array($this->lang, 'plural'), func_get_args())
+            call_user_func_array([$this->lang, 'plural'], func_get_args())
         );
     }
 

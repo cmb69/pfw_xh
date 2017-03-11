@@ -45,17 +45,17 @@ class System
     /**
      * @var Plugin[]
      */
-    private $plugins = array();
+    private $plugins = [];
     
     /**
      * @var Config[]
      */
-    private $configs = array();
+    private $configs = [];
     
     /**
      * @var Lang[]
      */
-    private $langs = array();
+    private $langs = [];
     
     /**
      * The protected methods are publicly available as static methods.
@@ -70,7 +70,7 @@ class System
             case 'lang':
             case 'registerPlugin':
             case 'runPlugins':
-                return call_user_func_array(array(self::instance(), $name), $args);
+                return call_user_func_array([self::instance(), $name], $args);
             default:
                 assert(false);
         }

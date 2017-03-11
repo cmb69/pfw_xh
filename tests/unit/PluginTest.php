@@ -35,12 +35,8 @@ class PluginTest extends TestCase
 
         parent::setUp();
         $pth = array(
-            'folder' => array(
-                'plugin' => './plugins/pfw/'
-            ),
-            'file' => array(
-                'plugin_help' => 'foo'
-            )
+            'folder' => ['plugin' => './plugins/pfw/'],
+            'file' => ['plugin_help' => 'foo']
         );
         $this->subject = new Plugin('pfw');
         $this->registerPluginMenuItemMock = new \PHPUnit_Extensions_MockFunction(
@@ -80,7 +76,7 @@ class PluginTest extends TestCase
     {
         $this->assertSame(
             $this->subject,
-            $this->subject->route(array('foo' => 'Bar'))
+            $this->subject->route(['foo' => 'Bar'])
         );
     }
     
@@ -96,7 +92,7 @@ class PluginTest extends TestCase
     {
         $this->assertSame(
             $this->subject,
-            $this->subject->admin()->route(array('foo' => 'Bar'))
+            $this->subject->admin()->route(['foo' => 'Bar'])
         );
     }
 
@@ -111,17 +107,12 @@ class PluginTest extends TestCase
     public function testRegistersFunctionNames()
     {
         $this->subject->func('pfw_foo');
-        $this->assertEquals(
-            array('pfw_foo'),
-            $this->subject->getFuncNames()
-        );
+        $this->assertEquals(['pfw_foo'], $this->subject->getFuncNames());
     }
     
     public function testRegistersFunctionRoutes()
     {
-        $this->subject->func('pfw_foo')->route(array(
-            '?foo' => 'Bar'
-        ));
+        $this->subject->func('pfw_foo')->route(['?foo' => 'Bar']);
         $routes = $this->subject->getFuncRoutes('pfw_foo'); 
         $this->assertContainsOnlyInstancesOf('Pfw\\Route', $routes);
         $this->assertCount(1, $routes);
@@ -140,7 +131,7 @@ class PluginTest extends TestCase
         $pluginMenuMock = new \PHPUnit_Extensions_MockFunction('pluginMenu', $this->subject);
         $pluginMenuMock->expects($this->never());
         $this->subject->admin()
-            ->route(array($this->subject->name() => ''))
+            ->route([$this->subject->name() => ''])
             ->run();
     }
 }

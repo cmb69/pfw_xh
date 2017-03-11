@@ -111,8 +111,8 @@ class Form
         $this->prefix = $prefix;
         $this->lang = $lang;
         $this->action = $action;
-        $this->controls = array();
-        $this->data = array();
+        $this->controls = [];
+        $this->data = [];
         $this->validated = false;
     }
 
@@ -221,7 +221,7 @@ class Form
     private function populateFromPost()
     {
         $prefix = "{$this->prefix}_";
-        $this->data = array();
+        $this->data = [];
         foreach (array_keys($this->controls) as $name) {
             if (isset($_POST[$name])) {
                 $key = substr($name, strlen($prefix));

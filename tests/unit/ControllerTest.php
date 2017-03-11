@@ -33,9 +33,7 @@ class ControllerTest extends TestCase
 
         parent::setUp();
         $pth = array(
-            'folder' => array(
-                'content' => 'foo/bar/baz/'
-            )
+            'folder' => ['content' => 'foo/bar/baz/']
         );
         $this->plugin = $this->getMockBuilder('Pfw\\Plugin')
             ->disableOriginalConstructor()

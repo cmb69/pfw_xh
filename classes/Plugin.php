@@ -97,7 +97,7 @@ class Plugin
      *
      * @var Route[]
      */
-    private $routes = array();
+    private $routes = [];
 
     /**
      * Whether we're inside an admin section
@@ -111,14 +111,14 @@ class Plugin
      *
      * @var Route[]
      */
-    private $adminRoutes = array();
+    private $adminRoutes = [];
 
     /**
      * The map of user function names to their routes
      *
      * @var array
      */
-    private $funcs = array();
+    private $funcs = [];
 
     /**
      * The name of current user function
@@ -246,7 +246,7 @@ class Plugin
     {
         $routes = $this->funcs[$name];
         if (empty($routes)) {
-            return array();
+            return [];
         }
         $params = $routes[0]->controllerParams();
         array_shift($params);
@@ -316,7 +316,7 @@ class Plugin
     {
         $this->admin = false;
         $this->currentFunc = $name;
-        $this->funcs[$name] = array();
+        $this->funcs[$name] = [];
         return $this;
     }
 

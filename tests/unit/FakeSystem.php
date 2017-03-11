@@ -27,11 +27,11 @@ class FakeSystem extends \PHPUnit_Framework_TestCase
     
     private $response;
     
-    private $plugins = array();
+    private $plugins = [];
     
-    private $configs = array();
+    private $configs = [];
     
-    private $langs = array();
+    private $langs = [];
     
     public function request()
     {

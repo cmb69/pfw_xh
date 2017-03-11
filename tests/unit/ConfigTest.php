@@ -29,14 +29,8 @@ class ConfigTest extends TestCase
 
         parent::setUp();
         $plugin_cf = array(
-            'other' => array(
-                'option1' => 'foo',
-                'option2' => 'bar'
-            ),
-            'pfw' => array(
-                'option1' => 'bar',
-                'option3' => 'baz'
-            )
+            'other' => ['option1' => 'foo', 'option2' => 'bar'],
+            'pfw' => ['option1' => 'bar', 'option3' => 'baz']
         );
     }
 

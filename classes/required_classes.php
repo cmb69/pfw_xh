@@ -26,7 +26,7 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 spl_autoload_register(function ($className) {
     $parts = explode('\\', $className);
     $parts[0] = lcfirst($parts[0]);
-    array_splice($parts, 1, 0, array('classes'));
+    array_splice($parts, 1, 0, ['classes']);
     array_unshift($parts, dirname(dirname(__DIR__)));
     $classFile = implode(DIRECTORY_SEPARATOR, $parts) . '.php';
     if (file_exists($classFile)) {

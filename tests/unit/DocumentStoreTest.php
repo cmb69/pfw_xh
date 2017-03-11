@@ -82,7 +82,7 @@ class DocumentStoreTest extends TestCase
     {
         file_put_contents($this->filename, self::CONTENTS);
         $this->assertEquals(
-            array(self::BASENAME),
+            [self::BASENAME],
             $this->subject->names()
         );
     }

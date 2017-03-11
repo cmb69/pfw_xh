@@ -33,7 +33,7 @@ class SelectControl extends Control
      *
      * @var string[]
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * Adds an option
