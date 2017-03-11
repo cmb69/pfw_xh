@@ -97,16 +97,6 @@
         </move>
         <move todir="dist">
             <fileset dir="export">
-                <include name="views/*.php"/>
-            </fileset>
-            <filterchain>
-                <replaceregexp>
-                    <regexp pattern="\?=" replace="?php echo "/>
-                </replaceregexp>
-            </filterchain>
-        </move>
-        <move todir="dist">
-            <fileset dir="export">
                 <exclude name="build.xml"/>
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
