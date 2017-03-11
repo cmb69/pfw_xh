@@ -32,7 +32,7 @@ namespace Pfw\SystemChecks;
  *
  *      echo (new SystemCheck)
  *          ->mandatory()
- *              ->phpVersion('5.3')
+ *              ->phpVersion('5.4.0')
  *          ->optional()
  *              ->extension('gd')
  *          ->mandatory()
