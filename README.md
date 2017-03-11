@@ -3,6 +3,9 @@ Pfw_XH
 
 A plugin framework for CMSimple_XH packaged as a CMSimple_XH plugin.
 
+[![alpha: 0.1.0](https://img.shields.io/badge/alpha-0.2.0-red.svg)](https://github.com/cmb69/pfw_xh/releases/tag/0.1.0)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+
 Copyright 2016-2017 Christoph M. Becker
 
 This program is free software: you can redistribute it and/or modify
@@ -23,4 +26,5 @@ Further information can be found in the help/ directory.
 Christoph M. Becker  
 Rheinstr. 147  
 55424 Münster-Sarmsheim  
+GERMANY  
 <cmbecker69@gmx.de>
