@@ -89,15 +89,14 @@ class Lang
      */
     public function plural($key, $count)
     {
-        if ($count == 1) {
-            $suffix = '_singular';
+        if ($count == 0) {
+            $suffix = '_0';
+        } elseif ($count == 1) {
+            $suffix = '_1';
         } elseif ($count > 2 && $count < 5) {
-            $suffix = '_paucal';
-            if ($this->get("$key$suffix") === null) {
-                $suffix = '_plural';
-            }
+            $suffix = '_2_4';
         } else {
-            $suffix = '_plural';
+            $suffix = '_5';
         }
         $args = array_slice(func_get_args(), 1);
         return vsprintf($this->get("$key$suffix"), $args);

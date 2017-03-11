@@ -32,8 +32,10 @@ class LangTest extends TestCase
             'other' => array(
                 'option1' => 'foo',
                 'option2' => 'bar%s',
-                'option4_singular' => '%d foo is %s',
-                'option4_plural' => '%d foos are %s'
+                'option4_0' => 'No foos are %2$s',
+                'option4_1' => '%1$d foo is %2$s',
+                'option4_2_4' => '%1$d foos are %2$s',
+                'option4_5' => '%1$d foos are %2$s'
             ),
             'pfw' => array(
                 'option1' => 'bar',
@@ -75,7 +77,7 @@ class LangTest extends TestCase
     public function testPlural()
     {
         $subject = new Lang('other');
-        $this->assertEquals('0 foos are too few', $subject->plural('option4', 0, 'too few'));
+        $this->assertEquals('No foos are too few', $subject->plural('option4', 0, 'too few'));
         $this->assertEquals('1 foo is fine', $subject->plural('option4', 1, 'fine'));
         $this->assertEquals('3 foos are okay', $subject->plural('option4', 3, 'okay'));
         $this->assertEquals('5 foos are good', $subject->plural('option4', 5, 'good'));
