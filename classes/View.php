@@ -105,25 +105,6 @@ class View
     }
     
     /**
-     * Call this at the beginning of the templates, to prevent direct access.
-     *
-     * Usually, the view/ folder is not protected against HTTP access.
-     * This allows malicious users to trigger execution of the templates,
-     * what might be a security issue, if register_globals is enabled,
-     * which is still supported (though deprecated) on PHP 5.3.
-     *
-     * Calling *any* method in the template will result in a fatal error,
-     * and as such prevent potential vulnerabilities, because even if
-     * register_globals is enabled, it is not possible to submit an object.
-     * We're offering a dedicated method nonetheless, which clearly describes
-     * its purpose.
-     */
-    public function preventAccess()
-    {
-        // do nothing
-    }
-
-    /**
      * Allows to set data and callbacks as properties of the view.
      *
      * These properties are available in the template as local variables,
