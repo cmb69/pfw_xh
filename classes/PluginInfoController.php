@@ -70,7 +70,6 @@ class PluginInfoController extends Controller
             ->mandatory()
                 ->phpVersion('5.3')
                 ->extension('SimpleXML')
-                ->noMagicQuotes()
                 ->xhVersion('1.6');
     }
     
