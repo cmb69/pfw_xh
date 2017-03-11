@@ -42,9 +42,9 @@ class HtmlViewTest extends TestCase
         $lang = $this->getMockBuilder('Pfw\\Lang')
             ->disableOriginalConstructor()
             ->getMock();
-        $plugin->expects($this->any())->method('lang')
+        $plugin->expects($this->any())->method('getLang')
             ->willReturn($lang);
-        $plugin->expects($this->any())->method('folder')
+        $plugin->expects($this->any())->method('getFolder')
             ->willReturn($this->root->url() . '/');
         $controller->expects($this->any())->method('plugin')->willReturn($plugin);
         $this->subject = new HtmlView($controller, 'foo');
