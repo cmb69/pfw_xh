@@ -41,7 +41,7 @@ class SystemCheckTest extends TestCase
     public function testPhpVersion()
     {
         $this->subject->mandatory()->phpVersion('12345');
-        $this->assertEquals('failure', $this->firstCheck()->getStatus());
+        $this->assertEquals('fail', $this->firstCheck()->getStatus());
         System::getLang('pfw')->expects($this->once())->method('singular')
             ->with('syscheck_phpversion', '12345');
         $this->firstCheck()->getText();

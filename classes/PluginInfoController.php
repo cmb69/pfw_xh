@@ -44,13 +44,7 @@ class PluginInfoController extends Controller
         $view->model = $this->plugin;
         $view->title = $title;
         $view->logo = $this->plugin->getFolder() . $this->plugin->getName() . '.png';
-        $view->checks = array_map(function ($check) {
-            return (object) array(
-                'text' => $check->getText(),
-                'statusIcon' => $this->plugin->getFolder() . 'images/' . $check->getStatus() . '.png',
-                'statusAlt' => 'syscheck_alt_' . $check->getStatus()
-            );
-        }, $this->systemCheck()->getChecks());
+        $view->checks = $this->systemCheck()->getChecks();
         $view->userFuncs = array_map(function ($funcName) {
             return (object) ['name' => $funcName, 'signature' => $this->userFuncSignature($funcName)];
         }, $this->plugin->getFuncNames());

@@ -70,7 +70,7 @@ abstract class Check
     /**
      * Returns the status.
      *
-     * @returns string ('success', 'warning', 'failure')
+     * @returns string ('success', 'warning', 'fail')
      */
     public function getStatus()
     {
@@ -78,7 +78,7 @@ abstract class Check
             return 'success';
         }
         if ($this->isMandatory) {
-            return 'failure';
+            return 'fail';
         }
         return 'warning';
     }

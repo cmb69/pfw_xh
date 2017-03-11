@@ -25,9 +25,8 @@
         <h4><?=$this->text('syscheck_title')?></h4>
         <ul class="pfw_syscheck">
 <?php   foreach ($this->checks as $check):?>
-            <li>
-                <img src="<?=$this->escape($check->statusIcon)?>" alt="<?=$this->text($check->statusAlt)?>">
-                <?=$this->escape($check->text)?>
+            <li class="xh_<?=$this->escape($check->getStatus())?>">
+                <?=$this->text('syscheck_message', $check->getText(), $check->getStatus())?>
             </li>
 <?php   endforeach?>
         </ul>

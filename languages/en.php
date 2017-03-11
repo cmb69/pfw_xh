@@ -8,13 +8,14 @@ $plugin_tx['pfw']['menu_help']="Help";
 $plugin_tx['pfw']['alt_logo']="Magic wand";
 
 $plugin_tx['pfw']['syscheck_title']="System Check";
-$plugin_tx['pfw']['syscheck_phpversion']="PHP Version ≥ %s";
-$plugin_tx['pfw']['syscheck_extension']="PHP extension %s loaded";
-$plugin_tx['pfw']['syscheck_xhversion']="CMSimple_XH version ≥ %s";
+$plugin_tx['pfw']['syscheck_message']="Checking that %1\$s … %2\$s";
+$plugin_tx['pfw']['syscheck_phpversion']="the PHP version is at least %s";
+$plugin_tx['pfw']['syscheck_extension']="the PHP extension %s is loaded";
+$plugin_tx['pfw']['syscheck_xhversion']="the CMSimple_XH version is at least %s";
 $plugin_tx['pfw']['syscheck_writable']="%s is writable";
-$plugin_tx['pfw']['syscheck_alt_success']="Success";
-$plugin_tx['pfw']['syscheck_alt_warning']="Warning";
-$plugin_tx['pfw']['syscheck_alt_failure']="Failure";
+$plugin_tx['pfw']['syscheck_success']="okay";
+$plugin_tx['pfw']['syscheck_warn']="warning";
+$plugin_tx['pfw']['syscheck_failure']="failure";
 
 $plugin_tx['pfw']['userfunc_title']="User functions";
 
