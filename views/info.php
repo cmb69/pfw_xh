@@ -20,24 +20,28 @@
         Public License along with this program. If not, see <a
         href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
     </p>
+<?php if (!empty($this->checks)):?>
     <section class="pfw_syscheck">
         <h4><?=$this->text('syscheck_title')?></h4>
         <ul class="pfw_syscheck">
-<?php foreach ($this->checks as $check):?>
+<?php   foreach ($this->checks as $check):?>
             <li>
                 <img src="<?=$this->escape($check->statusIcon)?>" alt="<?=$this->text($check->statusAlt)?>">
                 <?=$this->escape($check->text)?>
             </li>
-<?php endforeach?>
+<?php   endforeach?>
         </ul>
     </section>
+<?php endif?>
+<?php if (!empty($this->userFuncs)):?>
     <section class="pfw_userfuncs">
         <h4><?=$this->text('userfunc_title')?></h4>
         <dl class="pfw_userfuncs">
-<?php foreach ($this->userFuncs as $userFunc):?>
+<?php   foreach ($this->userFuncs as $userFunc):?>
             <dt><?=$this->escape($userFunc->name)?></dt>
             <dd><?=$this->text("userfunc_{$userFunc->signature}")?></dd>
-<?php endforeach?>
+<?php   endforeach?>
         </dl>
     </section>
+<?php endif?>
 </section>
