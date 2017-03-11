@@ -25,6 +25,9 @@ use org\bovigo\vfs\vfsStream;
 use Pfw\DataSource\DocumentStore;
 use Pfw\DataSource\Document;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class DocumentStoreTest extends TestCase
 {
     const BASENAME = 'foo.txt';

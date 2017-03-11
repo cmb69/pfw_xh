@@ -143,6 +143,9 @@ class FooController extends Controller
     {
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function barAction($id, $baz)
     {
     }

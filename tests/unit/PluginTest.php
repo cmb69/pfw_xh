@@ -21,6 +21,9 @@ along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace Pfw;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 class PluginTest extends TestCase
 {
     private $subject;
