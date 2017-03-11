@@ -1,7 +1,5 @@
 /vendor
 /.komodotools
-/pfw.komodoproject
 /tests/coverage
-.vscode
 doxygen
 /pfw.phar
