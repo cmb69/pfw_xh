@@ -46,7 +46,7 @@ class HtmlViewTest extends TestCase
             ->willReturn($lang);
         $plugin->expects($this->any())->method('getFolder')
             ->willReturn($this->root->url() . '/');
-        $controller->expects($this->any())->method('plugin')->willReturn($plugin);
+        $controller->expects($this->any())->method('getPlugin')->willReturn($plugin);
         $this->subject = new HtmlView($controller, 'foo');
     }
 

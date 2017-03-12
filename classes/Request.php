@@ -41,7 +41,7 @@ class Request
      *
      * @return Url
      */
-    public function url()
+    public function getUrl()
     {
         global $sn;
 

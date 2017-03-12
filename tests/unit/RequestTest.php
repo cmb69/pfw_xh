@@ -30,13 +30,13 @@ class RequestTest extends TestCase
         $this->assertEquals($_SERVER['REQUEST_METHOD'], $subject->method());
     }
 
-    public function testUrl()
+    public function testGetUrl()
     {
         global $sn;
 
         $sn = '/xh/';
         $_SERVER['QUERY_STRING'] = 'foo=bar';
         $subject = new Request();
-        $this->assertEquals('/xh/?foo=bar', $subject->url());
+        $this->assertEquals('/xh/?foo=bar', $subject->getUrl());
     }
 }

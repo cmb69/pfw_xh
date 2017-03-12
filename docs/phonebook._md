@@ -178,7 +178,7 @@ in `handleText` and quickly verify the result:
 
     public function handleText()
     {
-        $filename = $this->contentFolder() . 'phonebook.json';
+        $filename = $this->getContentFolder() . 'phonebook.json';
         $data = json_decode(file_get_contents($filename), true);
         var_dump($data);
         $this->view('book')->render();
@@ -189,7 +189,7 @@ Therefore we can simply assign the data to an appropriate view property:
 
     public function handleText()
     {
-        $filename = $this->contentFolder() . 'phonebook.json';
+        $filename = $this->getContentFolder() . 'phonebook.json';
         $data = json_decode(file_get_contents($filename), true);
         $view = $this->view('book');
         $view->data = $data;
@@ -218,7 +218,7 @@ as edit action, so we add the respective handler to `MainAdminController.php`:
 
     public function handleEdit()
     {
-        $filename = $this->contentFolder() . 'phonebook.json';
+        $filename = $this->getContentFolder() . 'phonebook.json';
         $data = file_get_contents($filename);
         $view = $this->view('edit');
         $view->data = $data;
@@ -254,11 +254,11 @@ we had to fix all the hard-coded URLs.
 Fortunately, the plugin framework allows to retrieve URLs to
 other actions easily, so we make use of this in `book.php` and append:
 
-    <a href="<?php echo $this->controller->url('edit')?>">Edit Phonebook</a>
+    <a href="<?php echo $this->controller->getUrl('edit')?>">Edit Phonebook</a>
 
 Similarly, we append a link to return to the phone book to `edit.php`:
 
-    <a href="<?php echo $this->controller->url('text')?>">Back to Phonebook</a>
+    <a href="<?php echo $this->controller->getUrl('text')?>">Back to Phonebook</a>
 
 The navigation between the phone book and its editor works,
 but we still can't save the edited phone book.
@@ -266,10 +266,10 @@ Obviously, this requires a save action in our main controller:
 
     public function handleSave()
     {
-        $filename = $this->contentFolder() . 'phonebook.json';
+        $filename = $this->getContentFolder() . 'phonebook.json';
         $contents = _POST['phonebook_contents'];
         file_put_contents($filename, $contents);
-        $this->seeOther($this->url('text'));
+        $this->seeOther($this->getUrl('text'));
     }
 
 We simply write the posted contents to our `phonebook.json` file.
@@ -279,7 +279,7 @@ Error handling is omitted for brevity.
 To use this save handler, we finally have to enter the edit form's `action`
 attribute value:
 
-    <form method="POST" action="<?php echo $this->controller->url('save')?>">
+    <form method="POST" action="<?php echo $this->controller->getUrl('save')?>">
 
 We do some final review, and decide that this first version of the phonebook plugin is ready
 to be delivered to the customer.
@@ -338,16 +338,16 @@ But of course we have to modify our templates to use the language string.
     <?php endforeach?>
         </tbody>
     </table>
-    <a href="<?php echo $this->controller->url('edit')?>"><?php echo $this->lang['action_edit']?></a>
+    <a href="<?php echo $this->controller->getUrl('edit')?>"><?php echo $this->lang['action_edit']?></a>
 
 And `edit.php` becomes:
 
     <h1><?php echo $this->lang['title_edit']?></h1>
-    <form method="POST" action="<?php echo $this->controller->url('save')?>">
+    <form method="POST" action="<?php echo $this->controller->getUrl('save')?>">
         <textarea name="phonebook_contents" cols="80" rows="25"><?php echo $data?></textarea>
         <button><?php echo $this->lang['label_save']?></button>
     </form>
-    <a href="<?php echo $this->controller->url('text')?>"><?php echo $this->lang['action_book']?></a>
+    <a href="<?php echo $this->controller->getUrl('text')?>"><?php echo $this->lang['action_book']?></a>
 
 Note that we simply have replaced the hard-coded language strings in the
 templates with `$this->lang[…]` variables; the first level of the two-dimensional
@@ -426,7 +426,7 @@ and instead adding respective edit links for each entry.
             <tr>
                 <td><?php echo $entry['name']?></td>
                 <td><?php echo $entry['phone']?></td>
-                <td><a href="<?php echo $this->controller->url('edit')->with('phonebook_id', $id)?>">
+                <td><a href="<?php echo $this->controller->getUrl('edit')->with('phonebook_id', $id)?>">
                     <?php echo $this->lang['action_edit']?></a></td>
             </tr>
     <?php endforeach?>
@@ -448,11 +448,11 @@ instead of the data as before:
     public function handleEdit()
     {
         $id = isset($_GET['phonebook_id']) ? $_GET['phonebook_id'] : '';
-        $filename = $this->contentFolder() . 'phonebook.json';
+        $filename = $this->getContentFolder() . 'phonebook.json';
         $data = json_decode(file_get_contents($filename), true);
         $entry = $data[$id];
         
-        $builder = new \Pfw\FormBuilder('phonebook', $this->lang, $this->url('save'));
+        $builder = new \Pfw\FormBuilder('phonebook', $this->lang, $this->getUrl('save'));
         $form = $builder
             ->text('name')->required()
             ->text('phone')->required()
@@ -478,14 +478,14 @@ to it.
 
     <h1><?php echo $this->lang['title_edit']?></h1>
     <?php echo $form?>
-    <a href="<?php echo $this->controller->url('text')?>"><?php echo $this->lang['action_book']?></a>
+    <a href="<?php echo $this->controller->getUrl('text')?>"><?php echo $this->lang['action_book']?></a>
 
 Nice; the edit links already bring us to the properly populated edit forms.
 Of course, saving would not work, so we'll tackle that next:
 
     public function handleSave()
     {
-        $builder = new \Pfw\FormBuilder('phonebook', $this->lang, $this->url('save'));
+        $builder = new \Pfw\FormBuilder('phonebook', $this->lang, $this->getUrl('save'));
         $form = $builder
             ->text('name')->required()
             ->text('phone')->required()
@@ -506,7 +506,7 @@ Of course, saving would not work, so we'll tackle that next:
         $data = json_decode(file_get_contents($filename), true);
         $data[$id] = $entry;
         file_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT));
-        $this->seeOther($this->url('text'));
+        $this->seeOther($this->getUrl('text'));
     }
 
 The first part of the method builds the form, as above.
@@ -554,7 +554,7 @@ showing up. We end up with:
             $data = $this->readData();
             $data[$this->id()] = $entry;
             $this->writeData($data);
-            $this->seeOther($this->url('text'));
+            $this->seeOther($this->getUrl('text'));
         }
         
         private function id()
@@ -564,19 +564,19 @@ showing up. We end up with:
     
         private function readData()
         {
-            $filename = $this->contentFolder() . 'phonebook.json';
+            $filename = $this->getContentFolder() . 'phonebook.json';
             return json_decode(file_get_contents($filename), true);
         }
     
         private function writeData($data)
         {
-            $filename = $this->contentFolder() . 'phonebook.json';
+            $filename = $this->getContentFolder() . 'phonebook.json';
             file_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT));
         }
     
         private function buildEditForm()
         {
-            $builder = new \Pfw\FormBuilder('phonebook', $this->lang, $this->url('save'));
+            $builder = new \Pfw\FormBuilder('phonebook', $this->lang, $this->getUrl('save'));
             return $builder
                 ->text('name')->required()
                 ->text('phone')->required()

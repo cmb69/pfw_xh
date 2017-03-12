@@ -42,7 +42,7 @@ namespace Pfw\Forms;
  * An example from a Controller method:
  *
  *      // create a form builder
- *      $builder = $this->formBuilder('./')
+ *      $builder = $this->createFormBuilder('./')
  *          // add a required text input
  *          ->text('name')->required()
  *          // add a number input which checks that the value is at least 18

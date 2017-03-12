@@ -57,7 +57,7 @@ class StylesheetAdminController extends Controller
      */
     public function indexAction()
     {
-        $url = $this->url('plugin_textsave');
+        $url = $this->getUrl('plugin_textsave');
         echo preg_replace(
             '/<form([^>]+)action="([^"]*)"/',
             "<form$1action=\"$url\"",

@@ -115,7 +115,7 @@ abstract class Controller
      *
      * @return Plugin
      */
-    public function plugin()
+    public function getPlugin()
     {
         return $this->plugin;
     }
@@ -125,7 +125,7 @@ abstract class Controller
      *
      * @return string
      */
-    public function contentFolder()
+    public function getContentFolder()
     {
         global $pth;
 
@@ -139,7 +139,7 @@ abstract class Controller
      *
      * @return string
      */
-    protected function config($key)
+    protected function getConfig($key)
     {
         return $this->config->get($key);
     }
@@ -154,7 +154,7 @@ abstract class Controller
      *
      * @return View
      */
-    protected function view($template)
+    protected function getView($template)
     {
         return new View($this, $template);
     }
@@ -169,7 +169,7 @@ abstract class Controller
      *
      * @return View
      */
-    protected function htmlView($template)
+    protected function createHtmlView($template)
     {
         return new HtmlView($this, $template);
     }
@@ -183,7 +183,7 @@ abstract class Controller
      *
      * @return FormBuilder
      */
-    protected function formBuilder($action)
+    protected function createFormBuilder($action)
     {
         return new Forms\FormBuilder($this->plugin->getName(), $this->lang, $action);
     }
@@ -215,8 +215,8 @@ abstract class Controller
      *
      * @return Url
      */
-    public function url($action)
+    public function getUrl($action)
     {
-        return $this->request->url()->with($this->getDispatcher(), $action);
+        return $this->request->getUrl()->with($this->getDispatcher(), $action);
     }
 }

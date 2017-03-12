@@ -57,7 +57,7 @@ class LanguageAdminController extends Controller
      */
     public function indexAction()
     {
-        $url = $this->url('plugin_save');
+        $url = $this->getUrl('plugin_save');
         echo preg_replace(
             '/<form([^>]+)action="([^"]*)"/',
             "<form$1action=\"$url\"",

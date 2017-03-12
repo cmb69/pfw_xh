@@ -94,7 +94,7 @@ class View
     {
         $this->controller = $controller;
         $this->template = $template;
-        $this->plugin = $controller->plugin();
+        $this->plugin = $controller->getPlugin();
         $this->lang = $this->plugin->getLang();
         $this->data = [];
     }
@@ -266,6 +266,6 @@ class View
      */
     protected function url($action)
     {
-        return $this->escape($this->controller->url($action));
+        return $this->escape($this->controller->getUrl($action));
     }
 }

@@ -49,14 +49,14 @@ class ControllerTest extends TestCase
         $this->assertNull($this->subject->getDispatcher());
     }
 
-    public function testPlugin()
+    public function testGetPlugin()
     {
-        $this->assertSame($this->plugin, $this->subject->plugin());
+        $this->assertSame($this->plugin, $this->subject->getPlugin());
     }
     
-    public function testContentFolder()
+    public function testGetContentFolder()
     {
-        $this->assertEquals('foo/bar/baz/', $this->subject->contentFolder());
+        $this->assertEquals('foo/bar/baz/', $this->subject->getContentFolder());
     }
     
     public function testSeeOtherCallsRedirect()
@@ -70,13 +70,13 @@ class ControllerTest extends TestCase
         $this->subject->seeOther($url);
     }
     
-    public function testUrl()
+    public function testGetUrl()
     {
         $url = $this->getMockBuilder('Pfw\\Url')
             ->disableOriginalConstructor()
             ->getMock();
         $url->expects($this->once())->method('with');
-        System::getRequest()->expects($this->once())->method('url')->willReturn($url);
-        $this->subject->url('foo');
+        System::getRequest()->expects($this->once())->method('getUrl')->willReturn($url);
+        $this->subject->getUrl('foo');
     }
 }
