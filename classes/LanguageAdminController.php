@@ -65,15 +65,13 @@ class LanguageAdminController extends Controller
         );
     }
 
-// @codingStandardsIgnoreStart
     /**
      * Saves the language.
      *
      * @return void
      */
-    public function plugin_saveAction()
+    public function pluginSaveAction()
     {
-// @codingStandardsIgnoreEnd
         echo $this->createFileEdit()->submit();
     }
 }

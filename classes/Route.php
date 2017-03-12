@@ -185,7 +185,7 @@ class Route
     {
         $dispatcher = $controller->getDispatcher();
         if (isset($dispatcher) && isset($_GET[$dispatcher])) {
-            $name = "{$_GET[$dispatcher]}Action";
+            $name = $this->toCamelCase($_GET[$dispatcher]) . 'Action';
             if (method_exists($controller, $name)) {
                 return $name;
             }
@@ -206,7 +206,7 @@ class Route
         $method = new \ReflectionMethod($controller, $methodName);
         $params = [];
         foreach ($method->getParameters() as $param) {
-            $name = $this->plugin->getName() . '_' . $param->getName();
+            $name = $this->plugin->getName() . '_' . $this->toUnderscores($param->getName());
             if (isset($_GET[$name])) {
                 $params[] = $_GET[$name];
             } else {
@@ -214,5 +214,23 @@ class Route
             }
         }
         $method->invokeArgs($controller, $params);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function toCamelCase($name)
+    {
+        return lcfirst(implode('', array_map('ucfirst', explode('_', $name))));
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function toUnderscores($name)
+    {
+        return strtolower(preg_replace('/[A-Z]/', '_$0', $name));
     }
 }

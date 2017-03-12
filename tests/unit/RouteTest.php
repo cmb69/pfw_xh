@@ -138,6 +138,23 @@ class RouteTest extends TestCase
         $route->resolve();
     }
 
+    /**
+     * @link https://github.com/cmb69/pfw_xh/issues/14
+     */
+    public function testCamelCaseAction()
+    {
+        $_GET = [
+            'action' => 'camel_case',
+            'pfw_foo_bar' => '42'
+        ];
+        $route = $this->createSubject(['' => 'Pfw\\FooController']);
+        $this->controller
+            ->expects($this->once())
+            ->method('camelCaseAction')
+            ->with($this->equalTo('42'));
+        $route->resolve();
+    }
+
     private function createSubject(array $map)
     {
         $route = $this->getMockBuilder('Pfw\\Route')
@@ -163,6 +180,13 @@ class FooController extends Controller
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function barAction($id, $baz)
+    {
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function camelCaseAction($fooBar)
     {
     }
 }

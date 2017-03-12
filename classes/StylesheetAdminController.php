@@ -65,15 +65,13 @@ class StylesheetAdminController extends Controller
         );
     }
 
-// @codingStandardsIgnoreStart
     /**
      * Saves the stylesheet.
      *
      * @return void
      */
-    public function plugin_textsaveAction()
+    public function pluginTextsaveAction()
     {
-// @codingStandardsIgnoreEnd
         echo $this->createFileEdit()->submit();
     }
 }
