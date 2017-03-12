@@ -61,11 +61,15 @@ class PluginInfoController extends Controller
      */
     protected function systemCheck()
     {
+        $pluginFolder = $this->getPlugin()->getFolder();
         return (new SystemChecks\SystemCheck)
             ->mandatory()
                 ->phpVersion('5.4.0')
                 ->extension('XMLWriter')
-                ->xhVersion('1.6');
+                ->xhVersion('1.6')
+                ->writable("{$pluginFolder}config")
+                ->writable("{$pluginFolder}css")
+                ->writable("{$pluginFolder}languages");
     }
 
     /**
