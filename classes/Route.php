@@ -185,11 +185,12 @@ class Route
     {
         $dispatcher = $controller->getDispatcher();
         if (isset($dispatcher) && isset($_GET[$dispatcher])) {
-            $name = $_GET[$dispatcher];
-        } else {
-            $name = 'index';
+            $name = "{$_GET[$dispatcher]}Action";
+            if (method_exists($controller, $name)) {
+                return $name;
+            }
         }
-        return "{$name}Action";
+        return 'indexAction';
     }
 
     /**

@@ -122,6 +122,22 @@ class RouteTest extends TestCase
         $route->resolve();
     }
 
+    /**
+     * @link https://github.com/cmb69/pfw_xh/issues/13
+     */
+    public function testUnavailableActionTriggersIndexAction()
+    {
+        global $su;
+
+        $su = 'foo';
+        $_GET = ['action' => 'does_not_exist'];
+        $route = $this->createSubject(['?foo' => 'Pfw\\FooController']);
+        $this->controller
+            ->expects($this->once())
+            ->method('indexAction');
+        $route->resolve();
+    }
+
     private function createSubject(array $map)
     {
         $route = $this->getMockBuilder('Pfw\\Route')
