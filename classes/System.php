@@ -125,15 +125,14 @@ class System
     }
 
     /**
-     * Returns a registered plugin.
+     * Returns a registered plugin or `null`
      *
      * @param string $name
-     *
-     * @return Plugin
+     * @return ?Plugin
      */
     protected function getPlugin($name)
     {
-        return $this->plugins[$name];
+        return isset($this->plugins[$name]) ? $this->plugins[$name] : null;
     }
 
     /**

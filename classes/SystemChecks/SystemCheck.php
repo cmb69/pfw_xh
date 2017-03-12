@@ -129,6 +129,30 @@ class SystemCheck
     }
 
     /**
+     * Checks for a minimum Pfw_XH version
+     *
+     * @param string $requiredVersion
+     * @return $this
+     */
+    public function pfw($requiredVersion)
+    {
+        $this->addCheck(new PfwCheck($this->isMandatory, $requiredVersion));
+        return $this;
+    }
+
+    /**
+     * Checks for a CMSimple_XH plugin
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function plugin($name)
+    {
+        $this->addCheck(new PluginCheck($this->isMandatory, $name));
+        return $this;
+    }
+
+    /**
      * Checks whether a file or folder is writable
      *
      * @param string $filename
