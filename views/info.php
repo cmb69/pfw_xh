@@ -37,8 +37,8 @@
         <h4><?=$this->text('userfunc_title')?></h4>
         <dl class="pfw_userfuncs">
 <?php   foreach ($this->userFuncs as $userFunc):?>
-            <dt><?=$this->escape($userFunc->name)?></dt>
-            <dd><?=$this->text("userfunc_{$userFunc->signature}")?></dd>
+            <dt><?=$this->escape($userFunc->signature)?></dt>
+            <dd><?=$this->text("userfunc_{$userFunc->name}")?></dd>
 <?php   endforeach?>
         </dl>
     </section>
