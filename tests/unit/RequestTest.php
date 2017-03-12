@@ -23,11 +23,11 @@ namespace Pfw;
 
 class RequestTest extends TestCase
 {
-    public function testMethod()
+    public function testGetMethod()
     {
         $subject = new Request();
         $_SERVER['REQUEST_METHOD'] = 'POST';
-        $this->assertEquals($_SERVER['REQUEST_METHOD'], $subject->method());
+        $this->assertEquals($_SERVER['REQUEST_METHOD'], $subject->getMethod());
     }
 
     public function testGetUrl()

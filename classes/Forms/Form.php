@@ -32,7 +32,7 @@ use Pfw\Lang;
  *
  * Example from a Controller method:
  *
- *      if ($this->request->method() != 'POST') {
+ *      if ($this->request->getMethod() !== 'POST') {
  *          // populate the form with some data
  *          $form->populate($data);
  *      } else {
