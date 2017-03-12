@@ -67,18 +67,6 @@ class ConfigAdminController extends Controller
 
 // @codingStandardsIgnoreStart
     /**
-     * Alias of ConfigAdminController::indexAction().
-     *
-     * @return void
-     */
-    public function plugin_editAction()
-    {
-// @codingStandardsIgnoreEnd
-        $this->indexAction();
-    }
-    
-// @codingStandardsIgnoreStart
-    /**
      * Saves the configuration.
      *
      * @return void

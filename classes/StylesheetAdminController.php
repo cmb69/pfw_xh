@@ -67,18 +67,6 @@ class StylesheetAdminController extends Controller
 
 // @codingStandardsIgnoreStart
     /**
-     * Alias of StylesheetAdminController::indexAction().
-     *
-     * @return void
-     */
-    public function plugin_textAction()
-    {
-// @codingStandardsIgnoreEnd
-        $this->indexAction();
-    }
-
-// @codingStandardsIgnoreStart
-    /**
      * Saves the stylesheet.
      *
      * @return void
