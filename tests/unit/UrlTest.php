@@ -86,7 +86,13 @@ class UrlTest extends TestCase
     private function pagemanagerConfigUrl()
     {
         return new Url('/xh/', [
-            'pagemanager' => null, 'admin' => 'plugin_config', 'action' => 'plugin_save'
+            'pagemanager' => '', 'admin' => 'plugin_config', 'action' => 'plugin_save'
         ]);
+    }
+
+    public function testArrayInQueryString()
+    {
+        $url = new Url('/', ['foo' => ['a' => '1', 'b' => '2']]);
+        $this->assertEquals('/?foo%5Ba%5D=1&foo%5Bb%5D=2', $url);
     }
 }

@@ -107,18 +107,7 @@ class Url
      */
     private function assembleQueryString()
     {
-        $params = array_map(
-            function ($name, $value) {
-                if (!empty($value)) {
-                    return "$name=$value";
-                } else {
-                    return $name;
-                }
-            },
-            array_keys($this->params),
-            array_values($this->params)
-        );
-        return implode('&', $params);
+        return preg_replace('/=(?=&|$)/', '', http_build_query($this->params, null, '&'));
     }
 
     /**
