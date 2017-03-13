@@ -58,9 +58,51 @@ class FormTest extends TestCase
             'archived' => true,
             'comment' => 'blah'
         ));
-        $this->assertEquals(
-            '<form method="POST" action="/" class="foo_form"><input type="hidden" name="xh_csrf_token" value="foo"/><div><input id="pfw_control_2" type="hidden" name="foo_id" value=""/></div><div><label for="pfw_control_3">LABEL_NAME</label><input id="pfw_control_3" type="text" name="foo_name" value="" required="required" pattern="[a-z]*"/></div><div><label for="pfw_control_4">LABEL_AGE</label><input id="pfw_control_4" type="number" name="foo_age" value="" required="required" min="18"/></div><div><label for="pfw_control_5">LABEL_WEIGHT</label><input id="pfw_control_5" type="number" name="foo_weight" value="" max="1000"/></div><div><label for="pfw_control_6">LABEL_GENDER</label><select id="pfw_control_6" name="foo_gender" required="required"><option>male</option><option selected="selected">female</option></select></div><div><label for="pfw_control_7">LABEL_ARCHIVED</label><input type="hidden" name="foo_archived" value=""/><input id="pfw_control_7" type="checkbox" name="foo_archived" value="1" checked="checked"/></div><div><label for="pfw_control_8">LABEL_SECRET</label><input id="pfw_control_8" type="password" name="foo_secret" value="" minlength="8"/></div><div><label for="pfw_control_9">LABEL_COMMENT</label><textarea id="pfw_control_9" name="foo_comment" maxlength="1000">blah</textarea></div><div><button name="foo_save">LABEL_SAVE</button></div></form>',
-            $this->subject->render()
+        $this->assertEquals(<<<'HTML'
+<form method="POST" action="/" class="foo_form">
+    <input type="hidden" name="xh_csrf_token" value="foo"/>
+    <div>
+        <input id="pfw_control_2" type="hidden" name="foo_id" value=""/>
+    </div>
+    <div>
+        <label for="pfw_control_3">LABEL_NAME</label>
+        <input id="pfw_control_3" type="text" name="foo_name" value="" required="required" pattern="[a-z]*"/>
+    </div>
+    <div>
+        <label for="pfw_control_4">LABEL_AGE</label>
+        <input id="pfw_control_4" type="number" name="foo_age" value="" required="required" min="18"/>
+    </div>
+    <div>
+        <label for="pfw_control_5">LABEL_WEIGHT</label>
+        <input id="pfw_control_5" type="number" name="foo_weight" value="" max="1000"/>
+    </div>
+    <div>
+        <label for="pfw_control_6">LABEL_GENDER</label>
+        <select id="pfw_control_6" name="foo_gender" required="required">
+            <option>male</option>
+            <option selected="selected">female</option>
+        </select>
+    </div>
+    <div>
+        <label for="pfw_control_7">LABEL_ARCHIVED</label>
+        <input type="hidden" name="foo_archived" value=""/>
+        <input id="pfw_control_7" type="checkbox" name="foo_archived" value="1" checked="checked"/>
+    </div>
+    <div>
+        <label for="pfw_control_8">LABEL_SECRET</label>
+        <input id="pfw_control_8" type="password" name="foo_secret" value="" minlength="8"/>
+    </div>
+    <div>
+        <label for="pfw_control_9">LABEL_COMMENT</label>
+        <textarea id="pfw_control_9" name="foo_comment" maxlength="1000">blah</textarea>
+    </div>
+    <div>
+        <button name="foo_save">LABEL_SAVE</button>
+    </div>
+</form>
+
+HTML
+            , $this->subject->render()
         );
     }
 
@@ -74,9 +116,57 @@ class FormTest extends TestCase
             'foo_comment' => str_repeat('*', 2000)
         );
         $this->subject->validate();
-        $this->assertEquals(
-            '<form method="POST" action="/" class="foo_form"><input type="hidden" name="xh_csrf_token" value="foo"/><div><input id="pfw_control_12" type="hidden" name="foo_id" value=""/></div><div><label for="pfw_control_13">LABEL_NAME</label><input id="pfw_control_13" type="text" name="foo_name" value="Becker" required="required" pattern="[a-z]*"/><div class="pfw_validation_error">VALIDATION_PATTERN</div></div><div><label for="pfw_control_14">LABEL_AGE</label><input id="pfw_control_14" type="number" name="foo_age" value="" required="required" min="18"/><div class="pfw_validation_error">VALIDATION_REQUIRED</div><div class="pfw_validation_error">VALIDATION_MIN</div></div><div><label for="pfw_control_15">LABEL_WEIGHT</label><input id="pfw_control_15" type="number" name="foo_weight" value="10000" max="1000"/><div class="pfw_validation_error">VALIDATION_MAX</div></div><div><label for="pfw_control_16">LABEL_GENDER</label><select id="pfw_control_16" name="foo_gender" required="required"><option>male</option><option selected="selected">female</option></select></div><div><label for="pfw_control_17">LABEL_ARCHIVED</label><input type="hidden" name="foo_archived" value=""/><input id="pfw_control_17" type="checkbox" name="foo_archived" value="1" checked="checked"/></div><div><label for="pfw_control_18">LABEL_SECRET</label><input id="pfw_control_18" type="password" name="foo_secret" value="" minlength="8"/><div class="pfw_validation_error">VALIDATION_MINLENGTH</div></div><div><label for="pfw_control_19">LABEL_COMMENT</label><textarea id="pfw_control_19" name="foo_comment" maxlength="1000">********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************</textarea><div class="pfw_validation_error">VALIDATION_MAXLENGTH</div></div><div><button name="foo_save">LABEL_SAVE</button></div></form>',
-            $this->subject->render()
+        $this->assertEquals(<<<'HTML'
+<form method="POST" action="/" class="foo_form">
+    <input type="hidden" name="xh_csrf_token" value="foo"/>
+    <div>
+        <input id="pfw_control_12" type="hidden" name="foo_id" value=""/>
+    </div>
+    <div>
+        <label for="pfw_control_13">LABEL_NAME</label>
+        <input id="pfw_control_13" type="text" name="foo_name" value="Becker" required="required" pattern="[a-z]*"/>
+        <div class="pfw_validation_error">VALIDATION_PATTERN</div>
+    </div>
+    <div>
+        <label for="pfw_control_14">LABEL_AGE</label>
+        <input id="pfw_control_14" type="number" name="foo_age" value="" required="required" min="18"/>
+        <div class="pfw_validation_error">VALIDATION_REQUIRED</div>
+        <div class="pfw_validation_error">VALIDATION_MIN</div>
+    </div>
+    <div>
+        <label for="pfw_control_15">LABEL_WEIGHT</label>
+        <input id="pfw_control_15" type="number" name="foo_weight" value="10000" max="1000"/>
+        <div class="pfw_validation_error">VALIDATION_MAX</div>
+    </div>
+    <div>
+        <label for="pfw_control_16">LABEL_GENDER</label>
+        <select id="pfw_control_16" name="foo_gender" required="required">
+            <option>male</option>
+            <option selected="selected">female</option>
+        </select>
+    </div>
+    <div>
+        <label for="pfw_control_17">LABEL_ARCHIVED</label>
+        <input type="hidden" name="foo_archived" value=""/>
+        <input id="pfw_control_17" type="checkbox" name="foo_archived" value="1" checked="checked"/>
+    </div>
+    <div>
+        <label for="pfw_control_18">LABEL_SECRET</label>
+        <input id="pfw_control_18" type="password" name="foo_secret" value="" minlength="8"/>
+        <div class="pfw_validation_error">VALIDATION_MINLENGTH</div>
+    </div>
+    <div>
+        <label for="pfw_control_19">LABEL_COMMENT</label>
+        <textarea id="pfw_control_19" name="foo_comment" maxlength="1000">********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************</textarea>
+        <div class="pfw_validation_error">VALIDATION_MAXLENGTH</div>
+    </div>
+    <div>
+        <button name="foo_save">LABEL_SAVE</button>
+    </div>
+</form>
+
+HTML
+            , $this->subject->render()
         );
     }
 

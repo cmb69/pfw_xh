@@ -172,6 +172,8 @@ class Form
     {
         $writer = new XMLWriter();
         $writer->openMemory();
+        $writer->setIndent(true);
+        $writer->setIndentString('    ');
         $writer->startElement('form');
         $writer->writeAttribute('method', 'POST');
         $writer->writeAttribute('action', $this->action);
