@@ -61,6 +61,7 @@ class SelectControl extends Control
         $writer->startElement('select');
         $writer->writeAttribute('id', $this->getId());
         $writer->writeAttribute('name', $this->getName());
+        $this->renderRuleAttributes($writer);
         foreach ($this->options as $option) {
             $writer->startElement('option');
             if ($this->getData() == $option) {
@@ -69,7 +70,6 @@ class SelectControl extends Control
             $writer->text($option);
             $writer->endElement();
         }
-        $this->renderRuleAttributes($writer);
         $writer->endElement();
         $this->renderValidationErrors($writer);
         $writer->endElement();
