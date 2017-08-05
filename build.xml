@@ -6,6 +6,10 @@
         <include name="classes/*.php"/>
     </fileset>
 
+    <fileset id="unit-tests" dir="tests/unit">
+        <include name="*Test.php"/>
+    </fileset>
+
     <target name="help" description="lists available targets">
         <exec command="phing -l" outputProperty="help"/>
         <echo>${help}</echo>
@@ -14,7 +18,21 @@
     <target name="sniff" description="checks adherence to coding standards">
         <phpcodesniffer standard="PSR2">
             <fileset refid="php-sources"/>
+            <fileset refid="unit-tests"/>
         </phpcodesniffer>
+    </target>
+
+    <target name="unit-tests" description="runs all unit tests">
+        <phpunit bootstrap="tests/unit/bootstrap.php" haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset refid="unit-tests"/>
+            </batchtest>
+        </phpunit>
+    </target>
+
+    <target name="coverage" description="generates coverage report">
+        <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
 
 </project>
