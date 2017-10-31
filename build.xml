@@ -22,7 +22,7 @@
     </target>
 
     <target name="sniff" description="checks adherence to coding standards">
-        <phpcodesniffer standard="PSR2">
+        <phpcodesniffer standard="PSR2" haltonerror="true">
             <fileset refid="php-sources"/>
             <fileset refid="unit-tests"/>
         </phpcodesniffer>
