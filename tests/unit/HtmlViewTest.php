@@ -54,7 +54,12 @@ class HtmlViewTest extends TestCase
 <?=$htmlstring?>
 <?php $nested()?>
 EOS
-                        , 'nested.php' => '<p><?=$string?></p>'
+                        ,
+                        'nested.php' => '<p><?=$string?></p>',
+                        'i18n.php' => <<<'EOS'
+<?=$this->text('foo_bar', $foo, $bar)?>
+<?=$this->text('foo_baz', $foo, $bar)?>
+EOS
                     ]
                 ]
             ]
@@ -65,7 +70,7 @@ EOS
     /**
      * @return void
      */
-    public function testExampleView()
+    public function testViewValues()
     {
         $this->expectOutputString(
             '1&lt;string&gt;&lt;key0&gt;&lt;array&gt;&lt;key1&gt;&lt;array&gt;&lt;property&gt;&lt;method&gt;'
@@ -91,6 +96,33 @@ EOS
                 })(),
                 'htmlstring' => new HtmlString('<htmlstring>'),
                 'nested' => (new HtmlView('foo'))->template('nested')->data(['string' => '<nested>'])
+            ])
+            ->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function testI18n()
+    {
+        global $plugin_tx;
+
+        $plugin_tx = [
+            'pfw' => [
+                'foo_baz' => 'A %s, a %s and a <foobaz>.'
+            ],
+            'foo' => [
+                'foo_bar' => 'A %s, a %s and a <foobar>.'
+            ]
+        ];
+        $this->expectOutputString(
+            'A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobar&gt;.A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobaz&gt;.'
+        );
+        (new HtmlView('foo'))
+            ->template('i18n')
+            ->data([
+                'foo' => '<foo>',
+                'bar' => '<bar>'
             ])
             ->render();
     }

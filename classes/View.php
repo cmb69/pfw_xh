@@ -84,4 +84,27 @@ abstract class View
      * @return string
      */
     abstract public function escape($value);
+
+    /**
+     * Return a properly escaped localized language text
+     *
+     * The `$key` is looked up in the active language file of the plugin the
+     * view is associated with, and if it is not there it is looked up in
+     * Pfw_XH's language file.  Additional arguments may be passed to substitute
+     * printf-style placeholders in the language text.
+     *
+     * @param string $key
+     * @return string
+     */
+    protected function text($key)
+    {
+        global $plugin_tx;
+
+        if (isset($plugin_tx[$this->pluginname][$key])) {
+            $string = $plugin_tx[$this->pluginname][$key];
+        } else {
+            $string = $plugin_tx['pfw'][$key];
+        }
+        return vsprintf($this->escape($string), array_slice(func_get_args(), 1));
+    }
 }
