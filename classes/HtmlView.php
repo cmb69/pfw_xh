@@ -21,26 +21,17 @@
 
 namespace Pfw;
 
-final class HtmlString
+final class HtmlView extends View
 {
     /**
-     * @var string
+     * @param mixed $value
      */
-    private $string;
-
-    /**
-     * @param string $string
-     */
-    public function __construct($string)
+    public function escape($value)
     {
-        $this->string = (string) $string;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->string;
+        if ($value instanceof HtmlString) {
+            return (string) $value;
+        } else {
+            return htmlspecialchars((string) $value, ENT_COMPAT | ENT_SUBSTITUTE, 'UTF-8');
+        }
     }
 }

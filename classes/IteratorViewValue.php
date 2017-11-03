@@ -21,26 +21,47 @@
 
 namespace Pfw;
 
-final class HtmlString
+use Iterator;
+
+class IteratorViewValue extends ViewValue implements Iterator
 {
     /**
-     * @var string
+     * @return mixed
      */
-    private $string;
-
-    /**
-     * @param string $string
-     */
-    public function __construct($string)
+    public function current()
     {
-        $this->string = (string) $string;
+        return self::create($this->view_, $this->value_->current());
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function __toString()
+    public function key()
     {
-        return $this->string;
+        return self::create($this->view_, $this->value_->key());
+    }
+
+    /**
+     * @return void
+     */
+    public function next()
+    {
+        $this->value_->next();
+    }
+
+    /**
+     * @return void
+     */
+    public function rewind()
+    {
+        $this->value_->rewind();
+    }
+
+    /**
+     * @return bool
+     */
+    public function valid()
+    {
+        return $this->value_->valid();
     }
 }

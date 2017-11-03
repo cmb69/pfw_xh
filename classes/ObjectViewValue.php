@@ -21,26 +21,23 @@
 
 namespace Pfw;
 
-final class HtmlString
+class ObjectViewValue extends ViewValue
 {
     /**
-     * @var string
+     * @param string $name
+     * @return self
      */
-    private $string;
-
-    /**
-     * @param string $string
-     */
-    public function __construct($string)
+    public function __get($name)
     {
-        $this->string = (string) $string;
+        return self::create($this->view_, $this->value_->{$name});
     }
 
     /**
-     * @return string
+     * @param string $name
+     * @return self
      */
-    public function __toString()
+    public function __call($name, array $arguments)
     {
-        return $this->string;
+        return self::create($this->view_, call_user_func_array([$this->value_, $name], $arguments));
     }
 }

@@ -21,26 +21,13 @@
 
 namespace Pfw;
 
-final class HtmlString
+class NestedViewValue extends ViewValue
 {
     /**
-     * @var string
+     * @return void
      */
-    private $string;
-
-    /**
-     * @param string $string
-     */
-    public function __construct($string)
+    public function __invoke()
     {
-        $this->string = (string) $string;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->string;
+        $this->value_->render();
     }
 }

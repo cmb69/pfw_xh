@@ -25,6 +25,9 @@ use PHPUnit\Framework\TestCase;
 
 class HtmlStringTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testReturnsStringUnmodified()
     {
         $string = 'foo <b>bar</b> &amp; baz';
