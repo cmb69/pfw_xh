@@ -59,6 +59,8 @@ EOS
                         'i18n.php' => <<<'EOS'
 <?=$this->text('foo_bar', $foo, $bar)?>
 <?=$this->text('foo_baz', $foo, $bar)?>
+<?=$this->plural('foo_plural', $count1)?>
+<?=$this->plural('foo_plural', $count42)?>
 EOS
                     ]
                 ]
@@ -109,20 +111,27 @@ EOS
 
         $plugin_tx = [
             'pfw' => [
-                'foo_baz' => 'A %s, a %s and a <foobaz>.'
+                'foo_baz' => 'A %s, a %s and a <foobaz>.',
+                'plural_suffix' => '$n != 1'
             ],
             'foo' => [
-                'foo_bar' => 'A %s, a %s and a <foobar>.'
+                'foo_bar' => 'A %s, a %s and a <foobar>.',
+                'foo_plural_0' => '%s foo.',
+                'foo_plural_1' => '%s foos.'
             ]
         ];
         $this->expectOutputString(
-            'A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobar&gt;.A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobaz&gt;.'
+            'A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobar&gt;.'
+            . 'A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobaz&gt;.'
+            . '1 foo.42 foos.'
         );
         (new HtmlView('foo'))
             ->template('i18n')
             ->data([
                 'foo' => '<foo>',
-                'bar' => '<bar>'
+                'bar' => '<bar>',
+                'count1' => 1,
+                'count42' => 42
             ])
             ->render();
     }

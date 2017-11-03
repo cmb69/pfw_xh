@@ -98,13 +98,57 @@ abstract class View
      */
     protected function text($key)
     {
+        return vsprintf(
+            $this->escape($this->getLanguageString($key)),
+            array_slice(func_get_args(), 1)
+        );
+    }
+
+    /**
+     * Return a properly escaped pluralized localized language text
+     *
+     * The `$key` is suffixed with the appropriate number suffix according to
+     * the current language's rules, which works basically the same as gettext's
+     * plurals.  The suffixed key is then looked up in the active language file
+     * of the plugin the view is associated with, and if it is not there it is
+     * looked up in Pfw_XH's language file.  Additional arguments may be passed
+     * to substitute printf-style placeholders in the language text.
+     *
+     * @param string $key
+     * @param int $count
+     * @return string
+     */
+    protected function plural($key, $count)
+    {
+        $string = $this->getLanguageString("{$key}_{$this->getPluralSuffix($count)}");
+        return vsprintf($this->escape($string), array_slice(func_get_args(), 1));
+    }
+
+    /**
+     * @param string $key
+     * @return string
+     */
+    private function getLanguageString($key)
+    {
         global $plugin_tx;
 
         if (isset($plugin_tx[$this->pluginname][$key])) {
-            $string = $plugin_tx[$this->pluginname][$key];
+            return $plugin_tx[$this->pluginname][$key];
         } else {
-            $string = $plugin_tx['pfw'][$key];
+            return $plugin_tx['pfw'][$key];
         }
-        return vsprintf($this->escape($string), array_slice(func_get_args(), 1));
+    }
+
+    /**
+     * @param int $count
+     * @return int
+     */
+    private function getPluralSuffix($count)
+    {
+        global $plugin_tx;
+
+        $n = (string) $count;
+        (string) $n; // silence PHPMD
+        return eval("return (int) ({$plugin_tx['pfw']['plural_suffix']});");
     }
 }
