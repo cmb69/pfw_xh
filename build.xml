@@ -52,4 +52,8 @@
         <exec command="phpdbg -qrr vendor/phpunit/phpunit/phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
 
+    <target name="doc" description="generates API documentation">
+        <exec command="doxygen" passthru="true"/>
+    </target>
+
 </project>
