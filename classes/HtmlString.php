@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2016-2017 Christoph M. Becker
+ * Copyright 2017 Christoph M. Becker
  *
  * This file is part of Pfw_XH.
  *
@@ -21,35 +21,26 @@
 
 namespace Pfw;
 
-/**
- * Simple value objects which encapsulate an HTML string.
- *
- * Encapsulating any HTML fragment as HtmlString is useful if such strings
- * will be `echo`d by a HtmlView, because HtmlView::escape() doesn't
- * escape HtmlStrings again.  This way we can always call HtmlView::escape()
- * regardless of whether we're dealing with text or HTML strings.
- */
-class HtmlString
+final class HtmlString
 {
-    private $contents;
+    /**
+     * @var string
+     */
+    private $string;
 
     /**
-     * Constructs an instance.
-     *
-     * @param string $contents
+     * @param string $string
      */
-    public function __construct($contents)
+    public function __construct($string)
     {
-        $this->contents = (string) $contents;
+        $this->string = (string) $string;
     }
 
     /**
-     * Returns the string representation.
-     *
      * @return string
      */
     public function __toString()
     {
-        return $this->contents;
+        return $this->string;
     }
 }

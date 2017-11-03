@@ -19,16 +19,6 @@
  * along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * Work around for missing `selected` solution in core
- */
-if (isset($_GET['selected']) && $su === $_GET['selected']) {
-    $temp = ['/^' . preg_quote($su, '/') . '(?=&|$)/u', '/(?:^|&)selected=.*?(?=&|$)/u'];
-    $temp = $su . preg_replace($temp, '', $_SERVER['QUERY_STRING']);
-    header('Location: ' . CMSIMPLE_URL . "?$temp", true, 301);
-    exit;
-}
-
 spl_autoload_register(function ($className) {
     $parts = explode('\\', $className);
     $parts[0] = lcfirst($parts[0]);

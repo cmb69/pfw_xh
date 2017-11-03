@@ -21,17 +21,23 @@
 
 namespace Pfw;
 
-final class HtmlView extends View
+class ObjectViewValue extends ViewValue
 {
     /**
-     * @param mixed $value
+     * @param string $name
+     * @return self
      */
-    public function escape($value)
+    public function __get($name)
     {
-        if ($value instanceof HtmlString) {
-            return (string) $value;
-        } else {
-            return htmlspecialchars((string) $value, ENT_COMPAT | ENT_SUBSTITUTE, 'UTF-8');
-        }
+        return self::create($this->view_, $this->value_->{$name});
+    }
+
+    /**
+     * @param string $name
+     * @return self
+     */
+    public function __call($name, array $arguments)
+    {
+        return self::create($this->view_, call_user_func_array([$this->value_, $name], $arguments));
     }
 }

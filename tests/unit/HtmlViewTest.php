@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2016-2017 Christoph M. Becker
+ * Copyright 2017 Christoph M. Becker
  *
  * This file is part of Pfw_XH.
  *
@@ -21,87 +21,118 @@
 
 namespace Pfw;
 
+use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 class HtmlViewTest extends TestCase
 {
-    private $subject;
-    
-    private $root;
-    
-    public function setUp()
+    /**
+     * @return void
+     */
+    protected function setUp()
     {
-        parent::setUp();
-        $this->root = vfsStream::setup();
-        $controller = $this->getMockBuilder('Pfw\\Controller')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $plugin = $this->getMockBuilder('Pfw\\Plugin')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $lang = $this->getMockBuilder('Pfw\\Lang')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $plugin->expects($this->any())->method('getLang')
-            ->willReturn($lang);
-        $plugin->expects($this->any())->method('getFolder')
-            ->willReturn($this->root->url() . '/');
-        $controller->expects($this->any())->method('getPlugin')->willReturn($plugin);
-        $this->subject = new HtmlView($controller, 'foo');
+        global $pth;
+
+        vfsStream::setup('root', null, [
+            'plugins' => [
+                'foo' => [
+                    'views' => [
+                        'test.php' => <<<'EOS'
+<?=$bool?>
+<?=$string?>
+<?php foreach ($array as $key => $value):?>
+<?=$key?>
+<?=$value?>
+<?php endforeach?>
+<?=$object->foo?>
+<?=$object->foo()?>
+<?php foreach ($generator as $key => $value):?>
+<?=$key?>
+<?=$value?>
+<?php endforeach?>
+<?=$htmlstring?>
+<?php $nested()?>
+EOS
+                        ,
+                        'nested.php' => '<p><?=$string?></p>',
+                        'i18n.php' => <<<'EOS'
+<?=$this->text('foo_bar', $foo, $bar)?>
+<?=$this->text('foo_baz', $foo, $bar)?>
+<?=$this->plural('foo_plural', $count1)?>
+<?=$this->plural('foo_plural', $count42)?>
+EOS
+                    ]
+                ]
+            ]
+        ]);
+        $pth['folder']['plugins'] = vfsStream::url('root/plugins/');
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Warning
+     * @return void
      */
-    public function testIllegalPropertyName()
+    public function testViewValues()
     {
-        $this->subject->data = 'foo';
+        $this->expectOutputString(
+            '1&lt;string&gt;&lt;key0&gt;&lt;array&gt;&lt;key1&gt;&lt;array&gt;&lt;property&gt;&lt;method&gt;'
+            . '&lt;key0&gt;&lt;generator&gt;&lt;key1&gt;&lt;generator&gt;<htmlstring><p>&lt;nested&gt;</p>'
+        );
+        (new HtmlView('foo'))
+            ->template('test')
+            ->data([
+                'bool' => true,
+                'string' => '<string>',
+                'array' => ['<key0>' => '<array>', '<key1>' => '<array>'],
+                'object' => new class {
+                    var $foo = '<property>';
+                    function foo()
+                    {
+                        return '<method>';
+                    }
+                },
+                'generator' => (function () {
+                    for ($i = 0; $i < 2; $i++) {
+                        yield "<key$i>" => '<generator>';
+                    }
+                })(),
+                'htmlstring' => new HtmlString('<htmlstring>'),
+                'nested' => (new HtmlView('foo'))->template('nested')->data(['string' => '<nested>'])
+            ])
+            ->render();
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Warning
+     * @return void
      */
-    public function testIllegalMethodName()
+    public function testI18n()
     {
-        $this->subject->escape = 'trim';
-    }
-    
-    public function testEscapesStrings()
-    {
-        $this->setUpTemplate('<?php echo $this->escape($this->foo)? >');
-        $this->subject->foo = '<"&>';
-        $this->expectOutputString('&lt;&quot;&amp;&gt;');
-        $this->subject->render();
-    }
+        global $plugin_tx;
 
-    public function testDoesNotEscapeProperties()
-    {
-        $this->setUpTemplate('<?php echo $this->foo? >');
-        $this->subject->foo = '<"&>';
-        $this->expectOutputString('<"&>');
-        $this->subject->render();
-    }
-
-    public function testAutoEscapesMethods()
-    {
-        $this->setUpTemplate('<?php echo $this->foo()? >');
-        $this->subject->foo = '<"&>';
-        $this->expectOutputString('&lt;&quot;&amp;&gt;');
-        $this->subject->render();
-    }
-
-    public function testDoesNotEscapeHtmlStrings()
-    {
-        $this->setUpTemplate('<?php echo $this->escape($this->foo)? >');
-        $this->subject->foo = new HtmlString('<"&>');
-        $this->expectOutputString('<"&>');
-        $this->subject->render();
-    }
-    
-    private function setUpTemplate($contents)
-    {
-        $viewFolder = $this->root->url() . DIRECTORY_SEPARATOR . 'views';
-        mkdir($viewFolder);
-        file_put_contents("$viewFolder/foo.php", str_replace('? >', '?>', $contents));
+        $plugin_tx = [
+            'pfw' => [
+                'foo_baz' => 'A %s, a %s and a <foobaz>.',
+                'plural_suffix' => '$n != 1'
+            ],
+            'foo' => [
+                'foo_bar' => 'A %s, a %s and a <foobar>.',
+                'foo_plural_0' => '%s foo.',
+                'foo_plural_1' => '%s foos.'
+            ]
+        ];
+        $this->expectOutputString(
+            'A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobar&gt;.'
+            . 'A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobaz&gt;.'
+            . '1 foo.42 foos.'
+        );
+        (new HtmlView('foo'))
+            ->template('i18n')
+            ->data([
+                'foo' => '<foo>',
+                'bar' => '<bar>',
+                'count1' => 1,
+                'count42' => 42
+            ])
+            ->render();
     }
 }

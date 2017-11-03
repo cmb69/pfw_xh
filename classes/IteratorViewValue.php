@@ -21,17 +21,47 @@
 
 namespace Pfw;
 
-final class HtmlView extends View
+use Iterator;
+
+class IteratorViewValue extends ViewValue implements Iterator
 {
     /**
-     * @param mixed $value
+     * @return mixed
      */
-    public function escape($value)
+    public function current()
     {
-        if ($value instanceof HtmlString) {
-            return (string) $value;
-        } else {
-            return htmlspecialchars((string) $value, ENT_COMPAT | ENT_SUBSTITUTE, 'UTF-8');
-        }
+        return self::create($this->view_, $this->value_->current());
+    }
+
+    /**
+     * @return int
+     */
+    public function key()
+    {
+        return self::create($this->view_, $this->value_->key());
+    }
+
+    /**
+     * @return void
+     */
+    public function next()
+    {
+        $this->value_->next();
+    }
+
+    /**
+     * @return void
+     */
+    public function rewind()
+    {
+        $this->value_->rewind();
+    }
+
+    /**
+     * @return bool
+     */
+    public function valid()
+    {
+        return $this->value_->valid();
     }
 }

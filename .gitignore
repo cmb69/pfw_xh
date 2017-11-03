@@ -1,5 +1,4 @@
 /vendor
-/.komodotools
 /tests/coverage
-doxygen
-/pfw.phar
+/classes.svg
+/docs

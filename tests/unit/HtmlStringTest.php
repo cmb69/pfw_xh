@@ -21,17 +21,16 @@
 
 namespace Pfw;
 
-final class HtmlView extends View
+use PHPUnit\Framework\TestCase;
+
+class HtmlStringTest extends TestCase
 {
     /**
-     * @param mixed $value
+     * @return void
      */
-    public function escape($value)
+    public function testReturnsStringUnmodified()
     {
-        if ($value instanceof HtmlString) {
-            return (string) $value;
-        } else {
-            return htmlspecialchars((string) $value, ENT_COMPAT | ENT_SUBSTITUTE, 'UTF-8');
-        }
+        $string = 'foo <b>bar</b> &amp; baz';
+        $this->assertEquals($string, new HtmlString($string));
     }
 }

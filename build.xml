@@ -3,12 +3,10 @@
 <project name="Pfw" default="help">
 
     <fileset id="php-sources" dir=".">
-        <include name="index.php"/>
         <include name="classes/*.php"/>
-        <include name="classes/**/*.php"/>
     </fileset>
 
-    <fileset id="tests" dir="tests/unit">
+    <fileset id="unit-tests" dir="tests/unit">
         <include name="*Test.php"/>
     </fileset>
 
@@ -17,17 +15,23 @@
         <echo>${help}</echo>
     </target>
 
+    <target name="uml" description="generates UML class diagram">
+        <fail unless="plantuml" message="plantuml is not defined!"/>
+        <exec command="umlwriter diagram:render --reflector=reflect --processor=plantuml classes | java -jar ${plantuml} -p -tsvg > classes.svg"
+              logoutput="true"/>
+    </target>
+
     <target name="sniff" description="checks adherence to coding standards">
-        <phpcodesniffer standard="PSR2">
+        <phpcodesniffer standard="PSR2" haltonerror="true">
             <fileset refid="php-sources"/>
-            <!--<fileset refid="tests"/>-->
+            <fileset refid="unit-tests"/>
         </phpcodesniffer>
     </target>
 
     <target name="mess" description="detects code flaws">
-        <phpmd>
+        <phpmd rulesets="codesize,unusedcode">
             <fileset refid="php-sources"/>
-            <fileset refid="tests"/>
+            <fileset refid="unit-tests"/>
          </phpmd>
     </target>
 
@@ -35,104 +39,21 @@
         <exec command="phpcompatinfo analyser:run --alias current" logoutput="true"/>
     </target>
 
-    <target name="test" description="runs all tests">
-        <phpunit haltonerror="true" haltonfailure="true"
-                bootstrap="tests/unit/bootstrap.php">
+    <target name="unit-tests" description="runs all unit tests">
+        <phpunit bootstrap="tests/unit/bootstrap.php" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset refid="tests"/>
+                <fileset refid="unit-tests"/>
             </batchtest>
         </phpunit>
     </target>
 
-    <target name="coverage" description="generates code coverage report">
-        <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
+    <target name="coverage" description="generates coverage report">
+        <exec command="phpdbg -qrr vendor/phpunit/phpunit/phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
 
     <target name="doc" description="generates API documentation">
-        <exec command="doxygen Doxyfile"/>
+        <exec command="doxygen" passthru="true"/>
     </target>
-    
-    <target name="phar" description="builds the PFW phar">
-        <fail unless="version" message="version is not defined!"/>
-        <copy file="sdk/pfw.php" tofile="sdk/pfw1.php">
-            <filterchain>
-                <replacetokens>
-                    <token key="PFW_VERSION" value="${version}"/>
-                </replacetokens>
-            </filterchain>
-        </copy>
-        <pharpackage destfile="./pfw.phar" basedir="./" clistub="sdk/pfw1.php">
-            <fileset dir="sdk">
-                <include name="*.php"/>
-                <exclude name="pfw.php"/>
-            </fileset>
-            <metadata>
-                <element name="version" value="${version}"/>
-                <element name="authors">
-                    <element name="Christoph M. Becker">
-                        <element name="e-mail" value="cmbecker69@gmx.de"/>
-                    </element>
-                </element>
-            </metadata>
-        </pharpackage>
-        <delete file="sdk/pfw1.php"/>
-    </target>
-    
-    <target name="build-plugin">
-        <fail unless="version" message="version is not defined!"/>
-        <exec command="git archive -o export.tar HEAD" checkreturn="true"/>
-        <untar file="export.tar" todir="export"/>
-        <delete file="export.tar"/>
-        <move todir="dist">
-            <fileset dir="export">
-                <include name="index.php"/>
-                <include name="version.nfo"/>
-            </fileset>
-            <filterchain>
-                <replacetokens>
-                    <token key="PFW_VERSION" value="${version}"/>
-                </replacetokens>
-            </filterchain>
-        </move>
-        <move todir="dist">
-            <fileset dir="export">
-                <exclude name="build.xml"/>
-                <exclude name="composer.*"/>
-                <exclude name="coverage.xml"/>
-                <exclude name="docs/**"/>
-                <exclude name="Doxyfile"/>
-                <exclude name="pax_global_header"/>
-                <exclude name="pfw.php"/>
-                <exclude name="phpcompatinfo.json"/>
-                <exclude name="sdk/**"/>
-                <exclude name="tests/**"/>
-            </fileset>
-        </move>
-        <delete dir="export"/>
-        <copy file="dist/config/config.php"
-              tofile="dist/config/defaultconfig.php"/>
-        <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
-        <zip destfile="Pfw_XH-${version}.zip" basedir="dist"
-             prefix="pfw/"/>
-        <delete dir="dist"/>
-    </target>
-    
-    <target name="build-sdk" depends="doc, phar">
-        <fail unless="version" message="version is not defined!"/>
-        <mkdir dir="dist"/>
-        <copy file="pfw.phar" tofile="dist/pfw.phar"/>
-        <copy todir="dist/docs">
-            <fileset dir="doxygen/html"/>
-        </copy>
-        <copy file="sdk/README.md" tofile="dist/README.md"/>
-        <copy file="LICENSE" tofile="dist/LICENSE"/>
-        <zip destfile="Pfw_XH-SDK-${version}.zip" basedir="dist"
-             prefix="pfw-sdk/"/>
-        <delete dir="dist"/>
-    </target>
-
-    <target name="build" depends="build-plugin, build-sdk"
-         description="builds the distributable ZIP archives"/>
 
 </project>

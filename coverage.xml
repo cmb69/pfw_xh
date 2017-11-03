@@ -8,12 +8,6 @@
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">classes</directory>
-            <exclude>
-                <file>classes/PluginInfoController.php</file>
-                <file>classes/ConfigAdminController.php</file>
-                <file>classes/LanguageAdminController.php</file>
-                <file>classes/StylesheetAdminController.php</file>
-            </exclude>
         </whitelist>
     </filter>
     <logging>

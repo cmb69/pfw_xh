@@ -21,17 +21,13 @@
 
 namespace Pfw;
 
-final class HtmlView extends View
+class NestedViewValue extends ViewValue
 {
     /**
-     * @param mixed $value
+     * @return void
      */
-    public function escape($value)
+    public function __invoke()
     {
-        if ($value instanceof HtmlString) {
-            return (string) $value;
-        } else {
-            return htmlspecialchars((string) $value, ENT_COMPAT | ENT_SUBSTITUTE, 'UTF-8');
-        }
+        $this->value_->render();
     }
 }
