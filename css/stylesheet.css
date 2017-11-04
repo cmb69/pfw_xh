@@ -1,0 +1,12 @@
+/*
+ * Back-end
+ */
+.pfw_logo {
+    float: left;
+    width: 128px;
+    height: 128px;
+    margin: 0 1.5em 0.5em 0;
+}
+.pfw_license {
+    text-align: justify;
+}
