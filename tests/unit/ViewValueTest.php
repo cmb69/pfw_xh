@@ -23,6 +23,10 @@ namespace Pfw;
 
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Pfw\View\HtmlView;
+use Pfw\View\ViewValue;
+use Pfw\View\ArrayViewValue;
+use Pfw\View\ObjectViewValue;
 
 class ViewValueTest extends TestCase
 {
@@ -50,7 +54,7 @@ class ViewValueTest extends TestCase
 
     /**
      * @return void
-     * @covers Pfw\ViewValue::create
+     * @covers Pfw\View\ViewValue::create
      */
     public function testBoolValue()
     {
@@ -59,7 +63,7 @@ class ViewValueTest extends TestCase
 
     /**
      * @return void
-     * @covers Pfw\ViewValue::create
+     * @covers Pfw\View\ViewValue::create
      */
     public function testArrayValue()
     {
@@ -68,7 +72,7 @@ class ViewValueTest extends TestCase
 
     /**
      * @return void
-     * @covers Pfw\ViewValue::create
+     * @covers Pfw\View\ViewValue::create
      */
     public function testObjectValue()
     {
@@ -77,7 +81,7 @@ class ViewValueTest extends TestCase
 
     /**
      * @return void
-     * @covers Pfw\ViewValue::create
+     * @covers Pfw\View\ViewValue::create
      */
     public function testStringValue()
     {

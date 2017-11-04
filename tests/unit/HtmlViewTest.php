@@ -24,6 +24,8 @@ namespace Pfw;
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use Pfw\View\HtmlView;
+use Pfw\View\HtmlString;
 
 class HtmlViewTest extends TestCase
 {

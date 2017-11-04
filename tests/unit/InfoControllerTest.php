@@ -22,6 +22,7 @@
 namespace Pfw;
 
 use PHPUnit\Framework\TestCase;
+use Pfw\View\HtmlView;
 
 class InfoControllerTest extends TestCase
 {

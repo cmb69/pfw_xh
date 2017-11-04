@@ -21,6 +21,8 @@
 
 namespace Pfw;
 
+use Pfw\View\HtmlView;
+
 class InfoController
 {
     public function defaultAction()

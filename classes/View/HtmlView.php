@@ -19,49 +19,19 @@
  * along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Pfw;
+namespace Pfw\View;
 
-use Iterator;
-
-class ArrayViewValue extends ViewValue implements Iterator
+final class HtmlView extends View
 {
     /**
-     * @return mixed
+     * @param mixed $value
      */
-    public function current()
+    public function escape($value)
     {
-        return self::create($this->view_, current($this->value_));
-    }
-
-    /**
-     * @return int
-     */
-    public function key()
-    {
-        return self::create($this->view_, key($this->value_));
-    }
-
-    /**
-     * @return void
-     */
-    public function next()
-    {
-        next($this->value_);
-    }
-
-    /**
-     * @return void
-     */
-    public function rewind()
-    {
-        reset($this->value_);
-    }
-
-    /**
-     * @return bool
-     */
-    public function valid()
-    {
-        return key($this->value_) !== null;
+        if ($value instanceof HtmlString) {
+            return (string) $value;
+        } else {
+            return htmlspecialchars((string) $value, ENT_COMPAT | ENT_SUBSTITUTE, 'UTF-8');
+        }
     }
 }

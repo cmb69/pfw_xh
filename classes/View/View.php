@@ -19,7 +19,7 @@
  * along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Pfw;
+namespace Pfw\View;
 
 abstract class View
 {

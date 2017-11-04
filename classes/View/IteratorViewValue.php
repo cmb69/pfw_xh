@@ -19,25 +19,49 @@
  * along with Pfw_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Pfw;
+namespace Pfw\View;
 
-class ObjectViewValue extends ViewValue
+use Iterator;
+
+class IteratorViewValue extends ViewValue implements Iterator
 {
     /**
-     * @param string $name
-     * @return self
+     * @return mixed
      */
-    public function __get($name)
+    public function current()
     {
-        return self::create($this->view_, $this->value_->{$name});
+        return self::create($this->view_, $this->value_->current());
     }
 
     /**
-     * @param string $name
-     * @return self
+     * @return int
      */
-    public function __call($name, array $arguments)
+    public function key()
     {
-        return self::create($this->view_, call_user_func_array([$this->value_, $name], $arguments));
+        return self::create($this->view_, $this->value_->key());
+    }
+
+    /**
+     * @return void
+     */
+    public function next()
+    {
+        $this->value_->next();
+    }
+
+    /**
+     * @return void
+     */
+    public function rewind()
+    {
+        $this->value_->rewind();
+    }
+
+    /**
+     * @return bool
+     */
+    public function valid()
+    {
+        return $this->value_->valid();
     }
 }
