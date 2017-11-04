@@ -25,4 +25,9 @@
         with Pfw_XH.  If not, see <a href="http://www.gnu.org/licenses/"
         target="_blank">http://www.gnu.org/licenses/</a>.
     </p>
+    <div class="pfw_syscheck">
+        <h2><?=$this->text('syscheck_title')?></h2>
+<?php foreach ($checks as $check):?>
+        <p class="xh_<?=$check->getState()?>"><?=$this->text('syscheck_message', $check->getLabel(), $check->getStateLabel())?></p>
+<?php endforeach?>
 </div>

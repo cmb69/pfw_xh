@@ -33,7 +33,13 @@ class InfoController
             ->template('info')
             ->data([
                 'logo' => "{$pth['folder']['plugins']}pfw/pfw.png",
-                'version' => Plugin::VERSION
+                'version' => Plugin::VERSION,
+                'checks' => (new SystemCheckService)
+                    ->minPhpVersion('5.4.0')
+                    ->minXhVersion('1.6.3')
+                    ->writable("{$pth['folder']['plugins']}pfw/css/")
+                    ->writable("{$pth['folder']['plugins']}pfw/languages/")
+                    ->getChecks()
             ])
             ->render();
     }

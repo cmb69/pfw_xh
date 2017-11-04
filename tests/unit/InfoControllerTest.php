@@ -34,17 +34,27 @@ class InfoControllerTest extends TestCase
         global $pth;
 
         $pth = ['folder' => ['plugins' => './plugins/']];
+        uopz_flags(SystemCheckService::class, null, 0); // un-final-ize class
+        $systemCheckServiceMock = $this->createMock(SystemCheckService::class);
+        $systemCheckServiceMock->expects($this->any())->method('minPhpVersion')->willReturn($systemCheckServiceMock);
+        $systemCheckServiceMock->expects($this->any())->method('minXhVersion')->willReturn($systemCheckServiceMock);
+        $systemCheckServiceMock->expects($this->any())->method('writable')->willReturn($systemCheckServiceMock);
+        $systemCheckServiceMock->expects($this->once())->method('getChecks')->willReturn([]);
+        uopz_set_mock(SystemCheckService::class, $systemCheckServiceMock);
         uopz_flags(HtmlView::class, null, 0); // un-final-ize class
         $viewMock = $this->createMock(HtmlView::class);
         $viewMock->expects($this->once())->method('template')->with('info')->willReturn($viewMock);
         $viewMock->expects($this->once())->method('data')->with([
             'logo' => './plugins/pfw/pfw.png',
-            'version' => '@PFW_VERSION@'
+            'version' => '@PFW_VERSION@',
+            'checks' => []
         ])->willReturn($viewMock);
         $viewMock->expects($this->once())->method('render');
         uopz_set_mock(HtmlView::class, $viewMock);
         (new InfoController)->defaultAction();
         uopz_unset_mock(HtmlView::class);
         uopz_flags(HtmlView::class, null, 4); // finalize class again
+        uopz_unset_mock(SystemCheckService::class);
+        uopz_flags(SystemCheckService::class, null, 4); // finalize class again
     }
 }
