@@ -66,7 +66,7 @@ final class SystemCheckService
     public function minPhpVersion($version)
     {
         $state = version_compare(PHP_VERSION, $version, 'ge')
-            ? SystemCheck::SUCCESS 
+            ? SystemCheck::SUCCESS
             : SystemCheck::FAILURE;
         $label = sprintf($this->lang['syscheck_phpversion'], $version);
         $this->checks[] = new SystemCheck($label, $state);
@@ -80,8 +80,8 @@ final class SystemCheckService
      */
     public function extension($extension, $isMandatory = true)
     {
-        $state = extension_loaded($extension) 
-            ? SystemCheck::SUCCESS 
+        $state = extension_loaded($extension)
+            ? SystemCheck::SUCCESS
             : ($isMandatory ? SystemCheck::FAILURE : SystemCheck::WARNING);
         $label = sprintf($this->lang['syscheck_extension'], $extension);
         $this->checks[] = new SystemCheck($label, $state);
@@ -94,8 +94,8 @@ final class SystemCheckService
      */
     public function minXhVersion($version)
     {
-        $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", 'ge') 
-            ? SystemCheck::SUCCESS 
+        $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", 'ge')
+            ? SystemCheck::SUCCESS
             : SystemCheck::FAILURE;
         $label = sprintf($this->lang['syscheck_xhversion'], $version);
         $this->checks[] = new SystemCheck($label, $state);
@@ -110,7 +110,7 @@ final class SystemCheckService
     {
         global $pth;
 
-        $state = is_dir("{$pth['folder']['plugins']}$plugin") 
+        $state = is_dir("{$pth['folder']['plugins']}$plugin")
             ? SystemCheck::SUCCESS
             : SystemCheck::FAILURE;
         $label = sprintf($this->lang['syscheck_plugin'], $plugin);
