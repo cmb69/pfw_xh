@@ -54,7 +54,7 @@ class HtmlViewTest extends TestCase
 <?=$value?>
 <?php endforeach?>
 <?=$htmlstring?>
-<?php $nested()?>
+<?=$nested?>
 EOS
                         ,
                         'nested.php' => '<p><?=$string?></p>',

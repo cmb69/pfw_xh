@@ -24,10 +24,12 @@ namespace Pfw\View;
 class NestedViewValue extends ViewValue
 {
     /**
-     * @return void
+     * @return string
      */
-    public function __invoke()
+    public function __toString()
     {
+        ob_start();
         $this->value_->render();
+        return ob_get_clean();
     }
 }
