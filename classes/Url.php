@@ -26,12 +26,11 @@ namespace Pfw;
  *
  * `Url` value objects are most useful to manipulate certain query string
  * parameters of the requested URL, but can also be used to construct other URLs
- * of the CMSimple_XH installation, or even other URLs of the domain.  At least
- * for CMSimple_XH internal URLs they should be preferred over manual URL
- * construction which is error prone and too concrete (consider clean URLs).
- * Furthermore, the `Url` objects let you focus on removing and adding query
- * string parameters as needed, instead of simply ignoring parameters of other
- * plugins.
+ * of the CMSimple_XH installation.  At least for CMSimple_XH internal URLs they
+ * should be preferred over manual URL construction which is error prone and too
+ * concrete (consider clean URLs). Furthermore, the `Url` objects let you focus
+ * on removing and adding query string parameters as needed, instead of simply
+ * ignoring parameters of other plugins.
  *
  * Typical usage example:
  *
@@ -39,9 +38,6 @@ namespace Pfw;
  *         ->without('foo')        // remove the `foo` parameter
  *         ->with('bar', 'baz');   // add a `bar` parameter with value `baz`
  *     $urlString = (string) $url;
- *
- * @todo Restrict this class to CMSimple_XH internal URLs?  Otherwise
- *       `getRelative()` and `getAbsolute()` won't necessarily match.
  */
 final class Url
 {
@@ -89,7 +85,7 @@ final class Url
      * @param string $path
      * @param string $page
      */
-    public function __construct($path, $page = '', array $params = [])
+    private function __construct($path, $page = '', array $params = [])
     {
         $this->path = $path;
         $this->page = $page;

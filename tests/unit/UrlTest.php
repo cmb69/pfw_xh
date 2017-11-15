@@ -30,8 +30,12 @@ class UrlTest extends TestCase
      */
     public function testPathOnly()
     {
-        $url = new Url('/');
-        $this->assertEquals('/', $url->getRelative());
+        global $sn, $su;
+
+        $sn = '/';
+        $su = '';
+        $_GET = [];
+        $this->assertEquals('/', Url::getCurrent()->getRelative());
     }
 
     /**
@@ -39,8 +43,12 @@ class UrlTest extends TestCase
      */
     public function testPathAndPageOnly()
     {
-        $url = new Url('/', 'pagemanager');
-        $this->assertEquals('/?pagemanager', $url->getRelative());
+        global $sn, $su;
+
+        $sn = '/';
+        $su = 'pagemanager';
+        $_GET = ['pagemanager' => ''];
+        $this->assertEquals('/?pagemanager', Url::getCurrent()->getRelative());
     }
 
     /**
@@ -48,8 +56,12 @@ class UrlTest extends TestCase
      */
     public function testPathAndParamsOnly()
     {
-        $url = new Url('/', '', ['foo' => 'bar']);
-        $this->assertEquals('/?&foo=bar', $url->getRelative());
+        global $sn, $su;
+
+        $sn = '/';
+        $su = '';
+        $_GET = ['foo' => 'bar'];
+        $this->assertEquals('/?&foo=bar', Url::getCurrent()->getRelative());
     }
 
     /**
@@ -57,8 +69,15 @@ class UrlTest extends TestCase
      */
     public function testFullUrl()
     {
-        $url = new Url('/', 'pagemanager', ['admin' => 'plugin_config', 'action' => 'plugin_edit', 'normal' => '']);
-        $this->assertEquals('/?pagemanager&admin=plugin_config&action=plugin_edit&normal', $url->getRelative());
+        global $sn, $su;
+
+        $sn = '/';
+        $su = 'pagemanager';
+        $_GET = ['pagemanager' => '', 'admin' => 'plugin_config', 'action' => 'plugin_edit', 'normal' => ''];
+        $this->assertEquals(
+            '/?pagemanager&admin=plugin_config&action=plugin_edit&normal',
+            Url::getCurrent()->getRelative()
+        );
     }
 
     /**
@@ -66,8 +85,12 @@ class UrlTest extends TestCase
      */
     public function testToString()
     {
-        $url = new Url('/', 'foo', ['bar' => 'baz']);
-        $this->assertEquals('/?foo&bar=baz', (string) $url);
+        global $sn, $su;
+
+        $sn = '/';
+        $su = 'foo';
+        $_GET = ['foo' => '', 'bar' => 'baz'];
+        $this->assertEquals('/?foo&bar=baz', (string) Url::getCurrent());
     }
 
     /**
@@ -75,8 +98,12 @@ class UrlTest extends TestCase
      */
     public function testComplexPage()
     {
-        $url = new Url('/', 'S%C3%BCper/Lig');
-        $this->assertEquals('/?S%C3%BCper/Lig', $url->getRelative());
+        global $sn, $su;
+
+        $sn = '/';
+        $su = 'S%C3%BCper/Lig';
+        $_GET = ['S%C3%BCper/Lig' => ''];
+        $this->assertEquals('/?S%C3%BCper/Lig', Url::getCurrent()->getRelative());
     }
 
     /**
@@ -84,9 +111,13 @@ class UrlTest extends TestCase
      */
     public function testAbsoulte()
     {
+        global $sn, $su;
+
+        $sn = '/';
+        $su = 'foo';
+        $_GET = ['foo' => '', 'bar' => 'baz'];
         uopz_redefine('CMSIMPLE_URL', 'http://example.com/');
-        $url = new Url('/', 'foo', ['bar' => 'baz']);
-        $this->assertEquals('http://example.com/?foo&bar=baz', $url->getAbsolute());
+        $this->assertEquals('http://example.com/?foo&bar=baz', Url::getCurrent()->getAbsolute());
     }
 
     /**
@@ -94,8 +125,12 @@ class UrlTest extends TestCase
      */
     public function testArrayParam()
     {
-        $url = new Url('/', '', ['foo' => ['bar', 'baz']]);
-        $this->assertEquals('/?&foo%5B0%5D=bar&foo%5B1%5D=baz', $url->getRelative());
+        global $sn, $su;
+
+        $sn = '/';
+        $su = '';
+        $_GET = ['foo' => ['bar', 'baz']];
+        $this->assertEquals('/?&foo%5B0%5D=bar&foo%5B1%5D=baz', Url::getCurrent()->getRelative());
     }
 
     /**
@@ -103,8 +138,12 @@ class UrlTest extends TestCase
      */
     public function testWithAdds()
     {
-        $url = new Url('/', '', ['foo' => 'bar']);
-        $url = $url->with('baz', 'qux');
+        global $sn, $su;
+
+        $sn = '/';
+        $su = '';
+        $_GET = ['foo' => 'bar'];
+        $url = Url::getCurrent()->with('baz', 'qux');
         $this->assertEquals('/?&foo=bar&baz=qux', $url->getRelative());
     }
 
@@ -113,8 +152,12 @@ class UrlTest extends TestCase
      */
     public function testWithReplaces()
     {
-        $url = new Url('/', '', ['foo' => 'bar']);
-        $url = $url->with('foo', 'baz');
+        global $sn, $su;
+
+        $sn = '/';
+        $su = '';
+        $_GET = ['foo' => 'bar'];
+        $url = Url::getCurrent()->with('foo', 'baz');
         $this->assertEquals('/?&foo=baz', $url->getRelative());
     }
 
@@ -123,8 +166,12 @@ class UrlTest extends TestCase
      */
     public function testWithout()
     {
-        $url = new Url('/', '', ['foo' => 'bar', 'baz' => 'qux']);
-        $url = $url->without('foo');
+        global $sn, $su;
+
+        $sn = '/';
+        $su = '';
+        $_GET = ['foo' => 'bar', 'baz' => 'qux'];
+        $url = Url::getCurrent()->without('foo');
         $this->assertEquals('/?&baz=qux', $url->getRelative());
     }
 
