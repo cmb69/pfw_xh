@@ -21,7 +21,7 @@
 
 namespace Pfw\View;
 
-class ObjectViewValue extends ViewValue
+final class ObjectViewValue extends ViewValue
 {
     /**
      * @param string $name

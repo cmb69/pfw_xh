@@ -23,7 +23,7 @@ namespace Pfw\View;
 
 use Iterator;
 
-class IteratorViewValue extends ViewValue implements Iterator
+final class IteratorViewValue extends ViewValue implements Iterator
 {
     /**
      * @return mixed
