@@ -21,6 +21,16 @@
 
 namespace Pfw\View;
 
+/**
+ * Generation of properly escaped HTML.
+ *
+ * Example:
+ *
+ *     (new View($pluginname))
+ *         ->template('foo')        // assign a template
+ *         ->data(['bar' => 'baz']) // assign view data
+ *         ->render();              // render the view
+ */
 final class View
 {
     /**
@@ -39,6 +49,11 @@ final class View
     private $data = [];
 
     /**
+     * Initialize the instance.
+     *
+     * `$pluginname` is the name of the instantiating plugin, and is used to
+     * look up the `#template` and any language texts.
+     *
      * @param string $pluginname
      */
     public function __construct($pluginname)
@@ -47,6 +62,11 @@ final class View
     }
 
     /**
+     * Assign a view template.
+     *
+     * The view template is looked up in the `views/` folder of the calling 
+     * plugin with the basename `$name.php`.
+     *
      * @param string $name
      * @return $this
      */
@@ -59,6 +79,13 @@ final class View
     }
 
     /**
+     * Assign view data.
+     *
+     * `$data` is an associative array, and its elements are available as local
+     * variables in the view template.  All values, except booleans, are
+     * encapsulated as `ViewValue`s to ensure proper HTML escaping which is
+     * supposed to happen automagically.
+     *
      * @return $this
      */
     public function data(array $data)
@@ -71,6 +98,11 @@ final class View
     }
 
     /**
+     * Render the view template.
+     *
+     * This method includes the assigned `#template` making the view `#data`
+     * available as local variables.
+     *
      * @return void
      */
     public function render()
@@ -147,6 +179,11 @@ final class View
     }
 
     /**
+     * Escapes HTML.
+     *
+     * This method is supposed to be called automagically when needed, but never
+     * explicitly.
+     *
      * @param mixed $value
      */
     public function escape($value)
