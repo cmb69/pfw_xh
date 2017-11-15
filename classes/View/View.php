@@ -21,7 +21,7 @@
 
 namespace Pfw\View;
 
-abstract class View
+final class View
 {
     /**
      * @var string
@@ -78,12 +78,6 @@ abstract class View
         extract($this->data);
         include $this->template;
     }
-
-    /**
-     * @param mixed $value
-     * @return string
-     */
-    abstract public function escape($value);
 
     /**
      * Return a properly escaped localized language text
@@ -150,5 +144,17 @@ abstract class View
         $n = (string) $count;
         (string) $n; // silence PHPMD
         return eval("return (int) ({$plugin_tx['pfw']['plural_suffix']});");
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function escape($value)
+    {
+        if ($value instanceof HtmlString) {
+            return (string) $value;
+        } else {
+            return htmlspecialchars((string) $value, ENT_COMPAT | ENT_SUBSTITUTE, 'UTF-8');
+        }
     }
 }

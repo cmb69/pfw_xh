@@ -24,10 +24,10 @@ namespace Pfw;
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
-use Pfw\View\HtmlView;
+use Pfw\View\View;
 use Pfw\View\HtmlString;
 
-class HtmlViewTest extends TestCase
+class ViewTest extends TestCase
 {
     /**
      * @return void
@@ -80,7 +80,7 @@ EOS
             '1&lt;string&gt;&lt;key0&gt;&lt;array&gt;&lt;key1&gt;&lt;array&gt;&lt;property&gt;&lt;method&gt;'
             . '&lt;key0&gt;&lt;generator&gt;&lt;key1&gt;&lt;generator&gt;<htmlstring><p>&lt;nested&gt;</p>'
         );
-        (new HtmlView('foo'))
+        (new View('foo'))
             ->template('test')
             ->data([
                 'bool' => true,
@@ -99,7 +99,7 @@ EOS
                     }
                 })(),
                 'htmlstring' => new HtmlString('<htmlstring>'),
-                'nested' => (new HtmlView('foo'))->template('nested')->data(['string' => '<nested>'])
+                'nested' => (new View('foo'))->template('nested')->data(['string' => '<nested>'])
             ])
             ->render();
     }
@@ -127,7 +127,7 @@ EOS
             . 'A &lt;foo&gt;, a &lt;bar&gt; and a &lt;foobaz&gt;.'
             . '1 foo.42 foos.'
         );
-        (new HtmlView('foo'))
+        (new View('foo'))
             ->template('i18n')
             ->data([
                 'foo' => '<foo>',

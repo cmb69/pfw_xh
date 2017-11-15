@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-use Pfw\View\HtmlView;
+use Pfw\View\View;
 
 class InfoController
 {
@@ -29,7 +29,7 @@ class InfoController
     {
         global $pth;
 
-        (new HtmlView('pfw'))
+        (new View('pfw'))
             ->template('info')
             ->data([
                 'logo' => "{$pth['folder']['plugins']}pfw/pfw.png",

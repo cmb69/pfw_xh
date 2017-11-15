@@ -23,7 +23,7 @@ namespace Pfw;
 
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Pfw\View\HtmlView;
+use Pfw\View\View;
 use Pfw\View\ViewValue;
 use Pfw\View\ArrayViewValue;
 use Pfw\View\ObjectViewValue;
@@ -40,8 +40,8 @@ class ViewValueTest extends TestCase
      */
     protected function setUp()
     {
-        uopz_flags(HtmlView::class, null, 0); // un-final-ize class
-        $this->viewMock = $this->createMock(HtmlView::class);
+        uopz_flags(View::class, null, 0); // un-final-ize class
+        $this->viewMock = $this->createMock(View::class);
     }
 
     /**
@@ -49,7 +49,7 @@ class ViewValueTest extends TestCase
      */
     protected function tearDown()
     {
-        uopz_flags(HtmlView::class, null, 4); // finalize class again
+        uopz_flags(View::class, null, 4); // finalize class again
     }
 
     /**

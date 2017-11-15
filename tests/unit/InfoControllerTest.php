@@ -22,7 +22,7 @@
 namespace Pfw;
 
 use PHPUnit\Framework\TestCase;
-use Pfw\View\HtmlView;
+use Pfw\View\View;
 
 class InfoControllerTest extends TestCase
 {
@@ -41,8 +41,8 @@ class InfoControllerTest extends TestCase
         $systemCheckServiceMock->expects($this->any())->method('writable')->willReturn($systemCheckServiceMock);
         $systemCheckServiceMock->expects($this->once())->method('getChecks')->willReturn([]);
         uopz_set_mock(SystemCheckService::class, $systemCheckServiceMock);
-        uopz_flags(HtmlView::class, null, 0); // un-final-ize class
-        $viewMock = $this->createMock(HtmlView::class);
+        uopz_flags(View::class, null, 0); // un-final-ize class
+        $viewMock = $this->createMock(View::class);
         $viewMock->expects($this->once())->method('template')->with('info')->willReturn($viewMock);
         $viewMock->expects($this->once())->method('data')->with([
             'logo' => './plugins/pfw/pfw.png',
@@ -50,10 +50,10 @@ class InfoControllerTest extends TestCase
             'checks' => []
         ])->willReturn($viewMock);
         $viewMock->expects($this->once())->method('render');
-        uopz_set_mock(HtmlView::class, $viewMock);
+        uopz_set_mock(View::class, $viewMock);
         (new InfoController)->defaultAction();
-        uopz_unset_mock(HtmlView::class);
-        uopz_flags(HtmlView::class, null, 4); // finalize class again
+        uopz_unset_mock(View::class);
+        uopz_flags(View::class, null, 4); // finalize class again
         uopz_unset_mock(SystemCheckService::class);
         uopz_flags(SystemCheckService::class, null, 4); // finalize class again
     }
