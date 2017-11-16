@@ -56,4 +56,57 @@
         <exec command="doxygen" passthru="true"/>
     </target>
 
+    <target name="build-plugin">
+        <fail unless="version" message="version is not defined!"/>
+        <exec command="git archive -o export.tar HEAD" checkreturn="true"/>
+        <untar file="export.tar" todir="export"/>
+        <delete file="export.tar"/>
+        <move todir="dist">
+            <fileset dir="export">
+                <include name="classes/Plugin.php"/>
+                <include name="version.nfo"/>
+            </fileset>
+            <filterchain>
+                <replacetokens>
+                    <token key="PFW_VERSION" value="${version}"/>
+                </replacetokens>
+            </filterchain>
+        </move>
+        <move todir="dist">
+            <fileset dir="export">
+                <exclude name="build.xml"/>
+                <exclude name="composer.*"/>
+                <exclude name="coverage.xml"/>
+                <exclude name="docs/**"/>
+                <exclude name="Doxyfile"/>
+                <exclude name="pax_global_header"/>
+                <exclude name="phpcompatinfo.json"/>
+                <exclude name="tests/**"/>
+            </fileset>
+        </move>
+        <delete dir="export"/>
+        <!-- <copy file="dist/config/config.php"
+              tofile="dist/config/defaultconfig.php"/> -->
+        <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
+        <zip destfile="Pfw_XH-${version}.zip" basedir="dist"
+             prefix="pfw/"/>
+        <delete dir="dist"/>
+    </target>
+
+    <target name="build-sdk" depends="doc">
+        <fail unless="version" message="version is not defined!"/>
+        <mkdir dir="dist"/>
+        <copy todir="dist/doc">
+            <fileset dir="doc"/>
+        </copy>
+        <copy file="sdk/README.md" tofile="dist/README.md"/>
+        <copy file="LICENSE" tofile="dist/LICENSE"/>
+        <zip destfile="Pfw_XH-SDK-${version}.zip" basedir="dist"
+             prefix="pfw-sdk/"/>
+        <delete dir="dist"/>
+    </target>
+
+    <target name="build" depends="build-plugin, build-sdk"
+         description="builds the distributable ZIP archives"/>
+
 </project>
