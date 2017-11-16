@@ -48,14 +48,14 @@ all other values it evaluates to `2` (genitive plural).
 Now an actual example.  Consider the following entries in the English language 
 file (`en.php`):
 
-    $plugin_tx['foo']['bar_0']="%d vote";
-    $plugin_tx['foo']['bar_1']="%d votes";
+    $plugin_tx['foo']['bar#0']="%d vote";
+    $plugin_tx['foo']['bar#1']="%d votes";
 
 Since the Czech translation (`cs.php`) needs three plural forms, it looks like:
 
-    $plugin_tx['foo']['bar_0']="%d hlas";
-    $plugin_tx['foo']['bar_1']="%d hlasy";
-    $plugin_tx['foo']['bar_2']="%d hlasů";
+    $plugin_tx['foo']['bar#0']="%d hlas";
+    $plugin_tx['foo']['bar#1']="%d hlasy";
+    $plugin_tx['foo']['bar#2']="%d hlasů";
 
 Obviously, the translation of plural forms cannot solely be done in the plugin
 administration area as usual, since there is no provision to add additional
@@ -67,4 +67,3 @@ To ease the internationalization for plugin developers, they can use @ref
 Pfw::View::View#plural "View::plural" in a view template like so:
 
     <?=$this->plural('bar', $count)?>
-

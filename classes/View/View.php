@@ -146,7 +146,7 @@ final class View
      */
     protected function plural($key, $count)
     {
-        $string = $this->getLanguageString("{$key}_{$this->getPluralSuffix($count)}");
+        $string = $this->getLanguageString("{$key}#{$this->getPluralSuffix($count)}");
         return vsprintf($this->escape($string), array_slice(func_get_args(), 1));
     }
 
