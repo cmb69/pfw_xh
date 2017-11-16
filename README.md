@@ -1,4 +1,4 @@
-[![unstable: 0.1.0](https://img.shields.io/badge/unstable-0.1.0-red.svg)](https://github.com/cmb69/pfw_xh/releases/tag/0.1.0)
+[![unstable: 0.2.0](https://img.shields.io/badge/unstable-0.2.0-red.svg)](https://github.com/cmb69/pfw_xh/releases/tag/0.2.0)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 Introduction
