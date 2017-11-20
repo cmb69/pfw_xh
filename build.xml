@@ -49,7 +49,17 @@
     </target>
 
     <target name="coverage" description="generates coverage report">
-        <exec command="phpdbg -qrr ../pfw/vendor/phpunit/phpunit/phpunit --configuration coverage.xml" logoutput="true"/>
+        <exec executable="phpdbg" logoutput="true">
+            <arg value="-qrr"/>
+            <arg file="../pfw/vendor/phpunit/phpunit/phpunit"/>
+            <arg value="--bootstrap"/>
+            <arg file="./tests/unit/bootstrap.php"/>
+            <arg value="--coverage-html"/>
+            <arg file="./tests/coverage/"/>
+            <arg value="--whitelist"/>
+            <arg file="./classes/"/>
+            <arg file="./tests/unit/"/>
+        </exec>
     </target>
 
     <target name="doc" description="generates API documentation">
@@ -76,7 +86,6 @@
             <fileset dir="export">
                 <exclude name="build.xml"/>
                 <exclude name="composer.*"/>
-                <exclude name="coverage.xml"/>
                 <exclude name="docs/**"/>
                 <exclude name="Doxyfile"/>
                 <exclude name="pax_global_header"/>
