@@ -46,7 +46,7 @@ class InfoControllerTest extends TestCase
         $viewMock->expects($this->once())->method('template')->with('info')->willReturn($viewMock);
         $viewMock->expects($this->once())->method('data')->with([
             'logo' => './plugins/pfw/pfw.png',
-            'version' => '@PFW_VERSION@',
+            'version' => '@PLUGIN_VERSION@',
             'checks' => []
         ])->willReturn($viewMock);
         $viewMock->expects($this->once())->method('render');

@@ -23,7 +23,7 @@ namespace Pfw;
 
 final class Plugin
 {
-    const VERSION = '@PFW_VERSION@';
+    const VERSION = '@PLUGIN_VERSION@';
 
     /**
      * @return void
