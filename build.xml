@@ -40,7 +40,20 @@
     </target>
 
     <target name="compat" description="checks PHP requirements">
+        <available file="phpcompatinfo.json" property="has_phpcompatinfo_json"/>
+        <if>
+            <not><isset property="has_phpcompatinfo_json"/></not>
+            <then>
+                <copy file="../pfw/phpcompatinfo.json" todir="."/>
+            </then>
+        </if>
         <exec command="phpcompatinfo analyser:run --alias current" logoutput="true"/>
+        <if>
+            <not><isset property="has_phpcompatinfo_json"/></not>
+            <then>
+                <delete file="phpcompatinfo.json"/>
+            </then>
+        </if>
     </target>
 
     <target name="unit-tests" description="runs all unit tests">
