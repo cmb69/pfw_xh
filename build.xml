@@ -10,6 +10,10 @@
         <include name="*Test.php"/>
     </fileset>
 
+    <fileset id="attack-tests" dir="tests/attack">
+        <include name="*Test.php"/>
+    </fileset>
+
     <target name="help" description="lists available targets">
         <exec command="phing -l" outputProperty="help"/>
         <echo>${help}</echo>
@@ -44,6 +48,16 @@
             <formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset refid="unit-tests"/>
+            </batchtest>
+        </phpunit>
+    </target>
+
+    <target name="attack-tests" description="runs all attack tests">
+        <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
+        <phpunit haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset refid="attack-tests"/>
             </batchtest>
         </phpunit>
     </target>
