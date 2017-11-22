@@ -5,6 +5,8 @@
     <fileset id="php-sources" dir=".">
         <include name="*.php"/>
         <include name="classes/*.php"/>
+        <include name="config/*.php"/>
+        <include name="languages/*.php"/>
     </fileset>
 
     <fileset id="unit-tests" dir="tests/unit">
