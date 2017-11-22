@@ -3,6 +3,7 @@
 <project name="Pfw" default="help">
 
     <fileset id="php-sources" dir=".">
+        <include name="*.php"/>
         <include name="classes/*.php"/>
     </fileset>
 
