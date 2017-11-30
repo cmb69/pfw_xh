@@ -33,7 +33,9 @@ nav ul ul {
 
 .logo {
     float: left;
-    margin-right: 1em;
+    margin: 0 1.5em 0.5em 0;
+    width: 128px;
+    height: 128px;
 }
 .important {
     font-weight: bold;
