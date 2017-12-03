@@ -105,11 +105,24 @@
     </target>
 
     <target name="minify" description="minifies JS resources">
-        <jsMin targetDir="${minify-dest}" suffix=".min" failOnError="true">
+        <fail unless="env.CLOSURE_COMPILER_JAR"
+              message="The environment variable CLOSURE_COMPILER_JAR is not defined!"/>
+        <copy todir="${minify-dest}">
             <fileset dir="${minify-source}">
                 <patternset refid="js-sources"/>
             </fileset>
-        </jsMin>
+            <mapper type="glob" from="*.js" to="*.min.js"/>
+        </copy>
+        <apply executable="java">
+            <arg value="-jar"/>
+            <arg file="${env.CLOSURE_COMPILER_JAR}"/>
+            <srcfile/>
+            <arg value="--js_output_file"/>
+            <srcfile/>
+            <fileset dir="${minify-dest}">
+                <include name="*.min.js"/>
+            </fileset>
+        </apply>
     </target>
 
     <target name="build">
