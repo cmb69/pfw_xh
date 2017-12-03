@@ -2,12 +2,20 @@
 
 <project name="Pfw" default="help">
 
+    <property name="minify-source" value="."/>
+    <property name="minify-dest" value="."/>
+
     <fileset id="php-sources" dir=".">
         <include name="*.php"/>
         <include name="classes/*.php"/>
         <include name="config/*.php"/>
         <include name="languages/*.php"/>
     </fileset>
+
+    <patternset id="js-sources">
+        <include name="*.js"/>
+        <exclude name="*.min.js"/>
+    </patternset>
 
     <fileset id="unit-tests" dir="tests/unit">
         <include name="*Test.php"/>
@@ -96,6 +104,14 @@
         <exec command="doxygen" passthru="true"/>
     </target>
 
+    <target name="minify" description="minifies JS resources">
+        <jsMin targetDir="${minify-dest}" suffix=".min" failOnError="true">
+            <fileset dir="${minify-source}">
+                <patternset refid="js-sources"/>
+            </fileset>
+        </jsMin>
+    </target>
+
     <target name="build">
         <fail unless="version" message="version is not defined!"/>
         <exec command="git archive -o export.tar HEAD" checkreturn="true"/>
@@ -112,11 +128,10 @@
                 </replacetokens>
             </filterchain>
         </move>
-        <jsMin targetDir="dist" suffix="" failOnError="false">
-            <fileset dir="export">
-                <include name="*.min.js"/>
-            </fileset>
-        </jsMin>
+        <phingcall target="minify">
+            <property name="minify-source" value="export"/>
+            <property name="minify-dest" value="dist"/>
+        </phingcall>
         <move todir="dist">
             <fileset dir="export">
                 <exclude name="build.xml"/>
