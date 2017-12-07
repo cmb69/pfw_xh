@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-final class Plugin
+class Plugin
 {
     const VERSION = '@PLUGIN_VERSION@';
 

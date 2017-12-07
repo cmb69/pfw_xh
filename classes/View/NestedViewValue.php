@@ -21,7 +21,7 @@
 
 namespace Pfw\View;
 
-final class NestedViewValue extends ViewValue
+class NestedViewValue extends ViewValue
 {
     /**
      * @return string

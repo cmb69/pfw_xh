@@ -23,7 +23,7 @@ namespace Pfw;
 
 use Pfw\View\View;
 
-final class InfoController
+class InfoController
 {
     public function defaultAction()
     {

@@ -21,7 +21,7 @@
 
 namespace Pfw\View;
 
-final class HtmlString
+class HtmlString
 {
     /**
      * @var string

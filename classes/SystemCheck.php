@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-final class SystemCheck
+class SystemCheck
 {
     const SUCCESS = 'success';
 

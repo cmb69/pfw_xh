@@ -32,7 +32,7 @@ namespace Pfw;
  *         ->getChecks();
  *
  */
-final class SystemCheckService
+class SystemCheckService
 {
     /**
      * @var array

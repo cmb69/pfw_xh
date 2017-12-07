@@ -31,7 +31,7 @@ namespace Pfw\View;
  *         ->data(['bar' => 'baz']) // assign view data
  *         ->render();              // render the view
  */
-final class View
+class View
 {
     /**
      * @var string

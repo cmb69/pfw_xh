@@ -39,7 +39,7 @@ namespace Pfw;
  *         ->with('bar', 'baz');   // add a `bar` parameter with value `baz`
  *     $urlString = (string) $url;
  */
-final class Url
+class Url
 {
     /**
      * Return the URL of the current request.
