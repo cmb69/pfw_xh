@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-use PHPUnit\Framework\TestCase;
+use Pfw\TestCase;
 
 class UrlTest extends TestCase
 {
@@ -116,7 +116,7 @@ class UrlTest extends TestCase
         $sn = '/';
         $su = 'foo';
         $_GET = ['foo' => '', 'bar' => 'baz'];
-        uopz_redefine('CMSIMPLE_URL', 'http://example.com/');
+        $this->setConstant('CMSIMPLE_URL', 'http://example.com/');
         $this->assertEquals('http://example.com/?foo&bar=baz', Url::getCurrent()->getAbsolute());
     }
 

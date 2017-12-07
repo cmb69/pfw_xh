@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-use PHPUnit\Framework\TestCase;
+use Pfw\TestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use Pfw\View\View;
@@ -122,8 +122,8 @@ EOS
             ],
             'foo' => [
                 'foo_bar' => 'A %s, a %s and a <foobar>.',
-                'foo_plural_0' => '%s foo.',
-                'foo_plural_1' => '%s foos.'
+                'foo_plural#0' => '%s foo.',
+                'foo_plural#1' => '%s foos.'
             ]
         ];
         $this->expectOutputString(

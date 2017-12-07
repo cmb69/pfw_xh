@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-use PHPUnit\Framework\TestCase;
+use Pfw\TestCase;
 
 class SystemCheckServiceTest extends TestCase
 {
@@ -73,7 +73,7 @@ class SystemCheckServiceTest extends TestCase
      */
     public function testMinXhVersion()
     {
-        uopz_redefine('CMSIMPLE_XH_VERSION', 'CMSimple_XH 1.7.0');
+        $this->setConstant('CMSIMPLE_XH_VERSION', 'CMSimple_XH 1.7.0');
         $subject = new SystemCheckService;
 
         $subject->minXhVersion('1.6.3');
@@ -90,7 +90,8 @@ class SystemCheckServiceTest extends TestCase
      */
     public function testPlugin()
     {
-        uopz_set_return('is_dir', true);
+        $isdirmock = $this->mockFunction('is_dir');
+        $isdirmock->expects($this->any())->willReturn(true);
         $subject = new SystemCheckService;
         
         $subject->plugin('pagemanager');
@@ -100,7 +101,7 @@ class SystemCheckServiceTest extends TestCase
         $this->assertCount(1, $checks);
         $this->assertEquals(SystemCheck::SUCCESS, $checks[0]->getState());
 
-        uopz_unset_return('is_dir');
+        $isdirmock->restore();
     }
 
     /**
@@ -109,7 +110,8 @@ class SystemCheckServiceTest extends TestCase
      */
     public function testWritable()
     {
-        uopz_set_return('is_writable', true);
+        $iswritablemock = $this->mockFunction('is_writable');
+        $iswritablemock->expects($this->any())->willReturn(true);
         $subject = new SystemCheckService;
 
         $subject->writable('foo/bar/baz');
@@ -119,6 +121,6 @@ class SystemCheckServiceTest extends TestCase
         $this->assertCount(1, $checks);
         $this->assertEquals(SystemCheck::SUCCESS, $checks[0]->getState());
 
-        uopz_unset_return('is_writable');
+        $iswritablemock->restore();
     }
 }

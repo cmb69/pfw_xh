@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-use PHPUnit\Framework\TestCase;
+use Pfw\TestCase;
 use Pfw\View\View;
 
 class InfoControllerTest extends TestCase
@@ -39,7 +39,8 @@ class InfoControllerTest extends TestCase
         $systemCheckServiceMock->expects($this->any())->method('minXhVersion')->willReturn($systemCheckServiceMock);
         $systemCheckServiceMock->expects($this->any())->method('writable')->willReturn($systemCheckServiceMock);
         $systemCheckServiceMock->expects($this->once())->method('getChecks')->willReturn([]);
-        uopz_set_mock(SystemCheckService::class, $systemCheckServiceMock);
+        $scscreatemock = $this->mockStaticMethod(SystemCheckService::class, 'create');
+        $scscreatemock->expects($this->any())->willReturn($systemCheckServiceMock);
         $viewMock = $this->createMock(View::class);
         $viewMock->expects($this->once())->method('template')->with('info')->willReturn($viewMock);
         $viewMock->expects($this->once())->method('data')->with([
@@ -48,9 +49,10 @@ class InfoControllerTest extends TestCase
             'checks' => []
         ])->willReturn($viewMock);
         $viewMock->expects($this->once())->method('render');
-        uopz_set_mock(View::class, $viewMock);
+        $viewcreatemock = $this->mockStaticMethod(View::class, 'create');
+        $viewcreatemock->expects($this->any())->willReturn($viewMock);
         (new InfoController)->defaultAction();
-        uopz_unset_mock(View::class);
-        uopz_unset_mock(SystemCheckService::class);
+        $viewcreatemock->restore();
+        $scscreatemock->restore();
     }
 }

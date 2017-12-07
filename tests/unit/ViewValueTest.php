@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-use PHPUnit\Framework\TestCase;
+use Pfw\TestCase;
 use stdClass;
 use Pfw\View\View;
 use Pfw\View\ViewValue;

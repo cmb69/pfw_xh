@@ -49,7 +49,7 @@ class Plugin
         switch ($admin) {
             case '':
                 ob_start();
-                (new InfoController)->defaultAction();
+                InfoController::create()->defaultAction();
                 $o .= ob_get_clean();
                 break;
             default:

@@ -21,24 +21,38 @@
 
 namespace Pfw;
 
-use PHPUnit\Framework\TestCase;
+use Pfw\TestCase;
 
 class PluginTest extends TestCase
 {
+    /**
+     * @var object
+     */
+    private $rspmimock;
+
+    /**
+     * @var object
+     */
+    private $wpamock;
+
+    /**
+     * @var object
+     */
+    private $ppamock;
+
     /**
      * @return void
      */
     public function testAlwaysRegistersPluginMenu()
     {
-        uopz_redefine('XH_ADM', true);
-        uopz_set_return('XH_registerStandardPluginMenuItems', function ($showMain) use (&$registered) {
-            $registered = $showMain === false;
-        }, true);
-        uopz_set_return('XH_wantsPluginAdministration', false);
+        $this->setConstant('XH_ADM', true);
+        $rspmimock = $this->mockFunction('XH_registerStandardPluginMenuItems');
+        $rspmimock->expects($this->once());
+        $wpamock = $this->mockFunction('XH_wantsPluginAdministration');
+        $wpamock->expects($this->any())->willReturn(false);
         (new Plugin)->run();
-        $this->assertTrue($registered);
-        uopz_unset_return('XH_registerStandardPluginMenuItems');
-        uopz_unset_return('XH_wantsPluginAdministration');
+        $rspmimock->restore();
+        $wpamock->restore();
     }
 
     /**
@@ -50,10 +64,13 @@ class PluginTest extends TestCase
 
         $admin = '';
         $this->setUpPluginAdministrationStubs();
+        $this->wpamock->expects($this->any())->willReturn(true);
         $infoControllerMock = $this->createMock(InfoController::class);
         $infoControllerMock->expects($this->once())->method('defaultAction');
-        uopz_set_mock(InfoController::class, $infoControllerMock);
+        $iccmock = $this->mockStaticMethod(InfoController::class, 'create');
+        $iccmock->expects($this->any())->willReturn($infoControllerMock);
         (new Plugin)->run();
+        $iccmock->restore();
         $this->tearDownPluginAdministrationStubs();
     }
 
@@ -67,13 +84,12 @@ class PluginTest extends TestCase
         $admin = 'plugin_language';
         $action = 'plugin_edit';
         $this->setUpPluginAdministrationStubs();
-        uopz_set_return('plugin_admin_common', function () use (&$called) {
-            $called = true;
-        }, true);
+        $this->wpamock->expects($this->any())->willReturn(true);
+        $pacmock = $this->mockFunction('plugin_admin_common');
+        $pacmock->expects($this->once())->willReturn(null);
         (new Plugin)->run();
-        $this->assertTrue($called);
         $this->tearDownPluginAdministrationStubs();
-        uopz_unset_return('plugin_admin_common');
+        $pacmock->restore();
     }
 
     /**
@@ -81,10 +97,10 @@ class PluginTest extends TestCase
      */
     private function setUpPluginAdministrationStubs()
     {
-        uopz_redefine('XH_ADM', true);
-        uopz_set_return('XH_registerStandardPluginMenuItems', null);
-        uopz_set_return('XH_wantsPluginAdministration', true);
-        uopz_set_return('print_plugin_admin', null);
+        $this->setConstant('XH_ADM', true);
+        $this->rspmimock = $this->mockFunction('XH_registerStandardPluginMenuItems');
+        $this->wpamock = $this->mockFunction('XH_wantsPluginAdministration');
+        $this->ppamock = $this->mockFunction('print_plugin_admin');
     }
 
     /**
@@ -92,8 +108,8 @@ class PluginTest extends TestCase
      */
     private function tearDownPluginAdministrationStubs()
     {
-        uopz_unset_return('XH_registerStandardPluginMenuItems');
-        uopz_unset_return('XH_wantsPluginAdministration');
-        uopz_unset_return('print_plugin_admin');
+        $this->rspmimock->restore();
+        $this->wpamock->restore();
+        $this->ppamock->restore();
     }
 }

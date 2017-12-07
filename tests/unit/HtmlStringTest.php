@@ -21,7 +21,7 @@
 
 namespace Pfw;
 
-use PHPUnit\Framework\TestCase;
+use Pfw\TestCase;
 use Pfw\View\HtmlString;
 
 class HtmlStringTest extends TestCase

@@ -25,16 +25,24 @@ use Pfw\View\View;
 
 class InfoController
 {
+    /**
+     * @return self
+     */
+    public static function create()
+    {
+        return new self;
+    }
+
     public function defaultAction()
     {
         global $pth;
 
-        (new View('pfw'))
+        View::create('pfw')
             ->template('info')
             ->data([
                 'logo' => "{$pth['folder']['plugins']}pfw/pfw.png",
                 'version' => Plugin::VERSION,
-                'checks' => (new SystemCheckService)
+                'checks' => SystemCheckService::create()
                     ->minPhpVersion('5.4.0')
                     ->minXhVersion('1.6.3')
                     ->writable("{$pth['folder']['plugins']}pfw/css/")
