@@ -50,12 +50,10 @@ class PluginTest extends TestCase
 
         $admin = '';
         $this->setUpPluginAdministrationStubs();
-        uopz_flags(InfoController::class, null, 0);
         $infoControllerMock = $this->createMock(InfoController::class);
         $infoControllerMock->expects($this->once())->method('defaultAction');
         uopz_set_mock(InfoController::class, $infoControllerMock);
         (new Plugin)->run();
-        uopz_flags(InfoController::class, null, 4);
         $this->tearDownPluginAdministrationStubs();
     }
 

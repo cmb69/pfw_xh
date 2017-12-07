@@ -40,16 +40,7 @@ class ViewValueTest extends TestCase
      */
     protected function setUp()
     {
-        uopz_flags(View::class, null, 0); // un-final-ize class
         $this->viewMock = $this->createMock(View::class);
-    }
-
-    /**
-     * @return void
-     */
-    protected function tearDown()
-    {
-        uopz_flags(View::class, null, 4); // finalize class again
     }
 
     /**
