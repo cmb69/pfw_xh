@@ -27,6 +27,16 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use Pfw\View\View;
 use Pfw\View\HtmlString;
 
+class Foo
+{
+    public $foo = '<property>';
+
+    public function foo()
+    {
+        return '<method>';
+    }
+}
+
 class ViewTest extends TestCase
 {
     /**
@@ -86,18 +96,12 @@ EOS
                 'bool' => true,
                 'string' => '<string>',
                 'array' => ['<key0>' => '<array>', '<key1>' => '<array>'],
-                'object' => new class {
-                    var $foo = '<property>';
-                    function foo()
-                    {
-                        return '<method>';
-                    }
-                },
-                'generator' => (function () {
+                'object' => new Foo(),
+                'generator' => call_user_func(function () {
                     for ($i = 0; $i < 2; $i++) {
                         yield "<key$i>" => '<generator>';
                     }
-                })(),
+                }),
                 'htmlstring' => new HtmlString('<htmlstring>'),
                 'nested' => (new View('foo'))->template('nested')->data(['string' => '<nested>'])
             ])
