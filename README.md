@@ -1,4 +1,4 @@
-[![unstable: 0.2.0](https://img.shields.io/badge/unstable-0.2.0-red.svg)](https://github.com/cmb69/pfw_xh/releases/tag/0.2.0)
+[![Latest Version: 0.2.0](https://img.shields.io/badge/Latest%20Version-0.2.0-red.svg)](https://github.com/cmb69/pfw_xh/releases/tag/0.2.0)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 Introduction
@@ -12,7 +12,7 @@ over large parts of the API of CMSimple_XH which still consists of global
 variables for historic reasons, and to (3) offer useful tools for often needed
 functionality.
 
-(2) is supposed to shield against eventual changes in CMSimple_XH's core,which
+Item (2) is supposed to shield against eventual changes in CMSimple_XH's core,which
 seem to be necessary in the long run to clean up some unfortunate design
 decisions, but have been postponed since years for backward compatibility
 reasons with existing plugins.  Therefore all plugin developers are encouraged
