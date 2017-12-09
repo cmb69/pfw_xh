@@ -2,8 +2,8 @@
 
 <project name="Pfw" default="help">
 
-    <property name="minify-source" value="."/>
-    <property name="minify-dest" value="."/>
+    <property name="build.source" value="."/>
+    <property name="build.dest" value="."/>
 
     <fileset id="php-sources" dir=".">
         <include name="*.php"/>
@@ -104,11 +104,36 @@
         <exec command="doxygen" passthru="true"/>
     </target>
 
+    <target name="readme" description="convert README.md to README.htm">
+        <tempfile property="temp.file" destdir="${build.source}"/>
+        <copy file="README.md" tofile="${temp.file}">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="\(https:\/\/htmlpreview\.github\.io\/\?.*?(help/help(_[a-z]{2})?.htm)\)" 
+                            replace="(\1)"/>
+                </replaceregexp>
+            </filterchain>
+        </copy>
+        <exec executable="pandoc">
+            <arg file="${temp.file}"/>
+            <arg value="-f"/>
+            <arg value="markdown"/>
+            <arg value="-t"/>
+            <arg value="html"/>
+            <arg value="-s"/>
+            <arg value="-M"/>
+            <arg value="pagetitle=Imgzoom_XH"/>
+            <arg value="-o"/>
+            <arg file="${build.dest}/README.htm"/>
+        </exec>
+        <delete file="${temp.file}"/>
+    </target>
+
     <target name="minify" description="minifies JS resources">
         <fail unless="env.CLOSURE_COMPILER_JAR"
               message="The environment variable CLOSURE_COMPILER_JAR is not defined!"/>
-        <copy todir="${minify-dest}">
-            <fileset dir="${minify-source}">
+        <copy todir="${build.dest}">
+            <fileset dir="${build.source}">
                 <patternset refid="js-sources"/>
             </fileset>
             <mapper type="glob" from="*.js" to="*.min.js"/>
@@ -119,7 +144,7 @@
             <srcfile/>
             <arg value="--js_output_file"/>
             <srcfile/>
-            <fileset dir="${minify-dest}">
+            <fileset dir="${build.dest}">
                 <include name="*.min.js"/>
             </fileset>
         </apply>
@@ -141,9 +166,13 @@
                 </replacetokens>
             </filterchain>
         </move>
+        <phingcall target="readme">
+            <property name="build.source" value="export"/>
+            <property name="build.dest" value="dist"/>
+        </phingcall>
         <phingcall target="minify">
-            <property name="minify-source" value="export"/>
-            <property name="minify-dest" value="dist"/>
+            <property name="build.source" value="export"/>
+            <property name="build.dest" value="dist"/>
         </phingcall>
         <move todir="dist">
             <fileset dir="export">
@@ -153,6 +182,7 @@
                 <exclude name="Doxyfile"/>
                 <exclude name="pax_global_header"/>
                 <exclude name="phpcompatinfo.json"/>
+                <exclude name="README.md"/>
                 <exclude name="tests/**"/>
             </fileset>
         </move>
