@@ -37,7 +37,7 @@ class View
      * @param string $pluginname
      * @return self
      */
-    public function create($pluginname)
+    public static function create($pluginname)
     {
         return new self($pluginname);
     }
