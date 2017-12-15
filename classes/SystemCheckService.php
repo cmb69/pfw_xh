@@ -111,6 +111,20 @@ class SystemCheckService
     }
 
     /**
+     * @param string $version
+     * @return $this
+     */
+    public function minPfwVersion($version)
+    {
+        $state = defined('\Pfw\Plugin::VERSION') && version_compare(Plugin::VERSION, $version, 'ge')
+            ? SystemCheck::SUCCESS
+            : SystemCheck::FAILURE;
+        $label = sprintf($this->lang['syscheck_pfwversion'], $version);
+        $this->checks[] = new SystemCheck($label, $state);
+        return $this;
+    }
+
+    /**
      * @param string $plugin
      * @return $this
      */

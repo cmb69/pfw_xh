@@ -86,6 +86,23 @@ class SystemCheckServiceTest extends TestCase
 
     /**
      * @return void
+     * @covers Pfw\SystemCheckService::minPfwVersion
+     */
+    public function testMinPfwVersion()
+    {
+        $this->setConstant('\Pfw\Plugin::VERSION', '0.3.0');
+        $subject = new SystemCheckService;
+        
+        $subject->minPfwVersion('0.2.0');
+
+        $checks = $subject->getChecks();
+        $this->assertContainsOnlyInstancesOf(SystemCheck::class, $checks);
+        $this->assertCount(1, $checks);
+        $this->assertEquals(SystemCheck::SUCCESS, $checks[0]->getState());
+    }
+
+    /**
+     * @return void
      * @covers Pfw\SystemCheckService::plugin
      */
     public function testPlugin()

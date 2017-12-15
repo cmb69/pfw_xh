@@ -7,6 +7,7 @@ $plugin_tx['pfw']['alt_logo']="Wirbelnder Zauberstab";
 $plugin_tx['pfw']['syscheck_extension']="die PHP-Extension '%s' geladen wurde";
 $plugin_tx['pfw']['syscheck_fail']="Fehlschlag";
 $plugin_tx['pfw']['syscheck_message']="Prüfe, dass %1\$s … %2\$s";
+$plugin_tx['pfw']['syscheck_pfwversion']="die Pfw_XH-Version mindestens %s ist";
 $plugin_tx['pfw']['syscheck_phpversion']="die PHP-Version mindestens %s ist";
 $plugin_tx['pfw']['syscheck_plugin']="das CMSimple_XH-Plugin '%s' installiert ist";
 $plugin_tx['pfw']['syscheck_success']="Okay";
