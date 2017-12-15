@@ -27,16 +27,6 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use Pfw\View\View;
 use Pfw\View\HtmlString;
 
-class Foo
-{
-    public $foo = '<property>';
-
-    public function foo()
-    {
-        return '<method>';
-    }
-}
-
 class ViewTest extends TestCase
 {
     /**
