@@ -118,7 +118,7 @@ class SystemCheckService
     {
         global $pth;
 
-        $state = is_dir("{$pth['folder']['plugins']}$plugin")
+        $state = in_array($plugin, XH_plugins())
             ? SystemCheck::SUCCESS
             : SystemCheck::FAILURE;
         $label = sprintf($this->lang['syscheck_plugin'], $plugin);

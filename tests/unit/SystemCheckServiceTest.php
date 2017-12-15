@@ -90,8 +90,8 @@ class SystemCheckServiceTest extends TestCase
      */
     public function testPlugin()
     {
-        $isdirmock = $this->mockFunction('is_dir');
-        $isdirmock->expects($this->any())->willReturn(true);
+        $isdirmock = $this->mockFunction('XH_plugins');
+        $isdirmock->expects($this->any())->willReturn(['pagemanager']);
         $subject = new SystemCheckService;
         
         $subject->plugin('pagemanager');
