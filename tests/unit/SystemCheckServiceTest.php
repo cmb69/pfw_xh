@@ -90,8 +90,8 @@ class SystemCheckServiceTest extends TestCase
      */
     public function testPlugin()
     {
-        $isdirmock = $this->mockFunction('XH_plugins');
-        $isdirmock->expects($this->any())->willReturn(['pagemanager']);
+        $pluginmock = $this->mockFunction('XH_plugins');
+        $pluginmock->expects($this->any())->willReturn(['pagemanager']);
         $subject = new SystemCheckService;
         
         $subject->plugin('pagemanager');
@@ -101,7 +101,7 @@ class SystemCheckServiceTest extends TestCase
         $this->assertCount(1, $checks);
         $this->assertEquals(SystemCheck::SUCCESS, $checks[0]->getState());
 
-        $isdirmock->restore();
+        $pluginmock->restore();
     }
 
     /**
