@@ -35,14 +35,6 @@ namespace Pfw;
 class SystemCheckService
 {
     /**
-     * @return self
-     */
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @var array
      */
     private $lang;

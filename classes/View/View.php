@@ -34,15 +34,6 @@ namespace Pfw\View;
 class View
 {
     /**
-     * @param string $pluginname
-     * @return self
-     */
-    public static function create($pluginname)
-    {
-        return new self($pluginname);
-    }
-
-    /**
      * @var string
      */
     private $pluginname;
