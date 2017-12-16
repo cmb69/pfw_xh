@@ -12,6 +12,10 @@
         <include name="languages/*.php"/>
     </fileset>
 
+    <fileset id="view_templates" dir="views">
+        <include name="*.php"/>
+    </fileset>
+
     <patternset id="js-sources">
         <include name="*.js"/>
         <exclude name="*.min.js"/>
@@ -41,6 +45,14 @@
             <fileset refid="php-sources"/>
             <fileset refid="unit-tests"/>
         </phpcodesniffer>
+    </target>
+
+    <target name="templint" description="lints all templates">
+        <apply executable="php" passthru="true" checkreturn="true">
+            <arg file="../pfw/sdk/sdk.php"/>
+            <arg value="templint"/>
+            <fileset refid="view_templates"/>
+        </apply>
     </target>
 
     <target name="mess" description="detects code flaws">
