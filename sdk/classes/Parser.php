@@ -184,7 +184,7 @@ class Parser
      */
     private function error()
     {
-        echo $this->scanner->getFilename(), ':', $this->symbol->getLine(), ': unexpected ', $this->symbol->getName(), PHP_EOL;
+        echo realpath($this->scanner->getFilename()), ':', $this->symbol->getLine(), ': unexpected ', $this->symbol->getName(), PHP_EOL;
         exit(1);
     }
 }
