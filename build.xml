@@ -91,7 +91,7 @@
 
     <target name="attack_tests" description="runs all attack tests">
         <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
-        <phpunit haltonerror="true" haltonfailure="true">
+        <phpunit bootstrap="../pfw/classes/required_classes.php" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset refid="attack_tests"/>
