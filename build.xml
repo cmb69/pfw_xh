@@ -2,10 +2,10 @@
 
 <project name="Pfw" default="help">
 
-    <property name="build.source" value="."/>
-    <property name="build.dest" value="."/>
+    <property name="build_source" value="."/>
+    <property name="build_dest" value="."/>
 
-    <fileset id="php-sources" dir=".">
+    <fileset id="php_sources" dir=".">
         <include name="*.php"/>
         <include name="classes/*.php"/>
         <include name="config/*.php"/>
@@ -16,16 +16,16 @@
         <include name="*.php"/>
     </fileset>
 
-    <patternset id="js-sources">
+    <patternset id="js_sources">
         <include name="*.js"/>
         <exclude name="*.min.js"/>
     </patternset>
 
-    <fileset id="unit-tests" dir="tests/unit">
+    <fileset id="unit_tests" dir="tests/unit">
         <include name="*Test.php"/>
     </fileset>
 
-    <fileset id="attack-tests" dir="tests/attack">
+    <fileset id="attack_tests" dir="tests/attack">
         <include name="*Test.php"/>
     </fileset>
 
@@ -42,8 +42,8 @@
 
     <target name="sniff" description="checks adherence to coding standards">
         <phpcodesniffer standard="PSR2" haltonerror="true">
-            <fileset refid="php-sources"/>
-            <fileset refid="unit-tests"/>
+            <fileset refid="php_sources"/>
+            <fileset refid="unit_tests"/>
         </phpcodesniffer>
     </target>
 
@@ -57,8 +57,8 @@
 
     <target name="mess" description="detects code flaws">
         <phpmd rulesets="codesize,unusedcode">
-            <fileset refid="php-sources"/>
-            <fileset refid="unit-tests"/>
+            <fileset refid="php_sources"/>
+            <fileset refid="unit_tests"/>
          </phpmd>
     </target>
 
@@ -79,21 +79,21 @@
         </if>
     </target>
 
-    <target name="unit-tests" description="runs all unit tests">
+    <target name="unit_tests" description="runs all unit tests">
         <phpunit bootstrap="tests/unit/bootstrap.php" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset refid="unit-tests"/>
+                <fileset refid="unit_tests"/>
             </batchtest>
         </phpunit>
     </target>
 
-    <target name="attack-tests" description="runs all attack tests">
+    <target name="attack_tests" description="runs all attack tests">
         <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
         <phpunit haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset refid="attack-tests"/>
+                <fileset refid="attack_tests"/>
             </batchtest>
         </phpunit>
     </target>
@@ -117,8 +117,8 @@
     </target>
 
     <target name="readme" description="convert README.md to README.htm">
-        <tempfile property="temp.file" destdir="${build.source}"/>
-        <copy file="README.md" tofile="${temp.file}">
+        <tempfile property="temp_file" destdir="${build_source}"/>
+        <copy file="README.md" tofile="${temp_file}">
             <filterchain>
                 <replaceregexp>
                     <regexp pattern="\(https:\/\/htmlpreview\.github\.io\/\?.*?(help/help(_[a-z]{2})?.htm)\)" 
@@ -127,7 +127,7 @@
             </filterchain>
         </copy>
         <exec executable="pandoc">
-            <arg file="${temp.file}"/>
+            <arg file="${temp_file}"/>
             <arg value="-f"/>
             <arg value="markdown"/>
             <arg value="-t"/>
@@ -136,17 +136,17 @@
             <arg value="-M"/>
             <arg value="pagetitle=Imgzoom_XH"/>
             <arg value="-o"/>
-            <arg file="${build.dest}/README.htm"/>
+            <arg file="${build_dest}/README.htm"/>
         </exec>
-        <delete file="${temp.file}"/>
+        <delete file="${temp_file}"/>
     </target>
 
     <target name="minify" description="minifies JS resources">
         <fail unless="env.CLOSURE_COMPILER_JAR"
               message="The environment variable CLOSURE_COMPILER_JAR is not defined!"/>
-        <copy todir="${build.dest}">
-            <fileset dir="${build.source}">
-                <patternset refid="js-sources"/>
+        <copy todir="${build_dest}">
+            <fileset dir="${build_source}">
+                <patternset refid="js_sources"/>
             </fileset>
             <mapper type="glob" from="*.js" to="*.min.js"/>
         </copy>
@@ -156,7 +156,7 @@
             <srcfile/>
             <arg value="--js_output_file"/>
             <srcfile/>
-            <fileset dir="${build.dest}">
+            <fileset dir="${build_dest}">
                 <include name="*.min.js"/>
             </fileset>
         </apply>
@@ -179,12 +179,12 @@
             </filterchain>
         </move>
         <phingcall target="readme">
-            <property name="build.source" value="export"/>
-            <property name="build.dest" value="dist"/>
+            <property name="build_source" value="export"/>
+            <property name="build_dest" value="dist"/>
         </phingcall>
         <phingcall target="minify">
-            <property name="build.source" value="export"/>
-            <property name="build.dest" value="dist"/>
+            <property name="build_source" value="export"/>
+            <property name="build_dest" value="dist"/>
         </phingcall>
         <move todir="dist">
             <fileset dir="export">
@@ -210,7 +210,7 @@
         <delete dir="dist"/>
     </target>
 
-    <target name="build-patch" description="builds a distributable update package">
+    <target name="build_patch" description="builds a distributable update package">
         <fail unless="patchee" message="patchee is not defined!"/>
         <fail unless="version" message="version is not defined!"/>
         <php function="strtolower" returnProperty="prefix">
@@ -236,7 +236,7 @@
         <delete dir="dist" quiet="true"/>
     </target>
 
-    <target name="build-sdk" depends="doc">
+    <target name="build_sdk" depends="doc">
         <fail unless="version" message="version is not defined!"/>
         <mkdir dir="dist"/>
         <copy todir="dist/doc">
@@ -251,7 +251,7 @@
         <delete dir="dist"/>
     </target>
 
-    <target name="build-all" depends="build, build-sdk"
+    <target name="build_all" depends="build, build_sdk"
          description="builds the distributable ZIP archives"/>
 
 </project>
