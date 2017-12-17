@@ -49,7 +49,7 @@
 
     <target name="templint" description="lints all templates">
         <apply executable="php" passthru="true" checkreturn="true">
-            <arg file="../pfw/sdk/sdk.php"/>
+            <arg file="../pfw/sdk/pfw.php"/>
             <arg value="templint"/>
             <fileset refid="view_templates"/>
         </apply>
