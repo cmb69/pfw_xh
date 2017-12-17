@@ -90,7 +90,8 @@
     </target>
 
     <target name="attack_tests" description="runs all attack tests">
-        <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
+        <fail unless="env.CMSIMPLE_URL" 
+              message="The environment variable CMSIMPLE_URL is not defined!"/>
         <phpunit bootstrap="../pfw/classes/required_classes.php" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>

@@ -24,11 +24,6 @@ namespace Pfw;
 
 use PHPUnit\Framework\TestCase;
 
-/*
- * The environment variable CMSIMPLEDIR has to be set to the installation folder
- * (e.g. / or /cmsimple_xh/).
- */
-
 /**
  * Testing CSRF protection.
  * 
@@ -39,12 +34,13 @@ use PHPUnit\Framework\TestCase;
  * http://dev-doc.cmsimple-xh.org/md_tutorials__x_h__c_s_r_f_protection.html.
  * This class can be extended to actually test the CSRF protection as
  * integration test (opposed to a unit test).  The CsrfTestCase uses cURL to
- * first log in as administrator (using the default password) to the CMSimple_XH
- * installation which is available via the enviroment variable `CMSIMPLEDIR`,
- * and then triggers additional cURL requests which lack the CSRF token, and as
- * such should be responded with a 403 Forbidden status code.  Otherwise the
- * test fails.  The query string and payload of each test has to be returned by
- * dataForAttack().
+ * first log in as administrator (using the default password), and then triggers
+ * additional cURL requests which lack the CSRF token, and as such should be
+ * responded with a 403 Forbidden status code.  Otherwise the test fails.  The
+ * query string and payload of each test has to be returned by dataForAttack().
+ *
+ * @note The environment variable `CMSIMPLE_URL` has to be set to the fully
+ *       qualified URL of the CMSimple_XH installation.
  */
 abstract class CsrfTestCase extends TestCase
 {
@@ -70,7 +66,7 @@ abstract class CsrfTestCase extends TestCase
      */
     protected function setUp()
     {
-        $this->url = 'http://localhost' . getenv('CMSIMPLEDIR');
+        $this->url = getenv('CMSIMPLE_URL');
         $this->cookieFile = tempnam(sys_get_temp_dir(), 'CC');
 
         $this->curlHandle = curl_init($this->url . '?&login=true&keycut=test');
