@@ -35,8 +35,9 @@
     </target>
 
     <target name="uml" description="generates UML class diagram">
-        <fail unless="plantuml" message="plantuml is not defined!"/>
-        <exec command="umlwriter diagram:render --reflector=reflect --processor=plantuml classes | java -jar ${plantuml} -p -tsvg > classes.svg"
+        <fail unless="env.PLANT_UML_JAR"
+              message="The environment variable PLANT_UML_JAR is not defined!"/>
+        <exec command="umlwriter diagram:render --reflector=reflect --processor=plantuml classes | java -jar ${env.PLANT_UML_JAR} -p -tsvg > classes.svg"
               logoutput="true"/>
     </target>
 
