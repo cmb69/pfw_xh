@@ -134,7 +134,7 @@
             <arg value="html"/>
             <arg value="-s"/>
             <arg value="-M"/>
-            <arg value="pagetitle=Imgzoom_XH"/>
+            <arg value="pagetitle=${phing.project.name}_XH"/>
             <arg value="-o"/>
             <arg file="${build_dest}/README.htm"/>
         </exec>
