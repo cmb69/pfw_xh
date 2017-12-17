@@ -242,10 +242,12 @@
         <copy todir="dist/doc">
             <fileset dir="doc"/>
         </copy>
-        <copy file="sdk/README.md" tofile="dist/README.md"/>
+        <copy todir="dist">
+            <fileset dir="sdk"/>
+        </copy>
         <copy file="LICENSE" tofile="dist/LICENSE"/>
         <zip destfile="Pfw_XH-SDK-${version}.zip" basedir="dist"
-             prefix="pfw-sdk/"/>
+             prefix="pfw/sdk/"/>
         <delete dir="dist"/>
     </target>
 
