@@ -195,6 +195,7 @@
                 <exclude name="pax_global_header"/>
                 <exclude name="phpcompatinfo.json"/>
                 <exclude name="README.md"/>
+                <exclude name="sdk/**"/>
                 <exclude name="tests/**"/>
             </fileset>
         </move>
