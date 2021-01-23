@@ -169,17 +169,6 @@
         <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
         <unzip file="export.zip" todir="export"/>
         <delete file="export.zip"/>
-        <move todir="dist">
-            <fileset dir="export">
-                <include name="classes/Plugin.php"/>
-                <include name="version.nfo"/>
-            </fileset>
-            <filterchain>
-                <replacetokens>
-                    <token key="PLUGIN_VERSION" value="${version}"/>
-                </replacetokens>
-            </filterchain>
-        </move>
         <phingcall target="readme">
             <property name="build_source" value="export"/>
             <property name="build_dest" value="dist"/>
